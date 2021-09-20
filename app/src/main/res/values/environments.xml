@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="BASE_URL">https://mocki.io/v1/</string>
+    <string name="BASE_URL">https://aspsrvc.webcoge.it/ASP_mensaitalia/</string>
 </resources>

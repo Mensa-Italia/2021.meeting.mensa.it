@@ -1,6 +1,8 @@
 package swaix.dev.mensaeventi.di
 
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +16,7 @@ import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.api.ApiHelper
 import swaix.dev.mensaeventi.api.ApiHelperImpl
 import swaix.dev.mensaeventi.api.ApiService
-import swaix.dev.mensaeventi.repository.EventRepository
+import swaix.dev.mensaeventi.repository.DataRepository
 import swaix.dev.mensaeventi.utils.TAG
 import javax.inject.Singleton
 
@@ -43,10 +45,14 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit {
+    fun getGson() : Gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm Z").create()
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String, gson: Gson): Retrofit {
         Log.d(TAG, "provideRetrofit: $baseUrl")
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(baseUrl)
             .client(okHttpClient)
             .build()
@@ -62,7 +68,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providesEventRepository(helper: ApiHelper): EventRepository = EventRepository(helper)
+    fun providesEventRepository(helper: ApiHelper): DataRepository = DataRepository(helper)
 
 
 }

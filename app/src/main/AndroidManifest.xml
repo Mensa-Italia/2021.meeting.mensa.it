@@ -18,14 +18,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MensaEventi">
         <activity
-            android:name=".ui.MainActivity"
-            android:exported="true">
+            android:name=".ui.HomeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_home">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -37,7 +42,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-
     </application>
 
 </manifest>

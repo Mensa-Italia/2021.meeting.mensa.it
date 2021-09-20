@@ -8,21 +8,30 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.api.NetworkResult
-import swaix.dev.mensaeventi.model.MensaEvent
-import swaix.dev.mensaeventi.repository.EventRepository
+import swaix.dev.mensaeventi.model.Events
+import swaix.dev.mensaeventi.repository.DataRepository
 import javax.inject.Inject
 
 
 @HiltViewModel
-class MapViewModel @Inject constructor(private val repository: EventRepository) : ViewModel() {
+class MapViewModel @Inject constructor(private val repository: DataRepository) : ViewModel() {
 
-    private val _response: MutableLiveData<NetworkResult<MensaEvent>> = MutableLiveData()
-    val response: LiveData<NetworkResult<MensaEvent>> = _response
+    private val _response: MutableLiveData<NetworkResult<Events>> = MutableLiveData()
+    val response: LiveData<NetworkResult<Events>> = _response
 
-    fun fetchMensaEventResponse() {
+    fun fetchEventsResponse() {
         viewModelScope.launch {
             repository.getEvents().collect { values->
                 _response.value = values
+            }
+            repository.getContacts().collect { values->
+//                _response.value = values
+            }
+            repository.getFreeTime().collect { values->
+//                _response.value = values
+            }
+            repository.getHotels().collect { values->
+//                _response.value = values
             }
         }
     }

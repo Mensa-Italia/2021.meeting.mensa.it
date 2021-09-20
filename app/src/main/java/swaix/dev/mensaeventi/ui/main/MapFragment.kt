@@ -18,7 +18,7 @@ import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.api.LoadingManager
 import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
-import swaix.dev.mensaeventi.model.MensaEvent
+import swaix.dev.mensaeventi.model.Events
 import swaix.dev.mensaeventi.utils.TAG
 
 
@@ -45,11 +45,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
 
 
     override fun onMapReady(googleMap: GoogleMap) {
-        viewModel.fetchMensaEventResponse()
+        viewModel.fetchEventsResponse()
 
-        viewModel.response.observe(viewLifecycleOwner, object : NetworkObserver<MensaEvent>(this) {
+        viewModel.response.observe(viewLifecycleOwner, object : NetworkObserver<Events>(this) {
 
-            override fun onSuccess(t: MensaEvent) {
+            override fun onSuccess(t: Events) {
             }
 
         })
