@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation2"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="swaix.dev.mensaeventi.ui.events.EventsFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/events_fragment">
+        <action
+            android:id="@+id/action_navigation_home_to_eventDetailFragment"
+            app:destination="@id/eventDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/eventDetailFragment"
+        android:name="swaix.dev.mensaeventi.ui.events.EventDetailFragment"
+        android:label="fragment_event_detail"
+        tools:layout="@layout/fragment_event_detail">
+        <argument
+            android:name="eventDetail"
+            app:argType="swaix.dev.mensaeventi.model.EventsDetails" />
+    </fragment>
+</navigation>

@@ -1,6 +1,7 @@
 package swaix.dev.mensaeventi.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 
 open class Events(
@@ -16,4 +17,5 @@ data class EventsDetails(
     @SerializedName("title") val title: String,
     val position: Position,
     @SerializedName("date") val date: Date
-)
+) : Serializable
+
