@@ -1,14 +1,12 @@
 package swaix.dev.mensaeventi.api
 
 import retrofit2.Response
-import swaix.dev.mensaeventi.model.Contacts
-import swaix.dev.mensaeventi.model.Events
-import swaix.dev.mensaeventi.model.FreeTime
-import swaix.dev.mensaeventi.model.Hotels
+import swaix.dev.mensaeventi.model.*
 
 interface ApiHelper {
-    suspend fun getEvents(): Response<Events>
-    suspend fun getHotels(): Response<Hotels>
-    suspend fun getFreeTime(): Response<FreeTime>
-    suspend fun getContacts(): Response<Contacts>
+    suspend fun getEvents(): Response<ResponseGetEvents>
+    suspend fun getEventActivities(id: String): Response<ResponseGetEventActivities>
+    suspend fun getHotels(id: String): Response<Hotels>
+    suspend fun getFreeTime(id: String): Response<Suggestions>
+    suspend fun getContacts(id: String): Response<Contacts>
 }

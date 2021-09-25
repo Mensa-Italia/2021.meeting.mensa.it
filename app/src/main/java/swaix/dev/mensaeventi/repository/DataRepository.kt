@@ -5,46 +5,76 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import swaix.dev.mensaeventi.BuildConfig.MOCK_DATA
 import swaix.dev.mensaeventi.api.ApiHelper
 import swaix.dev.mensaeventi.api.BaseApiResponse
 import swaix.dev.mensaeventi.api.NetworkResult
-import swaix.dev.mensaeventi.model.Contacts
-import swaix.dev.mensaeventi.model.Events
-import swaix.dev.mensaeventi.model.FreeTime
-import swaix.dev.mensaeventi.model.Hotels
+import swaix.dev.mensaeventi.model.*
 
 @ActivityRetainedScoped
 class DataRepository(private val apiHelper: ApiHelper) : BaseApiResponse() {
 
-    suspend fun getEvents(): Flow<NetworkResult<Events>> {
+    suspend fun getEvents(): Flow<NetworkResult<ResponseGetEvents>> {
         return flow {
-            emit(NetworkResult.Loading(true))
-            emit(safeApiCall { apiHelper.getEvents() })
-            emit(NetworkResult.Loading(false))
+            if (MOCK_DATA) {
+                emit(NetworkResult.Success(mockGetEventResponse()))
+            } else {
+                emit(NetworkResult.Loading(true))
+                emit(safeApiCall { apiHelper.getEvents() })
+                emit(NetworkResult.Loading(false))
+            }
+        }
+    }
+
+    suspend fun getEventActivities(id: String): Flow<NetworkResult<ResponseGetEventActivities>> {
+        return flow {
+            if (MOCK_DATA){
+                emit(NetworkResult.Success(mockGetEventActivitiesResponse()))
+            }
+            else{
+                emit(NetworkResult.Loading(true))
+                emit(safeApiCall { apiHelper.getEventActivities(id) })
+                emit(NetworkResult.Loading(false))
+            }
+        }
+    }
+
+    suspend fun getHotels(id: String): Flow<NetworkResult<Hotels>> {
+        return flow {
+            if (MOCK_DATA){
+                emit(NetworkResult.Success(mockGetHotelsResponse()))
+            }
+            else{
+                emit(NetworkResult.Loading(true))
+                emit(safeApiCall { apiHelper.getHotels(id) })
+                emit(NetworkResult.Loading(false))
+            }
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getHotels(): Flow<NetworkResult<Hotels>> {
+    suspend fun getContacts(id: String): Flow<NetworkResult<Contacts>> {
         return flow {
-            emit(NetworkResult.Loading(true))
-            emit(safeApiCall { apiHelper.getHotels() })
-            emit(NetworkResult.Loading(false))
+            if (MOCK_DATA){
+                emit(NetworkResult.Success(mockGetContactsResponse()))
+            }
+            else{
+                emit(NetworkResult.Loading(true))
+                emit(safeApiCall { apiHelper.getContacts(id) })
+                emit(NetworkResult.Loading(false))
+            }
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getContacts(): Flow<NetworkResult<Contacts>> {
+    suspend fun getFreeTime(id: String): Flow<NetworkResult<Suggestions>> {
         return flow {
-            emit(NetworkResult.Loading(true))
-            emit(safeApiCall { apiHelper.getContacts() })
-            emit(NetworkResult.Loading(false))
-        }.flowOn(Dispatchers.IO)
-    }
-
-    suspend fun getFreeTime(): Flow<NetworkResult<FreeTime>> {
-        return flow {
-            emit(NetworkResult.Loading(true))
-            emit(safeApiCall { apiHelper.getFreeTime() })
-            emit(NetworkResult.Loading(false))
+            if (MOCK_DATA){
+                emit(NetworkResult.Success(mockGetSuggestions()))
+            }
+            else{
+                emit(NetworkResult.Loading(true))
+                emit(safeApiCall { apiHelper.getFreeTime(id) })
+                emit(NetworkResult.Loading(false))
+            }
         }.flowOn(Dispatchers.IO)
     }
 }

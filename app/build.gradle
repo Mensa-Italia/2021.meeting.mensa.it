@@ -35,6 +35,22 @@ android {
     buildFeatures {
         viewBinding true
     }
+    flavorDimensions "version"
+    productFlavors {
+        mock {
+            dimension "version"
+            applicationIdSuffix ".mock"
+            versionNameSuffix "-mock"
+            buildConfigField "boolean", "MOCK_DATA", "true"
+        }
+        prod {
+            dimension "version"
+            applicationIdSuffix ".prod"
+            versionNameSuffix "-prod"
+            buildConfigField "boolean", "MOCK_DATA", "false"
+        }
+    }
+
 }
 
 dependencies {

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1000">
+        <KeyFrameSet>
+            <KeyPosition
+                motion:framePosition="22"
+                motion:keyPositionType="parentRelative"
+                motion:motionTarget="@+id/event_text"
+                motion:percentX="0.6" />
+            <KeyPosition
+                motion:framePosition="22"
+                motion:keyPositionType="parentRelative"
+                motion:motionTarget="@+id/mensa_text"
+                motion:percentX="0.6" />
+        </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start"></ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/logo_mensa"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+
+        <Constraint
+            android:id="@+id/event_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            motion:layout_constraintBottom_toBottomOf="@id/logo_mensa"
+            motion:layout_constraintStart_toEndOf="@id/logo_mensa"
+            motion:layout_constraintTop_toTopOf="@id/logo_mensa" />
+
+        <Constraint
+            android:id="@+id/mensa_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:translationX="-15dp"
+            motion:layout_constraintBottom_toBottomOf="@id/logo_mensa"
+            motion:layout_constraintStart_toEndOf="@id/event_text"
+            motion:layout_constraintTop_toTopOf="@id/logo_mensa" />
+    </ConstraintSet>
+</MotionScene>

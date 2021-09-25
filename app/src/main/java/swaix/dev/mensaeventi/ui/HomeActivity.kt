@@ -1,14 +1,11 @@
 package swaix.dev.mensaeventi.ui
 
 import android.os.Bundle
-import android.transition.TransitionManager
-import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.databinding.ActivityHomeBinding
@@ -24,27 +21,31 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
-
-        val navController = findNavController(R.id.nav_host_fragment_activity_home)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home/*, R.id.navigation_dashboard, R.id.navigation_notifications*/
-            )
-        )
+//        val navView: BottomNavigationView = binding.navView
+//
+//        val navController = findNavController(R.id.nav_host_fragment_activity_home)
+//        // Passing each menu ID as a set of Ids because each
+//        // menu should be considered as top level destinations.
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.navigation_home/*, R.id.navigation_dashboard, R.id.navigation_notifications*/
+//            )
+//        )
+//        val appBarConfiguration = AppBarConfiguration(navController.graph)
+//        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
 //        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+//        navView.setupWithNavController(navController)
 
 
-        val baseViewModel: BaseViewModel by viewModels()
-        baseViewModel.showBottomBar.observe(this, {
-            with(binding) {
-                TransitionManager.beginDelayedTransition(root)
-                navView.visibility = if (it) View.VISIBLE else View.GONE
-            }
+//        val baseViewModel: BaseViewModel by viewModels()
+//        baseViewModel.showBottomBar.observe(this, {
+//            with(binding) {
+//                TransitionManager.beginDelayedTransition(root)
+//                navView.visibility = if (it) View.VISIBLE else View.GONE
+//            }
+//
+//        })
 
-        })
+
     }
 }

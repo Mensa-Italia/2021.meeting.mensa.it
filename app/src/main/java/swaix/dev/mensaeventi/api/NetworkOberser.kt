@@ -5,14 +5,14 @@ import androidx.annotation.CallSuper
 import androidx.lifecycle.Observer
 import swaix.dev.mensaeventi.utils.TAG
 
-abstract class NetworkObserver<T>(private val loadingManager: LoadingManager?= null) : Observer<NetworkResult<T>> {
+abstract class NetworkObserver<T>(private val loadingManager: LoadingManager?= null, private val onNullResponse: ()->Unit = {}) : Observer<NetworkResult<T>> {
     override fun onChanged(t: NetworkResult<T>) {
         when (t) {
             is NetworkResult.Success -> {
                 if (t.data != null)
                     onSuccess(t.data)
                 else
-                    onNullResponse()
+                    onNullResponse
             }
             is NetworkResult.Error -> {
                 onError(t.message)
@@ -32,10 +32,6 @@ abstract class NetworkObserver<T>(private val loadingManager: LoadingManager?= n
     }
 
 
-    @CallSuper
-    fun onNullResponse() {
-        Log.d(TAG, "** NETWORK ** nullResponse")
-    }
 
 
 }

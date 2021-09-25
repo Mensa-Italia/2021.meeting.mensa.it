@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import swaix.dev.mensaeventi.databinding.FragmentEventDetailBinding
 import swaix.dev.mensaeventi.ui.BaseFragment
+import swaix.dev.mensaeventi.utils.yearString
 
 class EventDetailFragment : BaseFragment() {
 
@@ -20,7 +21,11 @@ class EventDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(FragmentEventDetailBinding.bind(view)){
-            description.text = args.eventDetail.description
+
+            eventName.text = args.eventDetail.name
+            eventYear.text = args.eventDetail.dateFrom.yearString()
+            eventDescription.text = args.eventDetail.description
+
         }
     }
 

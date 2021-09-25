@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,7 +11,8 @@ import swaix.dev.mensaeventi.adapters.EventAdapter
 import swaix.dev.mensaeventi.api.LoadingManager
 import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.EventsFragmentBinding
-import swaix.dev.mensaeventi.model.Events
+import swaix.dev.mensaeventi.model.MensaEvent
+import swaix.dev.mensaeventi.model.ResponseGetEvents
 import swaix.dev.mensaeventi.ui.BaseFragment
 
 
@@ -34,9 +34,11 @@ class EventsFragment : BaseFragment(), LoadingManager {
             eventList.adapter = EventAdapter {
                 findNavController().navigate(EventsFragmentDirections.actionNavigationHomeToEventDetailFragment(it))
             }
-            viewModel.events.observe(viewLifecycleOwner, object : NetworkObserver<Events>(this@EventsFragment) {
-                override fun onSuccess(t: Events) {
-                    (eventList.adapter as EventAdapter).updateDataset(t.items)
+            viewModel.events.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEvents>(this@EventsFragment, {
+                (eventList.adapter as EventAdapter).updateDataset(listOf())
+            }) {
+                override fun onSuccess(t: ResponseGetEvents) {
+                    (eventList.adapter as EventAdapter).updateDataset(t.events)
                 }
             })
         }

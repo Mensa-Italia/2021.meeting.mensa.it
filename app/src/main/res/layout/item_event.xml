@@ -3,7 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/background_rounded_blue"
+        app:layout_constraintDimensionRatio="7:3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/event_city"
+        style="@style/big_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textAlignment="textEnd"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ROMA" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vertical_quarter"
@@ -13,44 +38,15 @@
         app:layout_constraintGuide_percent="0.25" />
 
     <TextView
-        android:id="@+id/date"
+        android:id="@+id/date_label"
         style="@style/date_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="4dp"
+        android:padding="16dp"
         android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="@id/vertical_quarter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="25/05/2021" />
-
-    <TextView
-        android:id="@+id/time"
-        style="@style/date_style"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingTop="4dp"
-        android:paddingEnd="4dp"
-        android:paddingBottom="8dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="@id/vertical_quarter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date"
-        tools:text="10:00" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/time"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/vertical_quarter"
-        app:layout_constraintTop_toTopOf="@id/date"
-        android:paddingStart="4dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="dal 10 al 18 November 2021" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
