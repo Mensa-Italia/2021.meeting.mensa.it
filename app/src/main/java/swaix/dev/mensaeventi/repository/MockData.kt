@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 var dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+var dateTimeFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 
 fun <T> T.log() : T{
     val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm Z").create()
@@ -43,7 +44,34 @@ fun mockGetEventResponse() = ResponseGetEvents(
 ).log()
 
 
-fun mockGetEventActivitiesResponse() =ResponseGetEventActivities().log()
+fun mockGetEventActivitiesResponse() =ResponseGetEventActivities(
+    listOf(
+        MensaEventActivity(
+            "Roma ATTIVITa",
+            "prima attività a a Roma",
+            Position("via vedremo", "bla bla bla", 42.1, 39.1),
+            "",
+            dateFormat.parse("23/11/2022 09:00") ?: Date(),
+            dateFormat.parse("23/11/2022 18:00") ?: Date(),
+        ),
+        MensaEventActivity(
+            "Roma ATTIVITa 2",
+            "seconda attività a a Roma",
+            Position("via vedremo", "bla bla bla", 42.1, 39.1),
+            "",
+            dateFormat.parse("24/11/2022 09:00") ?: Date(),
+            dateFormat.parse("24/11/2022 18:00") ?: Date(),
+        ),
+        MensaEventActivity(
+            "Roma ATTIVITa 3",
+            "terza attività a a Roma",
+            Position("via vedremo", "bla bla bla", 42.1, 39.1),
+            "",
+            dateFormat.parse("25/11/2022 09:00") ?: Date(),
+            dateFormat.parse("25/11/2022 18:00") ?: Date(),
+        ),
+    )
+).log()
 fun mockGetHotelsResponse() =Hotels().log()
 fun mockGetContactsResponse() =Contacts().log()
 fun mockGetSuggestions() =Suggestions().log()

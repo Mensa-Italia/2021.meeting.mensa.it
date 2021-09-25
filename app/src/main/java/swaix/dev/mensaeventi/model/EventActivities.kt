@@ -8,9 +8,11 @@ import java.util.*
 data class ResponseGetEventActivities(val eventActivity: List<MensaEventActivity> = listOf())
 
 data class MensaEventActivity(
-    val link: String,
-    @SerializedName("title") private val name: String,
+    @SerializedName("title") val name: String,
     val description: String,
     val position: Position,
-    @SerializedName("date") val date: Date
+    val link: String,
+//    @SerializedName("date") val date: Date,
+    val dateFrom: Date,
+    val dateTo: Date,
 ) : Serializable

@@ -10,6 +10,11 @@ fun Date.yearString(): String {
     return yearFormat.format(this)
 }
 
+fun Date.hourMinuteString(): String {
+    val yearFormat = SimpleDateFormat("HH:ss", Locale.getDefault())
+    return yearFormat.format(this)
+}
+
 fun Context.formatDateRange(dateFrom: Date, dateTo: Date): String {
     val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
     val monthFormat = SimpleDateFormat("MMMM", Locale.getDefault())

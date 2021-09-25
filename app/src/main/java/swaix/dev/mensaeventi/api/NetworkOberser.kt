@@ -6,25 +6,25 @@ import androidx.lifecycle.Observer
 import swaix.dev.mensaeventi.utils.TAG
 
 abstract class NetworkObserver<T>(private val loadingManager: LoadingManager?= null, private val onNullResponse: ()->Unit = {}) : Observer<NetworkResult<T>> {
-    override fun onChanged(t: NetworkResult<T>) {
-        when (t) {
+    override fun onChanged(value: NetworkResult<T>) {
+        when (value) {
             is NetworkResult.Success -> {
-                if (t.data != null)
-                    onSuccess(t.data)
+                if (value.data != null)
+                    onSuccess(value.data)
                 else
                     onNullResponse
             }
             is NetworkResult.Error -> {
-                onError(t.message)
+                onError(value.message)
             }
             is NetworkResult.Loading -> {
-                loadingManager?.onLoading(t.isLoading)
+                loadingManager?.onLoading(value.isLoading)
             }
         }
     }
 
 
-    abstract fun onSuccess(t: T)
+    abstract fun onSuccess(value: T)
 
     @CallSuper
     fun onError(message: String?) {

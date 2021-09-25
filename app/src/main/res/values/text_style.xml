@@ -4,11 +4,27 @@
     <style name="date_style" parent="TextAppearance.AppCompat">
         <item name="android:hyphenationFrequency">normal</item>
     </style>
-    <style name="big_title" parent="TextAppearance.AppCompat.Display2"/>
-    <style name="medium_title" parent="TextAppearance.AppCompat.Display1"/>
+
+    <style name="big_title" parent="TextAppearance.AppCompat.Display2" />
+
+    <style name="medium_title" parent="TextAppearance.AppCompat.Display1" />
+
     <style name="medium_title.bold">
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="text" parent="TextAppearance.AppCompat.Body1"/>
+
+    <style name="text" parent="TextAppearance.AppCompat.Body1" />
+    <style name="text.bold" >
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="text.bold.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="text.white">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 
 </resources>

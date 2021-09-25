@@ -37,8 +37,8 @@ class EventsFragment : BaseFragment(), LoadingManager {
             viewModel.events.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEvents>(this@EventsFragment, {
                 (eventList.adapter as EventAdapter).updateDataset(listOf())
             }) {
-                override fun onSuccess(t: ResponseGetEvents) {
-                    (eventList.adapter as EventAdapter).updateDataset(t.events)
+                override fun onSuccess(value: ResponseGetEvents) {
+                    (eventList.adapter as EventAdapter).updateDataset(value.events)
                 }
             })
         }
