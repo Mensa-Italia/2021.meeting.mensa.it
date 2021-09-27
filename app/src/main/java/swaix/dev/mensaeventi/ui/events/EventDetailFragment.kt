@@ -9,9 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import swaix.dev.mensaeventi.adapters.EventActivityAdapter
+import swaix.dev.mensaeventi.adapters.EventExtraAdapter
 import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.FragmentEventDetailBinding
-import swaix.dev.mensaeventi.model.ResponseGetEventActivities
+import swaix.dev.mensaeventi.model.ResponseGetEventDetails
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.yearString
 
@@ -29,20 +30,47 @@ class EventDetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(FragmentEventDetailBinding.bind(view)) {
 
-            eventName.text = args.eventDetail.name
-            eventYear.text = args.eventDetail.dateFrom.yearString()
-            eventDescription.text = args.eventDetail.description
+            eventDetailsToolbar.eventName.text = args.item.description
+            eventDetailsToolbar.eventYear.text = args.item.dateFrom.yearString()
+            eventDescription.text = args.item.description
 
+
+
+
+            viewModel.fetEventDetails(args.item.id.toString())
+            eventHotelsList.adapter = EventExtraAdapter {
+                Toast.makeText(requireContext(), "Cliccato ${it.name} - TBD??", Toast.LENGTH_LONG).show()
+            }
             eventActivityList.adapter = EventActivityAdapter {
                 Toast.makeText(requireContext(), "Cliccato ${it.name} - GESTIRE REMINDER?", Toast.LENGTH_LONG).show()
             }
-
-            viewModel.fetchEventDetails(args.eventDetail.id.toString())
-            viewModel.eventsActivities.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEventActivities>() {
-                override fun onSuccess(value: ResponseGetEventActivities) {
-                    (eventActivityList.adapter as EventActivityAdapter).updateDataset(value.eventActivity)
+            eventSuggestionsList.adapter = EventExtraAdapter {
+                Toast.makeText(requireContext(), "Cliccato ${it.name} - TBD??", Toast.LENGTH_LONG).show()
+            }
+            viewModel.eventDetails.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEventDetails>() {
+                override fun onSuccess(value: ResponseGetEventDetails) {
+                    (eventHotelsList.adapter as EventExtraAdapter).updateDataset(value.eventHotel)
+                    (eventActivityList.adapter as EventActivityAdapter).updateDataset(value.eventActivities)
+                    (eventSuggestionsList.adapter as EventExtraAdapter).updateDataset(value.eventsSuggestions)
                 }
             })
+
+//
+//
+//
+//
+//            viewModel.fetchEventDetails(args.eventDetail.id.toString())
+//            viewModel.eventsActivities.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEventActivities>() {
+//                override fun onSuccess(value: ResponseGetEventActivities) {
+//                }
+//            })
+//
+//
+//            viewModel.fetchEventSuggestions(args.eventDetail.id.toString())
+//            viewModel.suggestions.observe(viewLifecycleOwner, object : NetworkObserver<Suggestions>() {
+//                override fun onSuccess(value: Suggestions) {
+//                }
+//            })
         }
     }
 

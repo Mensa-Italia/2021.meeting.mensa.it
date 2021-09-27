@@ -49,7 +49,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
 
         viewModel.response.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEvents>(this) {
 
-            override fun onSuccess(t: ResponseGetEvents) {
+            override fun onSuccess(value: ResponseGetEvents) {
             }
 
         })

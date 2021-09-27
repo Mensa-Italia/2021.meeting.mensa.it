@@ -11,7 +11,6 @@ import swaix.dev.mensaeventi.adapters.EventAdapter
 import swaix.dev.mensaeventi.api.LoadingManager
 import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.EventsFragmentBinding
-import swaix.dev.mensaeventi.model.MensaEvent
 import swaix.dev.mensaeventi.model.ResponseGetEvents
 import swaix.dev.mensaeventi.ui.BaseFragment
 

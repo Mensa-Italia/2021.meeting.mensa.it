@@ -3,10 +3,10 @@ package swaix.dev.mensaeventi.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import swaix.dev.mensaeventi.databinding.ItemEventActivityBinding
-import swaix.dev.mensaeventi.model.MensaEventActivity
+import swaix.dev.mensaeventi.model.EventItemWithDate
 import swaix.dev.mensaeventi.utils.hourMinuteString
 
-class EventActivityAdapter(private val onItemClick: (MensaEventActivity) -> Unit) : GenericAdapter<MensaEventActivity>() {
+class EventActivityAdapter(private val onItemClick: (EventItemWithDate) -> Unit) : GenericAdapter<EventItemWithDate>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnBindViewHolder {
         return ActivityViewHolder(ItemEventActivityBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
@@ -22,7 +22,7 @@ class EventActivityAdapter(private val onItemClick: (MensaEventActivity) -> Unit
 
 
 class ActivityViewHolder(binding: ItemEventActivityBinding) : OnBindViewHolder(binding) {
-    fun onBind(item: MensaEventActivity, onItemClick: (MensaEventActivity) -> Unit) {
+    fun onBind(item: EventItemWithDate, onItemClick: (EventItemWithDate) -> Unit) {
         with(ItemEventActivityBinding.bind(itemView)) {
             timeFrom.text = item.dateFrom.hourMinuteString()
             timeTo.text = item.dateTo.hourMinuteString()

@@ -1,16 +1,18 @@
 package swaix.dev.mensaeventi.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import swaix.dev.mensaeventi.databinding.ItemEventBinding
 import swaix.dev.mensaeventi.databinding.ItemLoadingBinding
 import swaix.dev.mensaeventi.databinding.ItemNoEventsBinding
 import swaix.dev.mensaeventi.databinding.ItemPlaceholderBinding
-import swaix.dev.mensaeventi.model.MensaEvent
-import swaix.dev.mensaeventi.utils.*
+import swaix.dev.mensaeventi.model.EventItemWithDate
+import swaix.dev.mensaeventi.utils.EMPTY_ROW
+import swaix.dev.mensaeventi.utils.FIRST_ROW_SPACE
+import swaix.dev.mensaeventi.utils.LOADING_ROW
+import swaix.dev.mensaeventi.utils.formatDateRange
 
-class EventAdapter(private val onItemClick: (MensaEvent) -> Unit) : GenericAdapter<MensaEvent>(hasEmptyState = true, hasLoadingState = true) {
+class EventAdapter(private val onItemClick: (EventItemWithDate) -> Unit) : GenericAdapter<EventItemWithDate>(hasEmptyState = true, hasLoadingState = true) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnBindViewHolder {
@@ -51,7 +53,7 @@ class LoadingHolder(binding: ItemLoadingBinding) : OnBindViewHolder(binding)
 class EmptyListHolder(binding: ItemNoEventsBinding) : OnBindViewHolder(binding)
 class EventViewHolder(binding: ItemEventBinding) : OnBindViewHolder(binding) {
 
-    fun onBind(item: MensaEvent, onItemClick: (MensaEvent) -> Unit) {
+    fun onBind(item: EventItemWithDate, onItemClick: (EventItemWithDate) -> Unit) {
         with(ItemEventBinding.bind(itemView)) {
             val dateFrom = item.dateFrom
             val dateTo = item.dateTo

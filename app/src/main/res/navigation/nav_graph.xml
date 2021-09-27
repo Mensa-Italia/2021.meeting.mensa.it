@@ -21,7 +21,7 @@
         android:label="fragment_event_detail"
         tools:layout="@layout/fragment_event_detail">
         <argument
-            android:name="eventDetail"
-            app:argType="swaix.dev.mensaeventi.model.MensaEvent" />
+            android:name="item"
+            app:argType="swaix.dev.mensaeventi.model.EventItemWithDate" />
     </fragment>
 </navigation>
