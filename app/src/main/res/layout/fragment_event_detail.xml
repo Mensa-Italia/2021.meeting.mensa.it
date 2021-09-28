@@ -125,6 +125,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/event_suggestions" />
 
+            <TextView
+                android:id="@+id/event_contact_label"
+                style="@style/medium_title.bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/label_contacts"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_suggestions_list" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/event_contact_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_contact_label" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

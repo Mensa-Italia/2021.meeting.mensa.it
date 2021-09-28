@@ -9,11 +9,11 @@ import swaix.dev.mensaeventi.utils.LOADING_ROW
 import swaix.dev.mensaeventi.utils.TAG
 
 abstract class GenericAdapter<R>(private val hasEmptyState: Boolean = false, private val hasLoadingState: Boolean = false) : RecyclerView.Adapter<OnBindViewHolder>() {
-    private val _dataSet: MutableList<R> = mutableListOf()
+    private val dataSet: MutableList<R> = mutableListOf()
     var isLoading: Boolean = true
 
     final override fun getItemCount(): Int {
-        return _dataSet.size + if (_dataSet.isEmpty() && (hasEmptyState || hasLoadingState)) 1 else 0
+        return dataSet.size + if (dataSet.isEmpty() && (hasEmptyState || hasLoadingState)) 1 else 0
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -22,7 +22,7 @@ abstract class GenericAdapter<R>(private val hasEmptyState: Boolean = false, pri
                 Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: LOADING_ROW")
                 LOADING_ROW
             }
-            hasEmptyState && _dataSet.isEmpty() -> {
+            hasEmptyState && dataSet.isEmpty() -> {
                 Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: EMPTY_ROW")
                 EMPTY_ROW
             }
@@ -35,15 +35,15 @@ abstract class GenericAdapter<R>(private val hasEmptyState: Boolean = false, pri
     }
 
     fun getItem(position: Int): R {
-        return _dataSet[position]
+        return dataSet[position]
     }
 
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateDataset(list: List<R>) {
         isLoading = false
-        _dataSet.clear()
-        _dataSet.addAll(list)
+        dataSet.clear()
+        dataSet.addAll(list)
         notifyDataSetChanged()
     }
 }

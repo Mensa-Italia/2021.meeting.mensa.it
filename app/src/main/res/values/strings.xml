@@ -13,4 +13,5 @@
     <string name="label_suggestions">Ti potrebbe interessare...</string>
     <string name="label_activities">Attività</string>
     <string name="label_no_data">Nessun Elemento</string>
+    <string name="label_contacts">Contatti</string>
 </resources>

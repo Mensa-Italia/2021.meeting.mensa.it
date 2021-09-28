@@ -154,6 +154,15 @@ fun mockGetEventDetailsResponse() = ResponseGetEventDetails(
             "albergo@asdf.it",
             "www.albergo.it",
             "066598461",
+        ),EventItem(
+            123125,
+            "Emergenza",
+            "numero di emergenza",
+            "",
+            Position("via vedremo", "bla bla bla", 41.9109, 12.4818),
+            "",
+            "",
+            "056585695",
         ),
     ),
 ).log()
