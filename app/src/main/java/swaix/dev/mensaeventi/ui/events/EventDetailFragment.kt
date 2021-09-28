@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import swaix.dev.mensaeventi.adapters.EventActivityAdapter
@@ -39,13 +39,14 @@ class EventDetailFragment : BaseFragment() {
 
             viewModel.fetEventDetails(args.item.id.toString())
             eventHotelsList.adapter = EventExtraAdapter {
-                Toast.makeText(requireContext(), "Cliccato ${it.name} - TBD??", Toast.LENGTH_LONG).show()
+//                Toast.makeText(requireContext(), "Cliccato ${it.name} - TBD??", Toast.LENGTH_LONG).show()
+                findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
             }
             eventActivityList.adapter = EventActivityAdapter {
-                Toast.makeText(requireContext(), "Cliccato ${it.name} - GESTIRE REMINDER?", Toast.LENGTH_LONG).show()
+                findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
             }
             eventSuggestionsList.adapter = EventExtraAdapter {
-                Toast.makeText(requireContext(), "Cliccato ${it.name} - TBD??", Toast.LENGTH_LONG).show()
+                findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
             }
             viewModel.eventDetails.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEventDetails>() {
                 override fun onSuccess(value: ResponseGetEventDetails) {

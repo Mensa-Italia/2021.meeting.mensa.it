@@ -23,5 +23,17 @@
         <argument
             android:name="item"
             app:argType="swaix.dev.mensaeventi.model.EventItemWithDate" />
+        <action
+            android:id="@+id/action_eventDetailFragment_to_eventDetailExtraFragment"
+            app:destination="@id/eventDetailExtraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailExtraFragment"
+        android:name="swaix.dev.mensaeventi.ui.events.EventDetailExtraFragment"
+        tools:layout="@layout/event_details_extra_fragment"
+        android:label="EventDetailExtraFragment" >
+        <argument
+            android:name="extra"
+            app:argType="swaix.dev.mensaeventi.model.EventItem" />
     </fragment>
 </navigation>
