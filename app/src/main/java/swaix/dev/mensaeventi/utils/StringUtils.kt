@@ -6,26 +6,26 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun Date.yearString(): String {
-    val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+    val yearFormat = SimpleDateFormat("yyyy", Locale.ITALIAN)
     return yearFormat.format(this)
 }
 
 fun Date.hourMinuteString(): String {
-    val yearFormat = SimpleDateFormat("HH:ss", Locale.getDefault())
+    val yearFormat = SimpleDateFormat("HH:ss", Locale.ITALIAN)
     return yearFormat.format(this)
 }
 fun Date.dateString(): String {
-    val yearFormat = SimpleDateFormat("dd MMMM yyyy HH:ss", Locale.getDefault())
+    val yearFormat = SimpleDateFormat("dd MMMM yyyy HH:ss", Locale.ITALIAN)
     return yearFormat.format(this)
 }
 
 fun Context.formatDateRange(dateFrom: Date, dateTo: Date): String {
-    val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
-    val monthFormat = SimpleDateFormat("MMMM", Locale.getDefault())
-    val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
-    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-    val dayMonthYearFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-    val dayMonthFormat = SimpleDateFormat("dd MMMM", Locale.getDefault())
+    val dayFormat = SimpleDateFormat("dd", Locale.ITALIAN)
+    val monthFormat = SimpleDateFormat("MMMM", Locale.ITALIAN)
+    val yearFormat = SimpleDateFormat("yyyy", Locale.ITALIAN)
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ITALIAN)
+    val dayMonthYearFormat = SimpleDateFormat("dd MMMM yyyy", Locale.ITALIAN)
+    val dayMonthFormat = SimpleDateFormat("dd MMMM", Locale.ITALIAN)
     val monthFrom = monthFormat.format(dateFrom)
     val monthTo = monthFormat.format(dateTo)
     val yearFrom = yearFormat.format(dateFrom)
