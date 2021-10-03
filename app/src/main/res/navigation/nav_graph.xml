@@ -19,7 +19,7 @@
         android:id="@+id/eventDetailFragment"
         android:name="swaix.dev.mensaeventi.ui.events.EventDetailFragment"
         android:label="fragment_event_detail"
-        tools:layout="@layout/fragment_event_detail">
+        tools:layout="@layout/event_detail_fragment">
         <argument
             android:name="item"
             app:argType="swaix.dev.mensaeventi.model.EventItemWithDate" />

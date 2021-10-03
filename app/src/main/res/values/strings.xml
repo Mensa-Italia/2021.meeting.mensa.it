@@ -14,4 +14,5 @@
     <string name="label_activities">Attività</string>
     <string name="label_no_data">Nessun Elemento</string>
     <string name="label_contacts">Contatti</string>
+    <string name="label_mensa_event">Eventi mensa</string>
 </resources>

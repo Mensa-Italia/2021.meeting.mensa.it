@@ -9,6 +9,15 @@
     app:layoutDescription="@xml/toolbar_events_details_scene"
     app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="16dp"/>
+
     <View
         android:id="@+id/event_image"
         android:layout_width="match_parent"

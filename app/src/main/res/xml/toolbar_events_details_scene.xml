@@ -15,5 +15,28 @@
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/back_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/event_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            motion:layout_constraintBottom_toBottomOf="@id/back_arrow"
+            motion:layout_constraintTop_toTopOf="@id/back_arrow"
+            motion:layout_constraintStart_toEndOf="@id/back_arrow" />
+        <Constraint
+            android:id="@+id/event_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            motion:layout_constraintBottom_toBottomOf="@id/back_arrow"
+            motion:layout_constraintTop_toTopOf="@id/back_arrow"
+            motion:layout_constraintStart_toEndOf="@id/event_name" />
     </ConstraintSet>
 </MotionScene>

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -12,9 +11,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import swaix.dev.mensaeventi.adapters.EventActivityAdapter
 import swaix.dev.mensaeventi.adapters.EventContactAdapter
 import swaix.dev.mensaeventi.adapters.EventExtraAdapter
-import swaix.dev.mensaeventi.adapters.Item
 import swaix.dev.mensaeventi.api.NetworkObserver
-import swaix.dev.mensaeventi.databinding.FragmentEventDetailBinding
+import swaix.dev.mensaeventi.databinding.EventDetailFragmentBinding
 import swaix.dev.mensaeventi.model.ResponseGetEventDetails
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.setContactClickListener
@@ -28,15 +26,19 @@ class EventDetailFragment : BaseFragment() {
     private val args: EventDetailFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return FragmentEventDetailBinding.inflate(inflater, container, false).root
+        return EventDetailFragmentBinding.inflate(inflater, container, false).root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        with(FragmentEventDetailBinding.bind(view)) {
+        with(EventDetailFragmentBinding.bind(view)) {
 
             eventDetailsToolbar.eventName.text = args.item.description
             eventDetailsToolbar.eventYear.text = args.item.dateFrom.yearString()
+            eventDetailsToolbar.backArrow.setOnClickListener {
+                findNavController().navigateUp()
+            }
             eventDescription.text = args.item.description
+
 
 
 

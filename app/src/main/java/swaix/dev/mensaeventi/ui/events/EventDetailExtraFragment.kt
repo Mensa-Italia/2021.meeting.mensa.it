@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -16,7 +16,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.EventContactAdapter
-import swaix.dev.mensaeventi.adapters.Item
 import swaix.dev.mensaeventi.databinding.EventDetailsExtraFragmentBinding
 import swaix.dev.mensaeventi.model.EventItemWithDate
 import swaix.dev.mensaeventi.ui.BaseFragment
@@ -51,10 +50,11 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
                 setContactClickListener(it)
             }.apply { updateContacts(args.extra) }
 
+            backArrow.setOnClickListener {
+                findNavController().navigateUp()
+            }
         }
     }
-
-
 
 
     override fun onMapReady(googleMap: GoogleMap) {
