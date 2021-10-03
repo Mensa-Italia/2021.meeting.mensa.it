@@ -6,7 +6,7 @@ import androidx.fragment.app.activityViewModels
 
 open class BaseFragment : Fragment() {
 
-    val baseViewModel: BaseViewModel by activityViewModels()
+    private val baseViewModel: BaseViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -14,8 +14,7 @@ open class BaseFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        baseViewModel.showBottomBar.postValue(isBottomBarVisible())
     }
 
-   open fun isBottomBarVisible() = true
+
 }

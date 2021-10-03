@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import dagger.hilt.android.AndroidEntryPoint
+import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.EventActivityAdapter
 import swaix.dev.mensaeventi.adapters.EventContactAdapter
 import swaix.dev.mensaeventi.adapters.EventExtraAdapter
@@ -34,9 +37,20 @@ class EventDetailFragment : BaseFragment() {
 
             eventDetailsToolbar.eventName.text = args.item.description
             eventDetailsToolbar.eventYear.text = args.item.dateFrom.yearString()
+
             eventDetailsToolbar.backArrow.setOnClickListener {
                 findNavController().navigateUp()
             }
+
+            Glide.with(requireContext())
+                .load(args.item.imageURL)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .error(R.drawable.placeholder)
+                .placeholder(R.drawable.placeholder)
+                .centerCrop()
+                .into(eventDetailsToolbar.background)
+
+
             eventDescription.text = args.item.description
 
 
@@ -69,7 +83,6 @@ class EventDetailFragment : BaseFragment() {
         }
     }
 
-    override fun isBottomBarVisible(): Boolean = false
 
 
 }

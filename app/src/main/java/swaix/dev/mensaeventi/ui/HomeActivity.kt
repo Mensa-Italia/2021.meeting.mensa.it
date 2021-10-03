@@ -1,6 +1,9 @@
 package swaix.dev.mensaeventi.ui
 
 import android.os.Bundle
+import android.transition.TransitionManager
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.lifecycle.lifecycleScope
@@ -38,13 +41,8 @@ class HomeActivity : AppCompatActivity() {
 
 
 //        val baseViewModel: BaseViewModel by viewModels()
-//        baseViewModel.showBottomBar.observe(this, {
-//            with(binding) {
-//                TransitionManager.beginDelayedTransition(root)
-//                navView.visibility = if (it) View.VISIBLE else View.GONE
-//            }
-//
-//        })
+
+
 
         enableClicks()
         with(binding.root) {

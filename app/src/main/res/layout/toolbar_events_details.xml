@@ -10,6 +10,14 @@
     app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
     <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
         android:id="@+id/back_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,14 +26,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:padding="16dp"/>
 
-    <View
-        android:id="@+id/event_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintDimensionRatio="7:4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/event_year"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/event_image"
+        app:layout_constraintBottom_toBottomOf="@id/background"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="2022" />
 
@@ -43,7 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/event_image"
+        app:layout_constraintBottom_toBottomOf="@id/background"
         app:layout_constraintEnd_toStartOf="@id/event_year"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="ROMA" />

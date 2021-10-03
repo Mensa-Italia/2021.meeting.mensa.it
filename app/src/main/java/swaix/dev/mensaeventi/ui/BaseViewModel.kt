@@ -5,6 +5,5 @@ import androidx.lifecycle.ViewModel
 
 class BaseViewModel : ViewModel() {
 
-    val showBottomBar: MutableLiveData<Boolean> = MutableLiveData(true)
 
 }
