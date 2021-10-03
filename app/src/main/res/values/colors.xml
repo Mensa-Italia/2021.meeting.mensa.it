@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="event_activity_cell">#009</color>
     <color name="event_divider_color">#ddd</color>
+    <color name="mensa_background">#2F2E6A</color>
 </resources>

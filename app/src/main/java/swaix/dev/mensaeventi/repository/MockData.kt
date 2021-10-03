@@ -33,7 +33,7 @@ fun mockGetEventResponse() = ResponseGetEvents(
             2, "Milano", "lorem ipsum",
             dateFormat.parse("30/01/2023") ?: Date(),
             dateFormat.parse("02/02/2023") ?: Date(),
-            "https://lh3.googleusercontent.com/proxy/NlEMIJcoTJjFSzTI6qWThU_ok-wFibpowhD-gGcL3DPcCKLALL_KK47lNAdMQ6OJxwBQzx_r3fCKZw7yAT98CYBJZn2y3CgwDH7WC8fYeVNbdVpWgMJSe3WykQW0szozjRE",
+            "https://imbruttito.com/images/milan_cathedral_duomo_di_milano_evening_760x430-1.jpg?p=16x9&s=92cd3ea39351a606a373ea144c685eaa",
             Position("via vedremo", "bla bla bla", 41.9109, 12.4818),
             "",
             "",

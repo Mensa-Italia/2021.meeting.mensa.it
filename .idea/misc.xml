@@ -3,9 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3953125" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_rounded.xml" value="0.43333333333333335" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_rounded_blue.xml" value="0.2713541666666667" />
+        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_rounded_no_border.xml" value="0.4027777777777778" />
+        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_text_event.xml" value="0.34791666666666665" />
+        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.3953125" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2713541666666667" />
+        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.3953125" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/activity_home.xml" value="0.4466666666666667" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/activity_maps.xml" value="0.33125" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/event_details_extra_fragment.xml" value="0.3223958333333333" />
@@ -17,7 +22,7 @@
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/fragment_notifications.xml" value="0.3170289855072464" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_contact_detail.xml" value="0.3223958333333333" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_contact_name.xml" value="0.3223958333333333" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_event.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_event.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_event_activity.xml" value="0.3333333333333333" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_event_extras.xml" value="0.3609375" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_event_extras_no_data.xml" value="0.3609375" />
@@ -30,6 +35,8 @@
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/toolbar_events.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/toolbar_events_details.xml" value="0.3234375" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/menu/bottom_nav_menu.xml" value="0.284375" />
+        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.34791666666666665" />
+        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3953125" />
       </map>
     </option>
   </component>

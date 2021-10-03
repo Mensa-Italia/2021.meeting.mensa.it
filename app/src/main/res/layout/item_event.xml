@@ -2,48 +2,45 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:background="@drawable/background_rounded"
+    android:layout_marginBottom="8dp"
+    android:elevation="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/background_rounded_blue"
-        android:elevation="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="7:3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageEvent"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="7:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/background_text_event"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="7:3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/event_city"
-        style="@style/big_title"
+        style="@style/big_title.bold.white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:textAlignment="textEnd"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/imageEvent"
+        app:layout_constraintBottom_toTopOf="@id/date_label"
         tools:text="ROMA" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -55,14 +52,16 @@
 
     <TextView
         android:id="@+id/date_label"
-        style="@style/date_style"
+        style="@style/date_style.white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="8dp"
         android:textAlignment="textEnd"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/imageEvent"
+        app:layout_constraintEnd_toEndOf="@id/imageEvent"
         tools:text="dal 10 al 18 November 2021" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

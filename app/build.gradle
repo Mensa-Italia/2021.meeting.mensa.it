@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "swaix.dev.mensaeventi"
         minSdk 23
-        targetSdk 30
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -59,6 +59,8 @@ dependencies {
     def constraint_version = '2.1.1'
     def retrofit_version = '2.6.1'
     def json_version = '2.8.6'
+
+    implementation 'androidx.core:core-splashscreen:1.0.0-alpha01'
 
     implementation "androidx.core:core-ktx:$core_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"

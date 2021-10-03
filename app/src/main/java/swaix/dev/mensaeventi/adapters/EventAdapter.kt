@@ -15,7 +15,6 @@ import swaix.dev.mensaeventi.utils.EMPTY_ROW
 import swaix.dev.mensaeventi.utils.FIRST_ROW_SPACE
 import swaix.dev.mensaeventi.utils.LOADING_ROW
 import swaix.dev.mensaeventi.utils.formatDateRange
-import android.R
 
 import android.graphics.drawable.Drawable
 
@@ -25,8 +24,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 
 import com.bumptech.glide.request.RequestListener
-
-
+import swaix.dev.mensaeventi.R
 
 
 class EventAdapter(private val onItemClick: (EventItemWithDate) -> Unit) : GenericAdapter<EventItemWithDate>(hasEmptyState = true, hasLoadingState = true) {
@@ -84,6 +82,8 @@ class EventViewHolder(binding: ItemEventBinding) : OnBindViewHolder(binding) {
             Glide.with(itemView.context)
                 .load(item.imageURL)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .error(R.drawable.placeholder)
+                .placeholder(R.drawable.placeholder)
                 .transform(CenterCrop(),RoundedCorners(36))
                 .into(imageEvent)
 
