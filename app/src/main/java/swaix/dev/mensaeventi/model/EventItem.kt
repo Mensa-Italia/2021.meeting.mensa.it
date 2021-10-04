@@ -6,6 +6,7 @@ open class EventItem(
     val id: Int,
     val name: String,
     val description: String,
+    val type: ItemType,
     val imageURL: String,
     val position: Position,
     val mail: String,

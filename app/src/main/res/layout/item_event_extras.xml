@@ -4,27 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp">
+
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="4:5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/extra_name"
-        android:layout_width="wrap_content"
+        style="@style/text.bold.white"
+        android:layout_width="0dp"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/background"
         app:layout_constraintEnd_toEndOf="@id/background"
         app:layout_constraintStart_toStartOf="@id/background"
         tools:text="ALBERGO PIPPO" />
 
-    <View
-        android:id="@+id/background"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/badge_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
+
+    <ImageView
+        android:id="@+id/badge"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#aaaa"
-        app:layout_constraintBottom_toTopOf="@id/extra_name"
-        app:layout_constraintDimensionRatio="3:7"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/badge_line"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

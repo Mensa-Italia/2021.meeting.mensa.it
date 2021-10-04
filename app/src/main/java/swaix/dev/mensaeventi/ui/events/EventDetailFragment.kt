@@ -18,6 +18,7 @@ import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.EventDetailFragmentBinding
 import swaix.dev.mensaeventi.model.ResponseGetEventDetails
 import swaix.dev.mensaeventi.ui.BaseFragment
+import swaix.dev.mensaeventi.utils.SearchBarLabel
 import swaix.dev.mensaeventi.utils.setContactClickListener
 import swaix.dev.mensaeventi.utils.yearString
 
@@ -58,6 +59,17 @@ class EventDetailFragment : BaseFragment() {
 
 
             viewModel.fetEventDetails(args.item.id.toString())
+
+            eventHotels.addListener(object : SearchBarLabel.OnEventListener {
+                override fun onKeyboardOpen(v: View) {
+                    nestedScrollView.requestChildFocus(v,v)
+                }
+
+                override fun onTextChanged(value: String) {
+
+                }
+            })
+
             eventHotelsList.adapter = EventExtraAdapter {
 //                Toast.makeText(requireContext(), "Cliccato ${it.name} - TBD??", Toast.LENGTH_LONG).show()
                 findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
@@ -82,7 +94,6 @@ class EventDetailFragment : BaseFragment() {
             })
         }
     }
-
 
 
 }

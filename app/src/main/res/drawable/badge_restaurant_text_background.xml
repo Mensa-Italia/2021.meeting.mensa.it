@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="15"
+        android:centerY="5%"
+        android:startColor="#0000"
+        android:centerColor="#5000"
+        android:endColor="@color/restaurant_badge_color_bg"
+        android:type="linear"        />
+
+    <corners android:bottomLeftRadius="16dp" android:bottomRightRadius="16dp"
+        />
+</shape>

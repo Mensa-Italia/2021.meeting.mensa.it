@@ -9,6 +9,7 @@ class ResponseGetEventDetails(
     description: String,
     dateFrom: Date,
     dateTo: Date,
+    type: ItemType,
     imageURL: String,
     position: Position,
     mail: String,
@@ -18,4 +19,4 @@ class ResponseGetEventDetails(
     val eventHotel: List<EventItem>,
     val eventsSuggestions: List<EventItem>,
     val eventsContacts: List<EventItem>,
-) : EventItemWithDate(id, name, description, dateFrom, dateTo, imageURL, position, mail, link, telephoneNumber), Serializable
+) : EventItemWithDate(id, name, description, dateFrom, dateTo, type, imageURL, position, mail, link, telephoneNumber), Serializable

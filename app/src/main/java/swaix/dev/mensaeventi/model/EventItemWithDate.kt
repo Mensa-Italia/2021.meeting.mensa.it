@@ -9,9 +9,10 @@ open class EventItemWithDate(
     description: String,
     val dateFrom: Date,
     val dateTo: Date,
+    type: ItemType,
     imageURL: String,
     position: Position,
     mail: String,
     link: String,
     telephoneNumber: String,
-) : EventItem(id, name, description, imageURL, position, mail, link, telephoneNumber), Serializable
+) : EventItem(id, name, description, type, imageURL, position, mail, link, telephoneNumber), Serializable

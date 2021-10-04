@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="SearchBarLabel">
+        <attr name="label" format="string" />
+    </declare-styleable>
+</resources>

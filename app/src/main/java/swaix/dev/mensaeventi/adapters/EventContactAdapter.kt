@@ -6,12 +6,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.databinding.ItemContactDetailBinding
 import swaix.dev.mensaeventi.databinding.ItemContactNameBinding
 import swaix.dev.mensaeventi.databinding.ItemLoadingBinding
 import swaix.dev.mensaeventi.databinding.ItemNoEventsBinding
 import swaix.dev.mensaeventi.model.EventItem
 import swaix.dev.mensaeventi.utils.*
+import android.text.util.Linkify
+
+import android.widget.TextView
+
+
+
 
 class EventContactAdapter(private val hasEmptyState: Boolean = false, private val hasLoadingState: Boolean = false, private val onItemClick: (Item) -> Unit) : RecyclerView.Adapter<OnBindViewHolder>() {
 
@@ -120,6 +127,7 @@ sealed class SealedContactBinding(binding: ViewBinding) : OnBindViewHolder(bindi
     class ContactHeaderViewHolder(binding: ItemContactNameBinding) : SealedContactBinding(binding) {
         override fun onBind(item: Item, onclick: (Item) -> Unit) {
             with(ItemContactNameBinding.bind(itemView)) {
+
                 contactName.text = item.name
             }
         }
@@ -129,6 +137,16 @@ sealed class SealedContactBinding(binding: ViewBinding) : OnBindViewHolder(bindi
         override fun onBind(item: Item, onclick: (Item) -> Unit) {
             with(ItemContactDetailBinding.bind(itemView)) {
                 contactDetail.text = item.value
+
+                when (item) {
+                    is Item.Telephone -> {
+                        image.setImageResource(R.drawable.ic_phone_call_icon)
+                    }
+                    is Item.Email -> image.setImageResource(R.drawable.ic_email_icon)
+                    is Item.Header -> {
+                    }
+                    is Item.Link -> image.setImageResource(R.drawable.ic_web_icon)
+                }
                 root.setOnClickListener {
                     onclick(item)
                 }

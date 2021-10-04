@@ -19,6 +19,7 @@
 
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -83,13 +84,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/event_activity_list" />
 
-            <TextView
+            <swaix.dev.mensaeventi.utils.SearchBarLabel
                 android:id="@+id/event_hotels"
-                style="@style/medium_title.bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="@string/label_hotels"
+                app:label="@string/label_hotels"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/event_position" />
@@ -97,20 +97,19 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_hotels_list"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="215dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/event_hotels" />
 
-            <TextView
+            <swaix.dev.mensaeventi.utils.SearchBarLabel
                 android:id="@+id/event_suggestions"
-                style="@style/medium_title.bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="@string/label_suggestions"
+                app:label="@string/label_suggestions"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/event_hotels_list" />
@@ -118,7 +117,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_suggestions_list"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="215dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +126,7 @@
 
             <TextView
                 android:id="@+id/event_contact_label"
-                style="@style/medium_title.bold"
+                style="@style/big_title.bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layoutDescription="@xml/layout_search_bar_label_scene">
+
+    <TextView
+        android:id="@+id/search_label"
+        style="@style/big_title.bold"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/search_icon"
+        app:layout_constraintEnd_toStartOf="@id/search_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/search_icon"
+        tools:text="DIO" />
+
+    <ImageView
+        android:id="@+id/search_icon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:padding="12dp"
+        android:src="@drawable/ic_search"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/search_value"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/search_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/search_icon"
+        app:layout_constraintTop_toTopOf="@id/search_icon" />
+</androidx.constraintlayout.motion.widget.MotionLayout>

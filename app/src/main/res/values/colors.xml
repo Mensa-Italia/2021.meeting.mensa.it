@@ -10,4 +10,12 @@
     <color name="event_activity_cell">#009</color>
     <color name="event_divider_color">#ddd</color>
     <color name="mensa_background">#2F2E6A</color>
+    <color name="hotel_badge_color_bg">#e44</color>
+    <color name="hotel_badge_color_accent">#FFC107</color>
+    <color name="restaurant_badge_color_bg">#0277BD</color>
+    <color name="restaurant_badge_color_accent">#80DEEA</color>
+    <color name="light_blue_400">#FF29B6F6</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_600">#FF757575</color>
 </resources>

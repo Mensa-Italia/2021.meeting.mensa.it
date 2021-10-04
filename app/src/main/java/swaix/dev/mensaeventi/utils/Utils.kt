@@ -1,22 +1,66 @@
 package swaix.dev.mensaeventi.utils
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.content.Intent.*
+import android.net.Uri
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.Item
+
 
 fun Fragment.setContactClickListener(it: Item) {
     when (it) {
         is Item.Email -> {
-            Toast.makeText(requireContext(), "gestire apertura email", Toast.LENGTH_LONG).show()
+            requireContext().sendEmail(it.value, null, null)
         }
         is Item.Header -> {
             // NO EVENT
         }
         is Item.Link -> {
-            Toast.makeText(requireContext(), "gestire apertura link esterno", Toast.LENGTH_LONG).show()
+
+            (it.value).openInBrowser(requireContext())
+
         }
         is Item.Telephone -> {
-            Toast.makeText(requireContext(), "gestire apertura telefonata", Toast.LENGTH_LONG).show()
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:${it.value}")
+            requireContext().startActivity(intent)
         }
+    }
+}
+
+fun Context.sendEmail(
+    address: String?,
+    subject: String?,
+    body: String?,
+) {
+    val selectorIntent = Intent(ACTION_SENDTO)
+        .setData("mailto:$address".toUri())
+    val emailIntent = Intent(ACTION_SEND).apply {
+        putExtra(EXTRA_EMAIL, arrayOf(address))
+        putExtra(EXTRA_SUBJECT, subject)
+        putExtra(EXTRA_TEXT, body)
+        selector = selectorIntent
+    }
+    startActivity(Intent.createChooser(emailIntent, getString(R.string.email_title)))
+
+}
+
+
+fun String.openInBrowser(context: Context) {
+    try {
+        var webpage = Uri.parse(this)
+        if (!startsWith("http://") && !startsWith("https://")) {
+            webpage = Uri.parse("http://$this")
+        }
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        context.startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        Toast.makeText(context, "Errore durante l'apertura del link", Toast.LENGTH_LONG).show()
     }
 }
