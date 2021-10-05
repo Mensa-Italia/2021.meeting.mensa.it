@@ -36,6 +36,7 @@ class EventExtraAdapter(private val onItemClick: (EventItem) -> Unit) : GenericA
 }
 
 class EmptyExtraListViewHolder(binding: ItemEventExtrasNoDataBinding) : OnBindViewHolder(binding)
+
 class EventExtraViewHolder(binding: ItemEventExtrasBinding) : OnBindViewHolder(binding) {
 
     fun onBind(item: EventItem, onItemClick: (EventItem) -> Unit) {

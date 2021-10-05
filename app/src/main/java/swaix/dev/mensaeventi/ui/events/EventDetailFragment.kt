@@ -1,6 +1,7 @@
 package swaix.dev.mensaeventi.ui.events
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import swaix.dev.mensaeventi.databinding.EventDetailFragmentBinding
 import swaix.dev.mensaeventi.model.ResponseGetEventDetails
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.SearchBarLabel
+import swaix.dev.mensaeventi.utils.TAG
 import swaix.dev.mensaeventi.utils.setContactClickListener
 import swaix.dev.mensaeventi.utils.yearString
 
@@ -62,11 +64,12 @@ class EventDetailFragment : BaseFragment() {
 
             eventHotels.addListener(object : SearchBarLabel.OnEventListener {
                 override fun onKeyboardOpen(v: View) {
-                    nestedScrollView.requestChildFocus(v,v)
+                    //nestedScrollView.requestChildFocus(v,v)
                 }
 
                 override fun onTextChanged(value: String) {
-
+                    Log.d(TAG, "onTextChanged: $value")
+                    (eventHotelsList.adapter as EventExtraAdapter).filter(value)
                 }
             })
 

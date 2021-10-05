@@ -11,7 +11,6 @@
     <group android:translateY="80"
         android:translateX="60">
 
-
         <path
             android:fillColor="@color/restaurant_badge_color_accent"
             android:pathData="M100.881,291.641c-2.149,2.15 -2.149,5.635 0,7.787l8.861,8.861c1.075,1.074 2.484,1.612 3.894,1.612c1.408,0 2.814,-0.537 3.89,-1.61l68.967,-68.861l-16.699,-16.701L100.881,291.641z" />

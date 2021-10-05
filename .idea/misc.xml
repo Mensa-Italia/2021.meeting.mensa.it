@@ -52,6 +52,11 @@
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/menu/bottom_nav_menu.xml" value="0.284375" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3953125" />
+        <entry key="..\:/Users/afinocch/StudioProjects/MensaEventi/app/src/main/res/drawable/badge_hotel_icon.xml" value="0.1171875" />
+        <entry key="..\:/Users/afinocch/StudioProjects/MensaEventi/app/src/main/res/drawable/badge_restaurant_icon.xml" value="0.1171875" />
+        <entry key="..\:/Users/afinocch/StudioProjects/MensaEventi/app/src/main/res/layout/item_event_extras.xml" value="0.10104166666666667" />
+        <entry key="..\:/Users/afinocch/StudioProjects/MensaEventi/app/src/main/res/layout/item_event_extras_no_data.xml" value="0.15" />
+        <entry key="..\:/Users/afinocch/StudioProjects/MensaEventi/app/src/main/res/layout/item_no_events.xml" value="0.15" />
       </map>
     </option>
   </component>

@@ -25,6 +25,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 
 import com.bumptech.glide.request.RequestListener
 import swaix.dev.mensaeventi.R
+import swaix.dev.mensaeventi.model.EventItem
 
 
 class EventAdapter(private val onItemClick: (EventItemWithDate) -> Unit) : GenericAdapter<EventItemWithDate>(hasEmptyState = true, hasLoadingState = true) {
@@ -59,7 +60,6 @@ class EventAdapter(private val onItemClick: (EventItemWithDate) -> Unit) : Gener
             }
         }
     }
-
 
 }
 

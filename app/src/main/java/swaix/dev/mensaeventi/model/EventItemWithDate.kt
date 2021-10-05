@@ -15,4 +15,23 @@ open class EventItemWithDate(
     mail: String,
     link: String,
     telephoneNumber: String,
-) : EventItem(id, name, description, type, imageURL, position, mail, link, telephoneNumber), Serializable
+) : EventItem(id, name, description, type, imageURL, position, mail, link, telephoneNumber), Serializable{
+
+    companion object{
+        fun getEmpty():EventItemWithDate{
+            return EventItemWithDate(
+                -1,
+                "",
+                "",
+                Date(),
+                Date(),
+                ItemType.NONE,
+                "",
+                Position(),
+                "",
+                "",
+                "",
+            )
+        }
+    }
+}

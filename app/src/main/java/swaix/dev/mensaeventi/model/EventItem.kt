@@ -1,5 +1,6 @@
 package swaix.dev.mensaeventi.model
 
+import swaix.dev.mensaeventi.utils.Searchable
 import java.io.Serializable
 
 open class EventItem(
@@ -12,4 +13,34 @@ open class EventItem(
     val mail: String,
     val link: String,
     val telephoneNumber: String,
-) : Serializable
+) : Serializable, Comparable<EventItem>, Searchable {
+
+    companion object{
+        fun getEmpty():EventItem{
+            return EventItem(
+                -1,
+                "",
+                "",
+                ItemType.NONE,
+                "",
+                Position(),
+                "",
+                "",
+                "",
+            )
+        }
+    }
+
+    override fun compareTo(other: EventItem): Int = id.compareTo(other.id)
+    override fun search(value: String): Boolean {
+        return when {
+            this.id.toString().contains(value) -> true
+            this.name.contains(value) -> true
+            this.description.contains(value) -> true
+            this.mail.contains(value) -> true
+            this.telephoneNumber.contains(value) -> true
+            else -> false
+        }
+    }
+
+}
