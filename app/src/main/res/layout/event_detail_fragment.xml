@@ -55,7 +55,21 @@
                 tools:text="LOREM IPSUM" />
 
             <TextView
-                android:id="@+id/event_activities_label"
+                android:id="@+id/event_position"
+                style="@style/text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:text="@string/label_open_maps"
+                app:drawableEndCompat="@android:drawable/ic_menu_directions"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_description" />
+
+            <TextView
+                android:id="@+id/event_calendar_label"
                 style="@style/title.bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -63,38 +77,35 @@
                 android:text="@string/label_activities"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_description" />
+                app:layout_constraintTop_toBottomOf="@id/event_position" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/event_activity_list"
-                android:layout_width="0dp"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/calendar_days_tabs"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_activities_label" />
+                app:layout_constraintTop_toBottomOf="@id/event_calendar_label" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/calendar_days_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/calendar_days_tabs" />
 
             <TextView
-                android:id="@+id/event_position"
-                style="@style/text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/label_open_maps"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_activity_list" />
-
-            <swaix.dev.mensaeventi.utils.SearchBarLabel
                 android:id="@+id/event_hotels"
+                style="@style/title.bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                app:label="@string/label_hotels"
+                android:text="@string/label_hotels"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_position" />
+                app:layout_constraintTop_toBottomOf="@id/calendar_days_pager" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_hotels_list"
@@ -107,14 +118,24 @@
                 app:layout_constraintTop_toBottomOf="@id/event_hotels" />
 
             <swaix.dev.mensaeventi.utils.SearchBarLabel
-                android:id="@+id/event_suggestions"
+                android:id="@+id/event_hotels_search"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                app:label="@string/label_suggestions"
+                app:label="@string/label_hotels_search"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/event_hotels_list" />
+
+            <TextView
+                android:id="@+id/event_suggestions"
+                style="@style/title.bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/label_suggestions"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_hotels_search" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_suggestions_list"
@@ -126,6 +147,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/event_suggestions" />
 
+            <swaix.dev.mensaeventi.utils.SearchBarLabel
+                android:id="@+id/event_suggestions_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:label="@string/label_suggestions_filter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_suggestions_list" />
+
             <TextView
                 android:id="@+id/event_contact_label"
                 style="@style/title.bold"
@@ -135,7 +165,7 @@
                 android:text="@string/label_contacts"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_suggestions_list" />
+                app:layout_constraintTop_toBottomOf="@id/event_suggestions_search" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_contact_list"

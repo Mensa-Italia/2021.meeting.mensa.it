@@ -8,11 +8,11 @@
 
     <TextView
         android:id="@+id/search_label"
-        style="@style/title.bold"
+        style="@style/caption"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center_vertical"
-        android:paddingStart="16dp"
+        android:paddingStart="32dp"
         android:paddingEnd="4dp"
         app:layout_constraintBottom_toBottomOf="@id/search_icon"
         app:layout_constraintEnd_toStartOf="@id/search_icon"
@@ -22,10 +22,9 @@
 
     <ImageView
         android:id="@+id/search_icon"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:padding="12dp"
-        android:src="@drawable/ic_search"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/baseline_filter_list_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"

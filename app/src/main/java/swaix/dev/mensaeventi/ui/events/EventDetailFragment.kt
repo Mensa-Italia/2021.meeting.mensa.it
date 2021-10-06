@@ -1,6 +1,8 @@
 package swaix.dev.mensaeventi.ui.events
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,19 +13,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import swaix.dev.mensaeventi.R
-import swaix.dev.mensaeventi.adapters.EventActivityAdapter
+import swaix.dev.mensaeventi.adapters.EventCalendarAdapter
 import swaix.dev.mensaeventi.adapters.EventContactAdapter
 import swaix.dev.mensaeventi.adapters.EventExtraAdapter
 import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.EventDetailFragmentBinding
+import swaix.dev.mensaeventi.model.EventItemWithDate
 import swaix.dev.mensaeventi.model.ResponseGetEventDetails
 import swaix.dev.mensaeventi.ui.BaseFragment
-import swaix.dev.mensaeventi.utils.SearchBarLabel
-import swaix.dev.mensaeventi.utils.TAG
-import swaix.dev.mensaeventi.utils.setContactClickListener
-import swaix.dev.mensaeventi.utils.yearString
+import swaix.dev.mensaeventi.utils.*
+
 
 @AndroidEntryPoint
 class EventDetailFragment : BaseFragment() {
@@ -57,16 +59,9 @@ class EventDetailFragment : BaseFragment() {
 
             eventDescription.text = args.item.description
 
-
-
-
-
             viewModel.fetEventDetails(args.item.id.toString())
 
-            eventHotels.addListener(object : SearchBarLabel.OnEventListener {
-                override fun onKeyboardOpen(v: View) {
-                    //nestedScrollView.requestChildFocus(v,v)
-                }
+            eventHotelsSearch.addListener(object : SearchBarLabel.OnEventListener {
 
                 override fun onTextChanged(value: String) {
                     Log.d(TAG, "onTextChanged: $value")
@@ -74,13 +69,21 @@ class EventDetailFragment : BaseFragment() {
                 }
             })
 
+            eventSuggestionsSearch.addListener(object : SearchBarLabel.OnEventListener {
+
+                override fun onTextChanged(value: String) {
+                    Log.d(TAG, "onTextChanged: $value")
+                    (eventSuggestionsList.adapter as EventExtraAdapter).filter(value)
+                }
+            })
+
             eventHotelsList.adapter = EventExtraAdapter {
 //                Toast.makeText(requireContext(), "Cliccato ${it.name} - TBD??", Toast.LENGTH_LONG).show()
                 findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
             }
-            eventActivityList.adapter = EventActivityAdapter {
-                findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
-            }
+//            eventActivityList.adapter = EventActivityAdapter {
+//                findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
+//            }
             eventSuggestionsList.adapter = EventExtraAdapter {
                 findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
             }
@@ -91,10 +94,35 @@ class EventDetailFragment : BaseFragment() {
             viewModel.eventDetails.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEventDetails>() {
                 override fun onSuccess(value: ResponseGetEventDetails) {
                     (eventHotelsList.adapter as EventExtraAdapter).updateDataset(value.eventHotel)
-                    (eventActivityList.adapter as EventActivityAdapter).updateDataset(value.eventActivities)
+
+                    val days: Map<String, List<EventItemWithDate>> = value.eventActivities
+                        .sortedBy {
+                            it.dateFrom
+                        }
+                        .groupBy {
+                            it.dateFrom.dayString()
+                        }
+
+                    calendarDaysPager.adapter = EventCalendarAdapter(days) {
+                        findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
+                    }
+
+                    TabLayoutMediator(calendarDaysTabs, calendarDaysPager) { tab, position ->
+                        tab.text = days.keys.toTypedArray()[position]
+                    }.attach()
+
                     (eventSuggestionsList.adapter as EventExtraAdapter).updateDataset(value.eventsSuggestions)
                     (eventContactList.adapter as EventContactAdapter).updateContacts(value.eventsContacts)
+
+                    eventPosition.setOnClickListener {
+                        val gmmIntentUri = Uri.parse("google.navigation:q=${value.position.latitude},${value.position.longitude}")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                        mapIntent.setPackage("com.google.android.apps.maps")
+                        startActivity(mapIntent)
+                    }
+
                 }
+
             })
         }
     }

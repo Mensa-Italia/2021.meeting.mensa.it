@@ -21,7 +21,7 @@
 
         android:theme="@style/Theme.MensaEventi">
         <activity
-            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize"
+            android:windowSoftInputMode="adjustPan"
             android:name=".ui.HomeActivity"
             android:exported="true"
             android:label="@string/title_activity_home">

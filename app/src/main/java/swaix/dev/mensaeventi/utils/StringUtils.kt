@@ -18,6 +18,10 @@ fun Date.dateString(): String {
     val yearFormat = SimpleDateFormat("dd MMMM yyyy HH:ss", Locale.ITALIAN)
     return yearFormat.format(this)
 }
+fun Date.dayString(): String {
+    val yearFormat = SimpleDateFormat("EEEE dd", Locale.ITALIAN)
+    return yearFormat.format(this)
+}
 
 fun Context.formatDateRange(dateFrom: Date, dateTo: Date): String {
     val dayFormat = SimpleDateFormat("dd", Locale.ITALIAN)

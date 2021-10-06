@@ -8,9 +8,11 @@
 
     <string name="date_label">dal %1$s al %2$s</string>
     <string name="label_description">Descrizione</string>
-    <string name="label_open_maps">Apri in maps</string>
+    <string name="label_open_maps">Raggiungi l\'evento</string>
     <string name="label_hotels">Hotels</string>
+    <string name="label_hotels_search">Filtra Hotels</string>
     <string name="label_suggestions">Ti potrebbe interessare…</string>
+    <string name="label_suggestions_filter">Filtra suggerimenti</string>
     <string name="label_activities">Calendario</string>
     <string name="label_no_data">Nessun Elemento</string>
     <string name="label_contacts">Contatti</string>
