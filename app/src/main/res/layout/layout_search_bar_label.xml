@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/search_label"
-        style="@style/big_title.bold"
+        style="@style/title.bold"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center_vertical"

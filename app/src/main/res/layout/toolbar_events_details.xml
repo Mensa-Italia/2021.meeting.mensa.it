@@ -27,22 +27,31 @@
         android:padding="16dp"/>
 
 
+    <View
+        android:id="@+id/gradient"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/event_name"
+        android:background="@drawable/background_text_gradient"    />
     <TextView
         android:id="@+id/event_year"
-        style="@style/big_title"
+        style="@style/title.bold.white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="@id/background"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="2022" />
 
     <TextView
         android:id="@+id/event_name"
-        style="@style/big_title"
+        style="@style/title.bold.white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="@id/background"
         app:layout_constraintEnd_toStartOf="@id/event_year"
         app:layout_constraintStart_toStartOf="parent"

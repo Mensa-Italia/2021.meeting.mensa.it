@@ -33,7 +33,7 @@
 
     <TextView
         android:id="@+id/event_city"
-        style="@style/big_title.bold.white"
+        style="@style/title.bold.white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"

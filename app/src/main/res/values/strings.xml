@@ -10,8 +10,8 @@
     <string name="label_description">Descrizione</string>
     <string name="label_open_maps">Apri in maps</string>
     <string name="label_hotels">Hotels</string>
-    <string name="label_suggestions">Ti potrebbe interessare...</string>
-    <string name="label_activities">Attività</string>
+    <string name="label_suggestions">Ti potrebbe interessare…</string>
+    <string name="label_activities">Calendario</string>
     <string name="label_no_data">Nessun Elemento</string>
     <string name="label_contacts">Contatti</string>
     <string name="label_mensa_event">Eventi mensa</string>

@@ -32,7 +32,7 @@
 
             <TextView
                 android:id="@+id/description_label"
-                style="@style/medium_title.bold"
+                style="@style/title.bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -46,7 +46,9 @@
                 style="@style/text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/description_label"
@@ -54,7 +56,7 @@
 
             <TextView
                 android:id="@+id/event_activities_label"
-                style="@style/medium_title.bold"
+                style="@style/title.bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -126,7 +128,7 @@
 
             <TextView
                 android:id="@+id/event_contact_label"
-                style="@style/big_title.bold"
+                style="@style/title.bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"

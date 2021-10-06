@@ -11,6 +11,7 @@
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_rounded_blue.xml" value="0.2713541666666667" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_rounded_no_border.xml" value="0.4027777777777778" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_text_event.xml" value="0.34791666666666665" />
+        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_text_gradient.xml" value="0.5036458333333333" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/badge_hotel_icon.xml" value="0.4861111111111111" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/badge_hotel_text_background.xml" value="0.3953125" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/badge_restaurant.xml" value="0.5708333333333333" />
@@ -48,7 +49,7 @@
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/map_fragment.xml" value="0.5380434782608695" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/sample_search_bar_label.xml" value="0.45652173913043476" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/toolbar_events.xml" value="0.4466666666666667" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/toolbar_events_details.xml" value="0.3234375" />
+        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/toolbar_events_details.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/menu/bottom_nav_menu.xml" value="0.284375" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.3953125" />

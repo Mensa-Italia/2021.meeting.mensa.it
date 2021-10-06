@@ -8,21 +8,15 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="big_title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title" />
-    <style name="big_title.bold">
+    <style name="title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title" />
+    <style name="title.bold">
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="big_title.bold.white">
+    <style name="title.bold.white">
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="medium_title" parent="TextAppearance.AppCompat.Display1" />
-
-    <style name="medium_title.bold">
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="text" parent="TextAppearance.AppCompat.Body1" />
+    <style name="text" parent="TextAppearance.AppCompat.Body2" />
     <style name="text.bold" >
         <item name="android:textStyle">bold</item>
     </style>

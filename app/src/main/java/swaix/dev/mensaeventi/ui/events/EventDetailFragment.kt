@@ -1,5 +1,6 @@
 package swaix.dev.mensaeventi.ui.events
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -35,11 +36,11 @@ class EventDetailFragment : BaseFragment() {
         return EventDetailFragmentBinding.inflate(inflater, container, false).root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(EventDetailFragmentBinding.bind(view)) {
 
-            eventDetailsToolbar.eventName.text = args.item.description
-            eventDetailsToolbar.eventYear.text = args.item.dateFrom.yearString()
+            eventDetailsToolbar.eventName.text = args.item.name + " " + args.item.dateFrom.yearString()
 
             eventDetailsToolbar.backArrow.setOnClickListener {
                 findNavController().navigateUp()

@@ -20,7 +20,7 @@ fun <T> T.log(): T {
 fun mockGetEventResponse() = ResponseGetEvents(
     listOf(
         EventItemWithDate(
-            1, "Roma", "lorem ipsum",
+            1, "Roma", "Porca Putténa! Nel mio ufficio non tollero uranisti te l'ho detto mille volte di non chiamarmi vecchio; abbiamo mangiato salame e prosciutto affrettato? M'avete preso per un coglione sono nichilista, nun me rompe li cojoni. I ricchioni si dividono in due grandi categorie è una famiglia schifosa; io vado a messa ogni domenica mattina? Marcolino un giorno ti dò una bottiglieta d'amaro qua a tracolla te la dò io beneficio benissimo così; che cagachezzo che è questo.",
             dateFormat.parse("23/11/2022") ?: Date(),
             dateFormat.parse("25/11/2022") ?: Date(),
             ItemType.EVENT,
@@ -57,7 +57,7 @@ fun mockGetEventResponse() = ResponseGetEvents(
 
 
 fun mockGetEventDetailsResponse() = ResponseGetEventDetails(
-    1, "Roma", "lorem ipsum",
+    1, "Roma", "Porca Putténa! Nel mio ufficio non tollero uranisti te l'ho detto mille volte di non chiamarmi vecchio; abbiamo mangiato salame e prosciutto affrettato? M'avete preso per un coglione sono nichilista, nun me rompe li cojoni. I ricchioni si dividono in due grandi categorie è una famiglia schifosa; io vado a messa ogni domenica mattina? Marcolino un giorno ti dò una bottiglieta d'amaro qua a tracolla te la dò io beneficio benissimo così; che cagachezzo che è questo.",
     dateFormat.parse("23/11/2022") ?: Date(),
     dateFormat.parse("25/11/2022") ?: Date(),
     ItemType.EVENT,

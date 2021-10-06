@@ -55,7 +55,7 @@
 
     <TextView
         android:id="@+id/event_detail_extra_contact_label"
-        style="@style/medium_title.bold"
+        style="@style/title.bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
