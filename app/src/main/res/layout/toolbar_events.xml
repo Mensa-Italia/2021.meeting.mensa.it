@@ -12,6 +12,8 @@
         android:id="@+id/logo_mensa"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:elevation="4dp"
         android:src="@drawable/logo_mensa"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,11 +28,13 @@
         style="@style/title.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="0"
         android:padding="16dp"
         android:text="@string/label_mensa_event"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/logo_mensa"
+        app:layout_constraintStart_toEndOf="@id/logo_mensa"
+        app:layout_constraintTop_toTopOf="@id/logo_mensa" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left"

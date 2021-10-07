@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import swaix.dev.mensaeventi.databinding.PageCalendarBinding
 import swaix.dev.mensaeventi.model.EventItemWithDate
 
-class EventCalendarAdapter(private val dataMap: Map<String, List<EventItemWithDate>>, private val onItemClick: (EventItemWithDate) -> Unit) : RecyclerView.Adapter<PageCalendarHolder>() {
+class EventCalendarAdapter(private val dataMap: Map<String, List<EventItemWithDate>>, private val infoClick: (EventItemWithDate) -> Unit, private val directionsClick: (EventItemWithDate) -> Unit) : RecyclerView.Adapter<PageCalendarHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageCalendarHolder {
         return PageCalendarHolder(PageCalendarBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
@@ -15,7 +15,7 @@ class EventCalendarAdapter(private val dataMap: Map<String, List<EventItemWithDa
         val day = dataMap.keys.toTypedArray()[position]
         val activities = dataMap[day]
 
-        (holder as? PageCalendarHolder)?.onBind(day, activities, onItemClick)
+        (holder as? PageCalendarHolder)?.onBind(day, activities, infoClick, directionsClick)
     }
 
     override fun getItemCount(): Int {
@@ -25,12 +25,13 @@ class EventCalendarAdapter(private val dataMap: Map<String, List<EventItemWithDa
 }
 
 class PageCalendarHolder(binding: PageCalendarBinding) : OnBindViewHolder(binding) {
-    fun onBind(day: String, activities: List<EventItemWithDate>?, onItemClick: (EventItemWithDate) -> Unit) {
+    fun onBind(day: String, activities: List<EventItemWithDate>?, onItemClick: (EventItemWithDate) -> Unit, directionsClick: (EventItemWithDate) -> Unit) {
         with(PageCalendarBinding.bind(itemView)) {
-
-            eventActivityList.adapter = EventActivityAdapter {
-                onItemClick.invoke(it)
-            }
+            eventActivityList.adapter = EventActivityAdapter({
+                onItemClick(it)
+            }, {
+                directionsClick(it)
+            })
             activities?.let { (eventActivityList.adapter as EventActivityAdapter).updateDataset(it) }
 
         }

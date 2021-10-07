@@ -19,5 +19,6 @@
 
 
     <dimen name="bottom_bar_height">@dimen/fab_size</dimen>
+    <dimen name="collapsing_open_dimen">250dp</dimen>
 
 </resources>

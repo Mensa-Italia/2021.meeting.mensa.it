@@ -8,7 +8,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="@dimen/collapsing_open_dimen"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <include
@@ -29,6 +29,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/calendar_days_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/calendar_days_pager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/calendar_days_tabs" />
 
             <TextView
                 android:id="@+id/description_label"
@@ -39,7 +55,7 @@
                 android:text="@string/label_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/calendar_days_pager" />
 
             <TextView
                 android:id="@+id/event_description"
@@ -55,48 +71,6 @@
                 tools:text="LOREM IPSUM" />
 
             <TextView
-                android:id="@+id/event_position"
-                style="@style/text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
-                android:paddingEnd="16dp"
-                android:text="@string/label_open_maps"
-                app:drawableEndCompat="@android:drawable/ic_menu_directions"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_description" />
-
-            <TextView
-                android:id="@+id/event_calendar_label"
-                style="@style/title.bold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="@string/label_activities"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_position" />
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/calendar_days_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_calendar_label" />
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/calendar_days_pager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/calendar_days_tabs" />
-
-            <TextView
                 android:id="@+id/event_hotels"
                 style="@style/title.bold"
                 android:layout_width="0dp"
@@ -105,7 +79,7 @@
                 android:text="@string/label_hotels"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/calendar_days_pager" />
+                app:layout_constraintTop_toBottomOf="@id/event_description" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_hotels_list"

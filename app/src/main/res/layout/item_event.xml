@@ -24,7 +24,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/background_gradient_teal_alpha_rounded"
+        android:background="@drawable/background_gradient_alpha_rounded"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="7:3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,8 @@
         style="@style/date_style.white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toBottomOf="@id/imageEvent"
         app:layout_constraintEnd_toEndOf="@id/imageEvent"

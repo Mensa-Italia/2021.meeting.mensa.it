@@ -29,7 +29,7 @@
     <View
         android:id="@+id/user_sheet_placeholder"
         android:layout_width="0dp"
-        android:layout_height="400dp"
+        android:layout_height="@dimen/collapsing_open_dimen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

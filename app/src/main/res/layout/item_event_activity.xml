@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:elevation="2dp"
-    android:layout_marginTop="8dp"
-    android:background="@drawable/background_bottom_right"
     android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
     android:layout_marginEnd="16dp"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/background_bottom_right"
+    android:elevation="2dp">
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/divider_guide_right"
@@ -82,12 +82,12 @@
         style="@style/text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
         android:paddingStart="16dp"
         android:paddingTop="8dp"
         android:paddingEnd="16dp"
         android:paddingBottom="4dp"
-        android:maxLines="3"
-        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/divider_guide_right"
         app:layout_constraintStart_toStartOf="@id/divider_guide_left"
@@ -98,14 +98,27 @@
         android:id="@+id/reminder"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1"
-        android:layout_marginEnd="4dp"
         android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:src="@android:drawable/ic_dialog_info"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/directions"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/divider_guide_right"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/teal_700_alpha_99" />
+        app:tint="@color/accent" />
+
+    <ImageView
+        android:id="@+id/directions"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@android:drawable/ic_menu_directions"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/divider_guide_right"
+        app:layout_constraintTop_toBottomOf="@id/reminder"
+        app:tint="@color/accent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@
         android:centerY="5%"
         android:startColor="#0000"
         android:centerColor="#0000"
-        android:endColor="@color/teal_700"
+        android:endColor="@color/detail_event_color_with_alpha"
         android:type="linear"        />
 
 </shape>

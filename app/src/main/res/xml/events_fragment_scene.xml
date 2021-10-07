@@ -7,15 +7,14 @@
         motion:constraintSetStart="@id/start"
         motion:duration="1000">
         <KeyFrameSet>
-            <KeyPosition
-                motion:framePosition="22"
-                motion:keyPositionType="parentRelative"
+            <KeyAttribute
                 motion:motionTarget="@+id/event_text"
-                motion:percentX="0.6" />
+                android:alpha="0"
+                motion:framePosition="80"/>
         </KeyFrameSet>
     </Transition>
 
-    <ConstraintSet android:id="@+id/start"/>
+    <ConstraintSet android:id="@+id/start" />
 
     <ConstraintSet android:id="@+id/end">
         <Constraint
@@ -31,8 +30,7 @@
             android:id="@+id/event_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleX="0.8"
-            android:scaleY="0.8"
+            android:alpha="1"
             motion:layout_constraintBottom_toBottomOf="@id/logo_mensa"
             motion:layout_constraintStart_toEndOf="@id/logo_mensa"
             motion:layout_constraintTop_toTopOf="@id/logo_mensa" />

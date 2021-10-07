@@ -22,7 +22,7 @@ fun Date.dateString(): String {
     return yearFormat.format(this)
 }
 fun Date.shortDayString(): String {
-    val yearFormat = SimpleDateFormat("EEE dd", Locale.ITALIAN)
+    val yearFormat = SimpleDateFormat("EEE dd/MM", Locale.ITALIAN)
     return yearFormat.format(this)
 }
 fun Date.dayString(): String {

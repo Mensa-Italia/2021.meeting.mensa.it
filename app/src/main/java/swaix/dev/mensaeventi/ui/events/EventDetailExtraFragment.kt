@@ -41,7 +41,7 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
         }
 
         with(EventDetailsExtraFragmentBinding.bind(view)) {
-            name.text = args.extra.name
+            name.text = args.extra.name.asHtml()
             description.text = args.extra.description.asHtml()
             if (args.extra is EventItemWithDate) {
                 with((args.extra as EventItemWithDate)) {

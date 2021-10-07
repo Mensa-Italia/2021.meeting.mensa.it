@@ -29,7 +29,22 @@
             motion:layout_constraintTop_toTopOf="parent" />
         <Constraint
             android:id="@+id/gradient"
-            android:alpha="0" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+
+        <Constraint
+            android:id="@+id/gradient_arrow"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="@id/event_name" />
 
         <Constraint
             android:id="@+id/event_name"
@@ -37,14 +52,6 @@
             android:layout_height="wrap_content"
             motion:layout_constraintBottom_toBottomOf="@id/back_arrow"
             motion:layout_constraintStart_toEndOf="@id/back_arrow"
-            motion:layout_constraintTop_toTopOf="@id/back_arrow" />
-
-        <Constraint
-            android:id="@+id/event_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            motion:layout_constraintBottom_toBottomOf="@id/back_arrow"
-            motion:layout_constraintStart_toEndOf="@id/event_name"
             motion:layout_constraintTop_toTopOf="@id/back_arrow" />
     </ConstraintSet>
 </MotionScene>

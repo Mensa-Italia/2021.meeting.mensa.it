@@ -17,6 +17,8 @@ fun <T> T.log(): T {
     return this
 }
 
+fun mockEmpty() = ResponseGetEvents(listOf())
+
 fun mockGetEventResponse() = ResponseGetEvents(
     listOf(
         EventItemWithDate(
@@ -46,7 +48,7 @@ fun mockGetEventResponse() = ResponseGetEvents(
             dateFormat.parse("31/12/2023") ?: Date(),
             dateFormat.parse("01/01/2024") ?: Date(),
             ItemType.EVENT,
-            "https://lh3.googleusercontent.com/proxy/NlEMIJcoTJjFSzTI6qWThU_ok-wFibpowhD-gGcL3DPcCKLALL_KK47lNAdMQ6OJxwBQzx_r3fCKZw7yAT98CYBJZn2y3CgwDH7WC8fYeVNbdVpWgMJSe3WykQW0szozjRE",
+            "https://media.leroymerlin.it/media/45993/.jpg",
             Position("via vedremo", "bla bla bla", 41.9109, 12.4818),
             "",
             "",
@@ -98,8 +100,8 @@ fun mockGetEventDetailsResponse() = ResponseGetEventDetails(
             2,
             "Attività 2",
             "<p>Porca Putténa! Certo che tu metti un'allegria,  io ti odio a te è un fatto di pelle è una guerra psicologica la nostra. Cambia Cavallo che l'erba cresce cerca di non gufare continuamente; la sua soddisfazione è il nostro miglior premio. Che chezzo ne so una torta di mare perché mettono le vongole vereci sopra ; ti spezzo i menischi! Non c'hanno sesso sono ricchione spogliati o ti spoglio io da morto: muto come un pesce che si è operato alle corde vocheli. </p>\n",
-            dateTimeFormat.parse("23/11/2022 09:00") ?: Date(),
-            dateTimeFormat.parse("23/11/2022 18:00") ?: Date(),
+            dateTimeFormat.parse("25/11/2022 09:00") ?: Date(),
+            dateTimeFormat.parse("25/11/2022 18:00") ?: Date(),
             ItemType.ACTIVITY,
             "",
             Position("via vedremo", "bla bla bla", 41.9109, 12.4818),
@@ -109,7 +111,7 @@ fun mockGetEventDetailsResponse() = ResponseGetEventDetails(
         ),
         EventItemWithDate(
             4,
-            "Attività 5",
+            "<i>Attività</i> 5",
             "<p>Porca Putténa! Lei è un cornuto lo sa:  sono una persona che gira i mari di tutto il mondo tutta la iella buttala a mare! Occhio e malocchio tu non sei né figlio d'emigrante né figlio di preta pura, lei è un cornuto lo sa. Ti spezzo la noce del capocollo:  Filomegna donde estas lei è un cornuto lo sa. In senso epidermico;  nel mio ufficio non tollero uranisti sono volatili per diabetici. </p>",
             dateTimeFormat.parse("25/11/2022 09:00") ?: Date(),
             dateTimeFormat.parse("25/11/2022 18:00") ?: Date(),
