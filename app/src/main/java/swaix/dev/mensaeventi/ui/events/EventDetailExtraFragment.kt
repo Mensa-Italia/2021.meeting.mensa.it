@@ -19,7 +19,9 @@ import swaix.dev.mensaeventi.adapters.EventContactAdapter
 import swaix.dev.mensaeventi.databinding.EventDetailsExtraFragmentBinding
 import swaix.dev.mensaeventi.model.EventItemWithDate
 import swaix.dev.mensaeventi.ui.BaseFragment
-import swaix.dev.mensaeventi.utils.dateString
+import swaix.dev.mensaeventi.utils.asHtml
+import swaix.dev.mensaeventi.utils.dayString
+import swaix.dev.mensaeventi.utils.hourMinuteString
 import swaix.dev.mensaeventi.utils.setContactClickListener
 
 @AndroidEntryPoint
@@ -40,10 +42,13 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
 
         with(EventDetailsExtraFragmentBinding.bind(view)) {
             name.text = args.extra.name
-            description.text = args.extra.description
+            description.text = args.extra.description.asHtml()
             if (args.extra is EventItemWithDate) {
-                to.text = (args.extra as EventItemWithDate).dateTo.dateString()
-                from.text = (args.extra as EventItemWithDate).dateFrom.dateString()
+                with((args.extra as EventItemWithDate)) {
+                    day.text = dateFrom.dayString()
+                    to.text = dateTo.hourMinuteString()
+                    from.text = dateFrom.hourMinuteString()
+                }
             }
 
             eventDetailExtraContactList.adapter = EventContactAdapter {

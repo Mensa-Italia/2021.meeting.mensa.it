@@ -57,7 +57,7 @@ class EventDetailFragment : BaseFragment() {
                 .into(eventDetailsToolbar.background)
 
 
-            eventDescription.text = args.item.description
+            eventDescription.text = args.item.description.asHtml()
 
             viewModel.fetEventDetails(args.item.id.toString())
 
@@ -100,7 +100,7 @@ class EventDetailFragment : BaseFragment() {
                             it.dateFrom
                         }
                         .groupBy {
-                            it.dateFrom.dayString()
+                            it.dateFrom.shortDayString()
                         }
 
                     calendarDaysPager.adapter = EventCalendarAdapter(days) {

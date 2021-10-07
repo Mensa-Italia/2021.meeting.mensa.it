@@ -24,7 +24,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/background_text_event"
+        android:background="@drawable/background_gradient_teal_alpha_rounded"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="7:3"
         app:layout_constraintEnd_toEndOf="parent"

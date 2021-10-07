@@ -1,6 +1,9 @@
 package swaix.dev.mensaeventi.utils
 
 import android.content.Context
+import android.text.Html
+import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import swaix.dev.mensaeventi.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,10 +21,17 @@ fun Date.dateString(): String {
     val yearFormat = SimpleDateFormat("dd MMMM yyyy HH:ss", Locale.ITALIAN)
     return yearFormat.format(this)
 }
+fun Date.shortDayString(): String {
+    val yearFormat = SimpleDateFormat("EEE dd", Locale.ITALIAN)
+    return yearFormat.format(this)
+}
 fun Date.dayString(): String {
     val yearFormat = SimpleDateFormat("EEEE dd", Locale.ITALIAN)
     return yearFormat.format(this)
 }
+
+fun String.asHtml()= HtmlCompat.fromHtml(this, HtmlCompat.FROM_HTML_MODE_LEGACY)
+
 
 fun Context.formatDateRange(dateFrom: Date, dateTo: Date): String {
     val dayFormat = SimpleDateFormat("dd", Locale.ITALIAN)

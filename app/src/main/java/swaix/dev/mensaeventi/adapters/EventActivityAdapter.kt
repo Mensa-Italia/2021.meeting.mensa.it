@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import swaix.dev.mensaeventi.databinding.ItemEventActivityBinding
 import swaix.dev.mensaeventi.model.EventItemWithDate
+import swaix.dev.mensaeventi.utils.asHtml
 import swaix.dev.mensaeventi.utils.hourMinuteString
 
 class EventActivityAdapter(private val onItemClick: (EventItemWithDate) -> Unit) : GenericAdapter<EventItemWithDate>() {
@@ -27,7 +28,7 @@ class ActivityViewHolder(binding: ItemEventActivityBinding) : OnBindViewHolder(b
             timeFrom.text = item.dateFrom.hourMinuteString()
             timeTo.text = item.dateTo.hourMinuteString()
             eventActivityName.text = item.name
-            eventActivityDescrition.text = item.description
+            eventActivityDescrition.text = item.description.asHtml()
             reminder.setOnClickListener {
                 onItemClick(item)
             }
