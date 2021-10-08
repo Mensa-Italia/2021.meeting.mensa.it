@@ -30,6 +30,9 @@
     </style>
 
     <style name="caption" parent="TextAppearance.MaterialComponents.Button"/>
+    <style name="small" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">10sp</item>
+    </style>
 
 
 </resources>

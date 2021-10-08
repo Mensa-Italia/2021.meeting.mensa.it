@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/time_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <TextView
+        android:id="@+id/t00"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_00" />
+
+    <TextView
+        android:id="@+id/t01"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_01" />
+
+    <TextView
+        android:id="@+id/t02"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_02" />
+
+    <TextView
+        android:id="@+id/t03"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_03" />
+
+    <TextView
+        android:id="@+id/t04"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_04" />
+
+    <TextView
+        android:id="@+id/t05"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_05" />
+
+    <TextView
+        android:id="@+id/t06"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_06" />
+
+    <TextView
+        android:id="@+id/t07"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_07" />
+
+    <TextView
+        android:id="@+id/t08"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_08" />
+
+    <TextView
+        android:id="@+id/t09"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_09" />
+
+    <TextView
+        android:id="@+id/t10"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_10" />
+
+    <TextView
+        android:id="@+id/t11"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_11" />
+
+    <TextView
+        android:id="@+id/t12"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_12" />
+
+    <TextView
+        android:id="@+id/t13"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_13" />
+
+    <TextView
+        android:id="@+id/t14"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_14" />
+
+    <TextView
+        android:id="@+id/t15"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_15" />
+
+    <TextView
+        android:id="@+id/t16"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_16" />
+
+    <TextView
+        android:id="@+id/t17"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_17" />
+
+    <TextView
+        android:id="@+id/t18"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_18" />
+
+    <TextView
+        android:id="@+id/t19"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_19" />
+
+    <TextView
+        android:id="@+id/t20"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_20" />
+
+    <TextView
+        android:id="@+id/t21"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_21" />
+
+    <TextView
+        android:id="@+id/t22"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_22" />
+
+    <TextView
+        android:id="@+id/t23"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_23" />
+
+    <TextView
+        android:id="@+id/t24"
+        style="@style/small"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/label_time_24" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/calendar_flow"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="t00,t01,t02,t03,t04,t05,t06,t07,t08,t09,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24"
+        app:flow_maxElementsWrap="25"
+        app:flow_verticalGap="1dp"
+        app:flow_verticalStyle="spread"
+        app:flow_wrapMode="chain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/time_limit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    <View-->
+    <!--        android:layout_width="0dp"-->
+    <!--        app:layout_constraintStart_toEndOf="@id/calendar_flow"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/t01"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/t04"-->
+    <!--        android:background="#040"-->
+    <!--        android:layout_height="0dp"/>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

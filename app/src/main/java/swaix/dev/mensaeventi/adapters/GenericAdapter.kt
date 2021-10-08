@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import swaix.dev.mensaeventi.utils.*
 import kotlin.properties.Delegates
 
+@SuppressLint("NotifyDataSetChanged")
 abstract class GenericAdapter<R>(private val hasEmptyState: Boolean = false, private val hasLoadingState: Boolean = false) : RecyclerView.Adapter<OnBindViewHolder>(), AutoUpdatableAdapter where R : Comparable<R>, R : Searchable {
     private var _dataSet: List<R> by Delegates.observable(mutableListOf()) { _, _, newList ->
         items = newList.toMutableList()
@@ -30,15 +31,15 @@ abstract class GenericAdapter<R>(private val hasEmptyState: Boolean = false, pri
     override fun getItemViewType(position: Int): Int {
         return when {
             hasLoadingState && isLoading -> {
-                Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: LOADING_ROW")
+//                Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: LOADING_ROW")
                 LOADING_ROW
             }
             hasEmptyState && items.isEmpty() -> {
-                Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: EMPTY_ROW")
+//                Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: EMPTY_ROW")
                 EMPTY_ROW
             }
             else -> {
-                Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: ITEM_ROW")
+//                Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: ITEM_ROW")
                 ITEM_ROW
             }
         }

@@ -13,6 +13,7 @@ open class EventItem(
     val mail: String,
     val link: String,
     val telephoneNumber: String,
+    var columnOnCalendar : Int = 0,
 ) : Serializable, Comparable<EventItem>, Searchable {
 
     companion object{

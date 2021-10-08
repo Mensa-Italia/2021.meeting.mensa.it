@@ -17,7 +17,7 @@ class DataRepository(private val apiHelper: ApiHelper) : BaseApiResponse() {
     suspend fun getEvents(): Flow<NetworkResult<ResponseGetEvents>> {
         return flow {
             if (MOCK_DATA) {
-                emit(NetworkResult.Success(mockEmpty()))
+                emit(NetworkResult.Success(mockGetEventResponse()))
             } else {
                 emit(NetworkResult.Loading(true))
                 emit(safeApiCall { apiHelper.getEvents() })
