@@ -16,7 +16,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_00" />
 
     <TextView
@@ -24,7 +24,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_01" />
 
     <TextView
@@ -32,7 +32,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_02" />
 
     <TextView
@@ -40,7 +40,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_03" />
 
     <TextView
@@ -48,7 +48,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_04" />
 
     <TextView
@@ -56,7 +56,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_05" />
 
     <TextView
@@ -64,7 +64,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_06" />
 
     <TextView
@@ -72,7 +72,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_07" />
 
     <TextView
@@ -80,7 +80,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_08" />
 
     <TextView
@@ -88,7 +88,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_09" />
 
     <TextView
@@ -96,7 +96,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_10" />
 
     <TextView
@@ -104,7 +104,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_11" />
 
     <TextView
@@ -112,7 +112,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_12" />
 
     <TextView
@@ -120,7 +120,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_13" />
 
     <TextView
@@ -128,7 +128,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_14" />
 
     <TextView
@@ -136,7 +136,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_15" />
 
     <TextView
@@ -144,7 +144,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_16" />
 
     <TextView
@@ -152,7 +152,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_17" />
 
     <TextView
@@ -160,7 +160,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_18" />
 
     <TextView
@@ -168,7 +168,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_19" />
 
     <TextView
@@ -176,7 +176,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_20" />
 
     <TextView
@@ -184,7 +184,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_21" />
 
     <TextView
@@ -192,7 +192,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_22" />
 
     <TextView
@@ -200,7 +200,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_23" />
 
     <TextView
@@ -208,7 +208,7 @@
         style="@style/small"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:text="@string/label_time_24" />
 
     <androidx.constraintlayout.helper.widget.Flow
@@ -218,7 +218,7 @@
         android:orientation="vertical"
         app:constraint_referenced_ids="t00,t01,t02,t03,t04,t05,t06,t07,t08,t09,t10,t11,t12,t13,t14,t15,t16,t17,t18,t19,t20,t21,t22,t23,t24"
         app:flow_maxElementsWrap="25"
-        app:flow_verticalGap="1dp"
+        app:flow_verticalGap="3dp"
         app:flow_verticalStyle="spread"
         app:flow_wrapMode="chain"
         app:layout_constraintBottom_toBottomOf="parent"

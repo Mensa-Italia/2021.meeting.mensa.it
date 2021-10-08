@@ -42,12 +42,12 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
 
         with(EventDetailsExtraFragmentBinding.bind(view)) {
             name.text = args.extra.name.asHtml()
-            description.text = args.extra.description.asHtml()
+            activityDescription.text = args.extra.description.asHtml()
             if (args.extra is EventItemWithDate) {
                 with((args.extra as EventItemWithDate)) {
-                    day.text = dateFrom.dayString()
-                    to.text = dateTo.hourMinuteString()
-                    from.text = dateFrom.hourMinuteString()
+                    activityDay.text = dateFrom.dayString()
+                    activityTimeTo.text = dateTo.hourMinuteString()
+                    activityTimeFrom.text = dateFrom.hourMinuteString()
                 }
             }
 

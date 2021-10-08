@@ -36,4 +36,12 @@
             android:name="extra"
             app:argType="swaix.dev.mensaeventi.model.EventItem" />
     </fragment>
+    <fragment
+        android:id="@+id/eventCalendarSlide"
+        android:name="swaix.dev.mensaeventi.ui.events.EventCalendarSlide"
+        android:label="EventCalendarSlide" >
+        <action
+            android:id="@+id/action_eventCalendarSlide_to_eventDetailExtraFragment"
+            app:destination="@id/eventDetailExtraFragment" />
+    </fragment>
 </navigation>

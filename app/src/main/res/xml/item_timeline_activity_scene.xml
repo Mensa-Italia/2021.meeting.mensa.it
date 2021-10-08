@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="550">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:motionTarget="@+id/activity_description" />
+
+            <KeyPosition
+                motion:framePosition="1"
+                motion:keyPositionType="deltaRelative"
+                motion:motionTarget="@id/activity_description"
+                motion:percentX="0"
+                motion:percentY="0" />
+
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:motionTarget="@+id/activity_day" />
+
+            <KeyPosition
+                motion:framePosition="1"
+                motion:keyPositionType="deltaRelative"
+                motion:motionTarget="@id/activity_day"
+                motion:percentX="0"
+                motion:percentY="0" />
+
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:motionTarget="@+id/activity_time_from" />
+
+            <KeyPosition
+                motion:framePosition="1"
+                motion:keyPositionType="deltaRelative"
+                motion:motionTarget="@id/activity_time_from"
+                motion:percentX="0"
+                motion:percentY="0" />
+
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:motionTarget="@+id/activity_time_to" />
+
+            <KeyPosition
+                motion:framePosition="1"
+                motion:keyPositionType="deltaRelative"
+                motion:motionTarget="@id/activity_time_to"
+                motion:percentX="0"
+                motion:percentY="0" />
+
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:motionTarget="@+id/activity_direction_button" />
+
+            <KeyPosition
+                motion:framePosition="1"
+                motion:keyPositionType="deltaRelative"
+                motion:motionTarget="@id/activity_direction_button"
+                motion:percentX="0"
+                motion:percentY="0" />
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="60"
+                motion:motionTarget="@+id/activity_detail_button" />
+
+            <KeyPosition
+                motion:framePosition="1"
+                motion:keyPositionType="deltaRelative"
+                motion:motionTarget="@id/activity_detail_button"
+                motion:percentX="0"
+                motion:percentY="0" />
+        </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start"></ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/activity_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            motion:layout_constraintStart_toStartOf="@id/activity_background"
+            motion:layout_constraintTop_toTopOf="@id/activity_background" />
+        <Constraint
+            android:id="@+id/activity_description"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="1"
+            motion:layout_constraintBottom_toTopOf="@id/activity_day"
+            motion:layout_constraintEnd_toEndOf="@id/activity_background"
+            motion:layout_constraintStart_toStartOf="@id/activity_background"
+            motion:layout_constraintTop_toBottomOf="@id/activity_name" />
+        <Constraint
+            android:id="@+id/activity_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:alpha="1"
+            motion:layout_constraintBottom_toTopOf="@id/activity_time_from"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/activity_time_from"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:alpha="1"
+            motion:layout_constraintBottom_toTopOf="@id/activity_direction_button"
+            motion:layout_constraintEnd_toStartOf="@id/activity_time_to"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/activity_time_to"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:alpha="1"
+            motion:layout_constraintBottom_toTopOf="@id/activity_detail_button"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toEndOf="@id/activity_time_from" />
+        <Constraint
+            android:id="@+id/activity_detail_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
+            android:alpha="1"
+            motion:layout_constraintBottom_toBottomOf="@id/activity_background"
+            motion:layout_constraintEnd_toEndOf="@id/activity_time_to"
+            motion:layout_constraintStart_toEndOf="@id/activity_direction_button" />
+        <Constraint
+            android:id="@+id/activity_direction_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:alpha="1"
+            motion:layout_constraintBottom_toBottomOf="@id/activity_background"
+            motion:layout_constraintEnd_toStartOf="@id/activity_detail_button"
+            motion:layout_constraintStart_toStartOf="@id/activity_time_from" />
+
+    </ConstraintSet>
+</MotionScene>

@@ -32,7 +32,7 @@ class ActivityViewHolder(binding: ItemEventActivityBinding) : OnBindViewHolder(b
             reminder.setOnClickListener {
                 onItemClick(item)
             }
-            directions.setOnClickListener {
+            activityDirectionButton.setOnClickListener {
                 directionsClick(item)
             }
         }

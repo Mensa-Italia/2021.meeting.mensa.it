@@ -1,22 +1,24 @@
 package swaix.dev.mensaeventi.ui.events
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import swaix.dev.mensaeventi.R
+import swaix.dev.mensaeventi.databinding.ItemTimelineActivityBinding
 import swaix.dev.mensaeventi.databinding.LayoutTimelineCalendarBinding
 import swaix.dev.mensaeventi.model.EventItemWithDate
-import swaix.dev.mensaeventi.utils.TAG
-import swaix.dev.mensaeventi.utils.getIdResByName
-import swaix.dev.mensaeventi.utils.hour
-import swaix.dev.mensaeventi.utils.randomColor
+import swaix.dev.mensaeventi.utils.*
 import java.util.*
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -97,12 +99,29 @@ class EventCalendarSlide : Fragment() {
             val resultList = mutableListOf<Pair<EventItemWithDate, View>>()
 
             data.forEachIndexed { index, eventItemWithDate ->
-                val element = TextView(requireContext()).apply {
-                    setBackgroundColor(Int.randomColor())
-                    layoutParams = ConstraintLayout.LayoutParams(0, 0)
+                val element = LayoutInflater.from(requireContext()).inflate(R.layout.item_timeline_activity, root, false).apply {
                     id = ConstraintLayout.generateViewId()
-                    text = eventItemWithDate.name
                 }
+
+                with(ItemTimelineActivityBinding.bind(element)) {
+                    activityName.text = eventItemWithDate.name.asHtml()
+                    activityDescription.text = eventItemWithDate.description.asHtml()
+
+                    activityDay.text = eventItemWithDate.dateFrom.dayString()
+                    activityTimeTo.text = eventItemWithDate.dateTo.hourMinuteString()
+                    activityTimeFrom.text = eventItemWithDate.dateFrom.hourMinuteString()
+
+                    activityDetailButton.setOnClickListener {
+                        findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(eventItemWithDate))
+                    }
+                    activityDirectionButton.setOnClickListener {
+                        val gmmIntentUri = Uri.parse("google.navigation:q=${eventItemWithDate.position.latitude},${eventItemWithDate.position.longitude}")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                        mapIntent.setPackage("com.google.android.apps.maps")
+                        startActivity(mapIntent)
+                    }
+                }
+
                 element.setOnClickListener {
                     openActivityDetail(root, it, openSet, startSet)
                 }
@@ -124,7 +143,7 @@ class EventCalendarSlide : Fragment() {
                         // cerco l'ultimo oggetto sulla colonna con data di fine PRECEDENTE alla data di inizio del mio attuale elemento
 
                         val lastElementOnColumn = itemOnColumn.last()
-                        if (lastElementOnColumn.first.dateTo.before(eventItemWithDate.dateFrom)) {
+                        if (lastElementOnColumn.first.dateTo.before(eventItemWithDate.dateFrom) || lastElementOnColumn.first.dateTo == eventItemWithDate.dateFrom) {
                             // se trovo uno slot sulla colonna inserisco ed esco
                             resultList.add(eventItemWithDate.apply {
                                 columnOnCalendar = lastElementOnColumn.first.columnOnCalendar
@@ -142,13 +161,15 @@ class EventCalendarSlide : Fragment() {
             }
 
 
-
             val maxColumn = resultList.maxOf { it.first.columnOnCalendar }
 
-            resultList.forEachIndexed {index, pair->
+            resultList.forEachIndexed { index, pair ->
                 val item = pair.first
                 val element = pair.second
-
+//
+//                val itemsOnColumn = resultList.filter { p ->
+//                    p.first.columnOnCalendar == item.columnOnCalendar
+//                }
 
                 val topString = "%02d".format(item.dateFrom.hour())
                 val botString = "%02d".format(item.dateTo.hour())
@@ -156,22 +177,51 @@ class EventCalendarSlide : Fragment() {
                 val idTop = root.findViewById<View>(requireContext().getIdResByName("t$topString")).id
                 val idBot = root.findViewById<View>(requireContext().getIdResByName("t$botString")).id
 
-                val (idStart, directionStart) =
-                    if(item.columnOnCalendar == 0 ) {
+                val topBias = item.dateFrom.minutes().toFloat() / 60f
+                val topAnchor = View(requireContext()).apply {
+                    id = ConstraintLayout.generateViewId()
+                    root.addView(this)
+                }.id
+
+                val botBias = item.dateTo.minutes().toFloat() / 60f
+                val bottomAnchor = View(requireContext()).apply {
+                    id = ConstraintLayout.generateViewId()
+                    root.addView(this)
+                }.id
+
+                startSet.constrainHeight(topAnchor, 1)
+                startSet.constrainHeight(bottomAnchor, 1)
+
+                startSet.connect(topAnchor, ConstraintSet.TOP, idTop, ConstraintSet.TOP)
+                startSet.connect(topAnchor, ConstraintSet.BOTTOM, idTop, ConstraintSet.BOTTOM)
+                startSet.connect(topAnchor, ConstraintSet.START, idTop, ConstraintSet.START)
+                startSet.connect(topAnchor, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+                startSet.setVerticalBias(topAnchor, topBias)
+
+                startSet.connect(bottomAnchor, ConstraintSet.TOP, idBot, ConstraintSet.TOP)
+                startSet.connect(bottomAnchor, ConstraintSet.BOTTOM, idBot, ConstraintSet.BOTTOM)
+                startSet.connect(bottomAnchor, ConstraintSet.START, idBot, ConstraintSet.START)
+                startSet.connect(bottomAnchor, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+                startSet.setVerticalBias(bottomAnchor, botBias)
+
+
+                val (startId, startSide) =
+                    if (item.columnOnCalendar == 0) {
                         calendarFlow.id to ConstraintSet.END
                     } else {
-                        val previousColumn = resultList.find{
-                            it.first.columnOnCalendar == item.columnOnCalendar-1
+                        val previousColumn = resultList.find {
+                            it.first.columnOnCalendar == item.columnOnCalendar - 1
                         }
-                        (previousColumn?.second?.id?:-1) to ConstraintSet.END
-                }
-                val (idEnd, directionEnd) = if (item.columnOnCalendar == maxColumn) {
+                        (previousColumn?.second?.id ?: -1) to ConstraintSet.END
+                    }
+
+                val (endId, endSide) = if (item.columnOnCalendar == maxColumn) {
                     ConstraintSet.PARENT_ID to ConstraintSet.END
                 } else {
-                    val nextColumn = resultList.find{
-                        it.first.columnOnCalendar == item.columnOnCalendar+1
+                    val nextColumn = resultList.find {
+                        it.first.columnOnCalendar == item.columnOnCalendar + 1
                     }
-                    (nextColumn?.second?.id?:-1) to ConstraintSet.START
+                    (nextColumn?.second?.id ?: -1) to ConstraintSet.START
                 }
 
                 startSet.setElevation(element.id, 0f)
@@ -179,10 +229,10 @@ class EventCalendarSlide : Fragment() {
                 startSet.clear(element.id, ConstraintSet.BOTTOM)
                 startSet.clear(element.id, ConstraintSet.START)
                 startSet.clear(element.id, ConstraintSet.END)
-                startSet.connect(element.id, ConstraintSet.TOP, idTop, ConstraintSet.TOP)
-                startSet.connect(element.id, ConstraintSet.BOTTOM, idBot, ConstraintSet.TOP)
-                startSet.connect(element.id, ConstraintSet.START, idStart, directionStart)
-                startSet.connect(element.id, ConstraintSet.END, idEnd, directionEnd)
+                startSet.connect(element.id, ConstraintSet.TOP, topAnchor, ConstraintSet.TOP)
+                startSet.connect(element.id, ConstraintSet.BOTTOM, bottomAnchor, ConstraintSet.TOP)
+                startSet.connect(element.id, ConstraintSet.START, startId, startSide)
+                startSet.connect(element.id, ConstraintSet.END, endId, endSide)
 //
             }
             TransitionManager.beginDelayedTransition(root)
@@ -194,7 +244,7 @@ class EventCalendarSlide : Fragment() {
 
     private fun openActivityDetail(root: ConstraintLayout, view: View?, openSet: ConstraintSet, startSet: ConstraintSet) {
         openSet.clone(root)
-        view?.let{element->
+        view?.let { element ->
 
             openSet.clear(element.id, ConstraintSet.TOP)
             openSet.clear(element.id, ConstraintSet.BOTTOM)
@@ -209,11 +259,16 @@ class EventCalendarSlide : Fragment() {
             TransitionManager.beginDelayedTransition(root)
             openSet.applyTo(root)
 
+            (element as MotionLayout).transitionToEnd()
+
+
             element.setOnClickListener {
                 TransitionManager.beginDelayedTransition(root)
                 startSet.applyTo(root)
+                element.transitionToStart()
                 it.setOnClickListener {
                     openActivityDetail(root, element, openSet, startSet)
+
                 }
             }
         }
