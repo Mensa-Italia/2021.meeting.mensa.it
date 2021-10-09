@@ -18,4 +18,5 @@
     <string name="label_contacts">Contatti</string>
     <string name="label_mensa_event">Eventi mensa</string>
     <string name="email_title">Invia una email</string>
+    <string name="no_events_label">Non ci sono eventi da visualizzare. Riprovare più tardi</string>
 </resources>
