@@ -3,53 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< HEAD
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_rounded.xml" value="0.43333333333333335" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_rounded_blue.xml" value="0.2713541666666667" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2713541666666667" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/activity_home.xml" value="0.4466666666666667" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/activity_maps.xml" value="0.33125" />
-=======
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable-v24/background_gradient_teal_alpha_squared.xml" value="0.4323076923076923" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable-v24/background_gradient_top_bottom_alpha_squared.xml" value="0.39739583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable-v24/background_rounded_top_left_bottom_right_blue.xml" value="0.39739583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable-v24/ic_account_circle.xml" value="0.5620512820512821" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable-v24/ic_close.xml" value="0.5708333333333333" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3953125" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_activity_timeline.xml" value="0.34791666666666665" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_bottom_right.xml" value="0.44907407407407407" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_gradient_alpha_rounded.xml" value="0.5101851851851852" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_gradient_alpha_squared.xml" value="0.5101851851851852" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_gradient_rounded_bot.xml" value="0.537962962962963" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_gradient_teal_alpha_squared.xml" value="0.39739583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_gradient_teal_squared.xml" value="0.4323076923076923" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_rounded.xml" value="0.43333333333333335" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_rounded_blue.xml" value="0.2713541666666667" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_rounded_no_border.xml" value="0.4027777777777778" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_text_event.xml" value="0.34791666666666665" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/background_text_gradient.xml" value="0.5036458333333333" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/badge_hotel_icon.xml" value="0.4861111111111111" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/badge_hotel_text_background.xml" value="0.3953125" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/badge_restaurant.xml" value="0.5708333333333333" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/badge_restaurant_icon.xml" value="0.3953125" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/badge_restaurant_text_background.xml" value="0.3953125" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/baseline_filter_list_24.xml" value="0.4453125" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/hotel_badge.xml" value="0.537962962962963" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_back_arrow.xml" value="0.39739583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.3953125" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_hotel_building_svgrepo_com.xml" value="0.5708333333333333" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_info.xml" value="0.39739583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2713541666666667" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.3953125" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/ic_restaurant_signal_svgrepo_com.xml" value="0.4861111111111111" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/outline_directions_24.xml" value="0.39739583333333334" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/drawable/triangle.xml" value="0.5708333333333333" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/activity_home.xml" value="0.25" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/activity_maps.xml" value="0.33125" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/event_detail_fragment.xml" value="0.1" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/event_details_extra_fragment.xml" value="0.22" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/event_extra_details.xml" value="0.3223958333333333" />
->>>>>>> 67a805bd1567ffb8e719be0ac8ddcf27245d3071
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/events_fragment.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/fragment_dashboard.xml" value="0.3170289855072464" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/fragment_event_detail.xml" value="0.28020833333333334" />
@@ -62,28 +20,13 @@
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_loading.xml" value="0.5380434782608695" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_no_events.xml" value="0.37864583333333335" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_placeholder.xml" value="0.2552083333333333" />
-<<<<<<< HEAD
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/main_activity.xml" value="0.16109422492401215" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/main_fragment.xml" value="0.33177083333333335" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/map_fragment.xml" value="0.5380434782608695" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/toolbar_events.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/toolbar_events_details.xml" value="0.3234375" />
-=======
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/item_timeline_activity.xml" value="0.16666666666666666" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/layout_search_bar_label.xml" value="0.24375" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/layout_timeline_calendar.xml" value="0.562157935887412" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/main_activity.xml" value="0.16109422492401215" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/main_fragment.xml" value="0.33177083333333335" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/map_fragment.xml" value="0.5380434782608695" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/page_calendar.xml" value="0.35643115942028986" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/row_event_calendar.xml" value="0.3338541666666667" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/row_event_calendar_hours.xml" value="0.5" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/sample_search_bar_label.xml" value="0.45652173913043476" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/toolbar_events.xml" value="0.1" />
-        <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/layout/toolbar_events_details.xml" value="0.1" />
->>>>>>> 67a805bd1567ffb8e719be0ac8ddcf27245d3071
         <entry key="..\:/AndroidStudioProjects/MensaEventi/app/src/main/res/menu/bottom_nav_menu.xml" value="0.284375" />
-        <entry key="..\:/Users/ale.viola/Desktop/Mensa/app/src/main/res/layout/event_detail_fragment.xml" value="0.3546875" />
+        <entry key="..\:/Users/ale.viola/Desktop/Mensa/app/src/main/res/layout/event_detail_fragment.xml" value="0.2" />
         <entry key="..\:/Users/ale.viola/Desktop/Mensa/app/src/main/res/layout/event_details_extra_fragment.xml" value="0.3546875" />
         <entry key="..\:/Users/ale.viola/Desktop/Mensa/app/src/main/res/layout/events_fragment.xml" value="0.1921875" />
         <entry key="..\:/Users/ale.viola/Desktop/Mensa/app/src/main/res/layout/item_event_activity.xml" value="0.19739583333333333" />

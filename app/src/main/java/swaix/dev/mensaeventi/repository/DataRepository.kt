@@ -29,8 +29,7 @@ class DataRepository(private val apiHelper: ApiHelper) : BaseApiResponse() {
     suspend fun getEventDetails(id: String): Flow<NetworkResult<ResponseGetEventDetails>> {
         return flow {
             if (MOCK_DATA){
-                //emit(NetworkResult.Success(mockGetEventDetailsResponse()))
-                emit(NetworkResult.Success(mockNoEventItemWithDate()))
+                emit(NetworkResult.Success(mockGetEventDetailsResponse()))
             }
             else{
                 emit(NetworkResult.Loading(true))

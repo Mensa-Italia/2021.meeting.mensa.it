@@ -90,9 +90,13 @@ class EventDetailFragment : BaseFragment() {
             eventContactList.adapter = EventContactAdapter {
                 setContactClickListener(it)
             }
+
+
             viewModel.eventDetails.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEventDetails>() {
                 override fun onSuccess(value: ResponseGetEventDetails) {
                     (eventHotelsList.adapter as EventExtraAdapter).updateDataset(value.eventHotel)
+
+                    checkForEmptyState(view, value)
 
                     val days: Map<String, List<EventItemWithDate>> = value.eventActivities
                         .sortedBy {
@@ -131,6 +135,37 @@ class EventDetailFragment : BaseFragment() {
                 }
 
             })
+        }
+    }
+
+
+
+    private fun checkForEmptyState(view: View, value: ResponseGetEventDetails){
+        var counter = 0
+        with(EventDetailFragmentBinding.bind(view)) {
+            if (value.description.isEmpty()) counter++
+            descriptionLabel.visibility = if (value.description.isEmpty()) View.GONE else View.VISIBLE
+            eventDescription.visibility = if (value.description.isEmpty()) View.GONE else View.VISIBLE
+
+            if (value.eventActivities.isNullOrEmpty()) counter++
+            calendarDaysTabs.visibility = if (value.eventActivities.isNullOrEmpty()) View.GONE else View.VISIBLE
+            calendarDaysPager.visibility = if (value.eventActivities.isNullOrEmpty()) View.GONE else View.VISIBLE
+
+            if (value.eventHotel.isNullOrEmpty()) counter++
+            eventHotels.visibility = if (value.eventHotel.isNullOrEmpty()) View.GONE else View.VISIBLE
+            eventHotelsList.visibility = if (value.eventHotel.isNullOrEmpty()) View.GONE else View.VISIBLE
+            eventHotelsSearch.visibility = if (value.eventHotel.isNullOrEmpty()) View.GONE else View.VISIBLE
+
+            if (value.eventsSuggestions.isNullOrEmpty()) counter++
+            eventSuggestions.visibility = if (value.eventsSuggestions.isNullOrEmpty()) View.GONE else View.VISIBLE
+            eventSuggestionsList.visibility = if (value.eventsSuggestions.isNullOrEmpty()) View.GONE else View.VISIBLE
+            eventSuggestionsSearch.visibility = if (value.eventsSuggestions.isNullOrEmpty()) View.GONE else View.VISIBLE
+
+            if (value.eventsContacts.isNullOrEmpty()) counter++
+            eventContactLabel.visibility = if (value.eventsContacts.isNullOrEmpty()) View.GONE else View.VISIBLE
+            eventContactList.visibility = if (value.eventsContacts.isNullOrEmpty()) View.GONE else View.VISIBLE
+
+            emptyStateMessage.visibility = if (counter == 5) View.VISIBLE else View.GONE
         }
     }
 

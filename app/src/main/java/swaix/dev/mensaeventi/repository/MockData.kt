@@ -21,17 +21,17 @@ fun <T> T.log(): T {
 
 
 
-fun mockNoEventItemWithDate() = ResponseGetEventDetails(
-    1, "Roma", "Porca Putténa! Nel mio ufficio non tollero uranisti te l'ho detto mille volte di non chiamarmi vecchio; abbiamo mangiato salame e prosciutto affrettato? M'avete preso per un coglione sono nichilista, nun me rompe li cojoni. I ricchioni si dividono in due grandi categorie è una famiglia schifosa; io vado a messa ogni domenica mattina? Marcolino un giorno ti dò una bottiglieta d'amaro qua a tracolla te la dò io beneficio benissimo così; che cagachezzo che è questo.",
-    dateFormat.parse("23/11/2022") ?: Date(),
-    dateFormat.parse("25/11/2022") ?: Date(),
-    ItemType.EVENT,
-    "https://lh3.googleusercontent.com/proxy/NlEMIJcoTJjFSzTI6qWThU_ok-wFibpowhD-gGcL3DPcCKLALL_KK47lNAdMQ6OJxwBQzx_r3fCKZw7yAT98CYBJZn2y3CgwDH7WC8fYeVNbdVpWgMJSe3WykQW0szozjRE",
-    Position("via vedremo", "bla bla bla", 41.9109, 12.4818),
-    "",
-    "",
-    "",
-    listOf(), listOf(), listOf(), listOf()).log()
+//fun mockNoEventItemWithDate() = ResponseGetEventDetails(
+//    1, "Roma", "",
+//    dateFormat.parse("23/11/2022") ?: Date(),
+//    dateFormat.parse("25/11/2022") ?: Date(),
+//    ItemType.EVENT,
+//    "https://lh3.googleusercontent.com/proxy/NlEMIJcoTJjFSzTI6qWThU_ok-wFibpowhD-gGcL3DPcCKLALL_KK47lNAdMQ6OJxwBQzx_r3fCKZw7yAT98CYBJZn2y3CgwDH7WC8fYeVNbdVpWgMJSe3WykQW0szozjRE",
+//    Position("via vedremo", "bla bla bla", 41.9109, 12.4818),
+//    "",
+//    "",
+//    "",
+//    listOf(), listOf(), listOf(), listOf()).log()
 
 
 
