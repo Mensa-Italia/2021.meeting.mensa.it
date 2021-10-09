@@ -5,5 +5,6 @@ import androidx.lifecycle.ViewModel
 
 class BaseViewModel : ViewModel() {
 
+    val locationServiceEnable = MutableLiveData(false)
 
 }

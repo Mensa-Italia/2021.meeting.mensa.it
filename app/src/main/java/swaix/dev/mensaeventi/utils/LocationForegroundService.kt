@@ -1,0 +1,211 @@
+package swaix.dev.mensaeventi.utils
+
+import android.annotation.SuppressLint
+import android.app.*
+import android.app.NotificationManager.IMPORTANCE_LOW
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.location.Location
+import android.os.Binder
+import android.os.Build
+import android.os.IBinder
+import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import com.google.android.gms.location.*
+import swaix.dev.mensaeventi.R
+import android.os.HandlerThread
+
+
+
+
+class LocationForegroundService : Service() {
+    companion object {
+        private const val ACTION_START = "start"
+        private const val ACTION_END = "end"
+        private const val CHANNEL_ID = "LocationForegroundServiceChannel"
+        private const val NOTIFICATION_ID_SERVICE = 1
+        private const val FOREGROUND_NOTE_ID = 2
+        const val NEW_LOCATION = "new_location"
+        const val STOP_SERVICE = "stop_service"
+        const val START_SERVICE = "start_service"
+
+
+        const val UPDATE_INTERVAL_IN_MILLISECONDS: Long = 30000
+        const val MAX_WAIT_TIME: Long = UPDATE_INTERVAL_IN_MILLISECONDS * 2
+        const val FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS: Long = UPDATE_INTERVAL_IN_MILLISECONDS / 2
+
+        fun startLocationService(context: Context) {
+            val intent = Intent(context, LocationForegroundService::class.java)
+            intent.action = ACTION_START
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent)
+            } else {
+                context.startService(intent)
+            }
+        }
+
+        fun stopLocationService(context: Context) {
+            val intent = Intent(context, LocationForegroundService::class.java)
+            intent.action = ACTION_END
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(intent)
+            } else {
+                context.startService(intent)
+            }
+        }
+
+
+    }
+
+
+    private val mBinder: IBinder = LocationForegroundServiceBinder()
+    private lateinit var mLocation: Location
+    private val mLocationRequest: LocationRequest = LocationRequest.create().apply {
+        interval = UPDATE_INTERVAL_IN_MILLISECONDS
+        fastestInterval = FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS
+        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        maxWaitTime = MAX_WAIT_TIME
+    }
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private lateinit var mLocationCallback: LocationCallback
+    var isRunning = false
+    private val handlerThread = HandlerThread("Service")
+
+    override fun onCreate() {
+        super.onCreate()
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        mLocationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                super.onLocationResult(locationResult)
+                try {
+                    mFusedLocationClient.lastLocation
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful && task.result != null) {
+                                mLocation = task.result
+                                notify(NEW_LOCATION)
+                                val broadcastIntent = Intent()
+                                broadcastIntent.action = NEW_LOCATION
+                                sendBroadcast(broadcastIntent)
+                            } else {
+                                Log.w(TAG, "Failed to get location.")
+                            }
+                        }
+                } catch (unlikely: SecurityException) {
+                    Log.e(TAG, "Lost location permission.$unlikely")
+                }
+            }
+        }
+
+
+    }
+
+
+    override fun onBind(intent: Intent): IBinder {
+        return mBinder
+    }
+
+    @SuppressLint("MissingPermission")
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (ACTION_END == intent?.action) {
+            stopForeground(true)
+            stopSelf()
+            isRunning = false
+            val broadcastIntent = Intent()
+            broadcastIntent.action = STOP_SERVICE
+            sendBroadcast(broadcastIntent)
+        } else {
+            isRunning = true
+            notify(intent?.action ?: "ERROR")
+
+            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
+        }
+        return START_NOT_STICKY
+    }
+
+
+    private fun notify(action: String) {
+        var notifyCheckForeground = false
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notifications = notificationManager.activeNotifications
+        for (notification in notifications) {
+            if (notification.id == FOREGROUND_NOTE_ID) {
+                notifyCheckForeground = true
+                break
+            }
+        }
+        Log.v(javaClass.simpleName, "Is foreground visible: $notifyCheckForeground")
+        if (notifyCheckForeground) {
+            notificationManager.notify(FOREGROUND_NOTE_ID, buildForegroundNotification(action))
+        } else {
+            startForeground(FOREGROUND_NOTE_ID, buildForegroundNotification(action))
+        }
+    }
+
+    private fun buildForegroundNotification(_action: String): Notification {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
+        //Do any customization you want here
+        val notificationContent: String = if (NEW_LOCATION == _action) {
+            getString(R.string.label_location_update, mLocation.latitude, mLocation.longitude)
+        } else {
+            getString(R.string.label_start_share_position)
+        }
+        val notificationTitle = getString(R.string.app_name)
+        val actionButtonText = getString(R.string.label_remove_location_updates)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelName = "LocationService"
+            val serviceChannel = NotificationChannel(
+                CHANNEL_ID,
+                channelName,
+                IMPORTANCE_LOW
+            )
+            serviceChannel.lightColor = ContextCompat.getColor(this, R.color.primary_color)
+            serviceChannel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+            val manager = (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager)
+            manager.createNotificationChannel(serviceChannel)
+            CHANNEL_ID
+        }
+
+        val intent = Intent(this, LocationForegroundService::class.java).apply {
+            action = ACTION_END
+        }
+        val pIntent = PendingIntent.getService(this, 112, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        return NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+            .setAutoCancel(true)
+            .setDefaults(NotificationCompat.PRIORITY_LOW)
+            .setWhen(System.currentTimeMillis())
+            .setSmallIcon(R.drawable.notification_mensa)
+            .setContentTitle(notificationTitle)
+            .setContentText(notificationContent)
+            .setOngoing(true)
+            .setSound(null)
+            .setVibrate(null)
+            .addAction(android.R.drawable.ic_media_rew, actionButtonText, pIntent)
+            .build()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel() {
+        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT)
+        channel.lightColor = Color.RED
+        channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+        val manager = (getSystemService(NOTIFICATION_SERVICE) as NotificationManager)
+        manager.createNotificationChannel(channel)
+    }
+
+    inner class LocationForegroundServiceBinder : Binder() {
+        // Return this instance of MyService so clients can call public methods
+        val service: LocationForegroundService
+            get() =// Return this instance of MyService so clients can call public methods
+                this@LocationForegroundService
+    }
+
+
+}

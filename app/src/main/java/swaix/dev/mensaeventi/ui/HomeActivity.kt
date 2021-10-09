@@ -1,8 +1,8 @@
 package swaix.dev.mensaeventi.ui
 
+import android.content.*
 import android.os.Bundle
-import android.transition.TransitionManager
-import android.view.View
+import android.os.IBinder
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -12,10 +12,15 @@ import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.databinding.ActivityHomeBinding
+import swaix.dev.mensaeventi.utils.LocationForegroundService
+import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.NEW_LOCATION
+import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.START_SERVICE
+import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.STOP_SERVICE
+
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
-
+    private val baseViewModel: BaseViewModel by viewModels()
     private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,30 +29,23 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val navView: BottomNavigationView = binding.navView
-//
-//        val navController = findNavController(R.id.nav_host_fragment_activity_home)
-//        // Passing each menu ID as a set of Ids because each
-//        // menu should be considered as top level destinations.
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.navigation_home/*, R.id.navigation_dashboard, R.id.navigation_notifications*/
-//            )
-//        )
-//        val appBarConfiguration = AppBarConfiguration(navController.graph)
-//        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        navView.setupWithNavController(navController)
 
-
-//        val baseViewModel: BaseViewModel by viewModels()
-
-
+        val mIntentFilter = IntentFilter()
+        mIntentFilter.addAction(STOP_SERVICE)
+        registerReceiver(mReceiver, mIntentFilter)
 
         enableClicks()
         with(binding.root) {
             setTransition(R.id.fab_closed, R.id.fab_middle)
         }
+    }
+
+
+
+
+    override fun onResume() {
+
+        super.onResume()
     }
 
     // region animation
@@ -159,5 +157,28 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+
+    override fun onDestroy() {
+        unregisterReceiver(mReceiver)
+        super.onDestroy()
+    }
+
+    private val mReceiver = object : BroadcastReceiver() {
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            when {
+                STOP_SERVICE == p1?.action -> {
+                    baseViewModel.locationServiceEnable.postValue(false)
+                }
+                START_SERVICE == p1?.action -> {
+                    baseViewModel.locationServiceEnable.postValue(true)
+                }
+                NEW_LOCATION == p1?.action -> {
+                    // FARE LA CHIAMATA per aggiornare la posizione
+                }
+            }
+        }
+
     }
 }

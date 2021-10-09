@@ -70,6 +70,17 @@
                 app:layout_constraintTop_toBottomOf="@id/description_label"
                 tools:text="LOREM IPSUM" />
 
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/share_position"
+                style="@style/text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/label_share_position"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_description" />
+
             <TextView
                 android:id="@+id/event_hotels"
                 style="@style/title.bold"
@@ -79,7 +90,7 @@
                 android:text="@string/label_hotels"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_description" />
+                app:layout_constraintTop_toBottomOf="@id/share_position" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_hotels_list"

@@ -7,6 +7,7 @@
     <string name="title_notifications">Notifications</string>
 
     <string name="date_label">dal %1$s al %2$s</string>
+    <string name="date_time_label">%1$s: %2$s-%3$s</string>
     <string name="label_description">Descrizione</string>
     <string name="label_open_maps">Raggiungi l\'evento</string>
     <string name="label_hotels">Hotels</string>
@@ -43,4 +44,8 @@
     <string name="label_time_22">22:00</string>
     <string name="label_time_23">23:00</string>
     <string name="label_time_24">24:00</string>
+    <string name="label_share_position">Condividi la tua posizione con gli altri partecipanti</string>
+    <string name="label_start_share_position">Inizio condivisione posizione…</string>
+    <string name="label_location_update">Posizione attuale: %1$f, %2$f</string>
+    <string name="label_remove_location_updates">stop</string>
 </resources>

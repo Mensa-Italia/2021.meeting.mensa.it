@@ -107,9 +107,7 @@ class EventCalendarSlide : Fragment() {
                     activityName.text = eventItemWithDate.name.asHtml()
                     activityDescription.text = eventItemWithDate.description.asHtml()
 
-                    activityDay.text = eventItemWithDate.dateFrom.dayString()
-                    activityTimeTo.text = eventItemWithDate.dateTo.hourMinuteString()
-                    activityTimeFrom.text = eventItemWithDate.dateFrom.hourMinuteString()
+                    activityDate.text = resources.getString(R.string.date_time_label, eventItemWithDate.dateFrom.dayString(), eventItemWithDate.dateFrom.hourMinuteString() , eventItemWithDate.dateTo.hourMinuteString())
 
                     activityDetailButton.setOnClickListener {
                         findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(eventItemWithDate))

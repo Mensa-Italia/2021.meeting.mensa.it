@@ -1,28 +1,35 @@
 package swaix.dev.mensaeventi.ui.events
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import swaix.dev.mensaeventi.BuildConfig
 import swaix.dev.mensaeventi.R
+import swaix.dev.mensaeventi.adapters.CalendarFragmentAdapter
 import swaix.dev.mensaeventi.adapters.EventContactAdapter
 import swaix.dev.mensaeventi.adapters.EventExtraAdapter
-import swaix.dev.mensaeventi.adapters.CalendarFragmentAdapter
 import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.EventDetailFragmentBinding
 import swaix.dev.mensaeventi.model.EventItemWithDate
 import swaix.dev.mensaeventi.model.ResponseGetEventDetails
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.*
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -32,14 +39,59 @@ class EventDetailFragment : BaseFragment() {
 
     private val args: EventDetailFragmentArgs by navArgs()
 
+
+    lateinit var permissionRequest: ActivityResultLauncher<Array<String>>
+    private var enableShareLocation = MutableLiveData(State.TO_BE_ASKED)
+
+    companion object {
+        val LOCATION_PERMISSIONS = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val locationPermissionsArray = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+
+        permissionRequest =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                val state = if (permissions.entries.filter { it.value == true }.size == locationPermissionsArray.size)
+                    State.GRANTED
+                else
+                    State.DENIED
+                enableShareLocation.postValue(state)
+            }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return EventDetailFragmentBinding.inflate(inflater, container, false).root
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: ???")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause: ????")
+    }
+
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+
         with(EventDetailFragmentBinding.bind(view)) {
 
+            baseViewModel.locationServiceEnable.observe(viewLifecycleOwner, {
+                sharePosition.isChecked = it
+            })
 
             eventDetailsToolbar.eventName.text = (args.item.name + " " + args.item.dateFrom.yearString()).asHtml()
 
@@ -77,12 +129,8 @@ class EventDetailFragment : BaseFragment() {
             })
 
             eventHotelsList.adapter = EventExtraAdapter {
-//                Toast.makeText(requireContext(), "Cliccato ${it.name} - TBD??", Toast.LENGTH_LONG).show()
                 findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
             }
-//            eventActivityList.adapter = EventActivityAdapter {
-//                findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
-//            }
             eventSuggestionsList.adapter = EventExtraAdapter {
                 findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
             }
@@ -102,22 +150,7 @@ class EventDetailFragment : BaseFragment() {
                             it.dateFrom.shortDayString()
                         }
 
-//                    eventTest.data = value.eventActivities
-//                    eventTest.startCalc()
-
-                    calendarDaysPager.adapter = CalendarFragmentAdapter(this@EventDetailFragment, value )
-
-//                    calendarDaysPager.adapter = EventCalendarAdapter(
-//                        days,
-//                        {
-//                            findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
-//                        },
-//                        {
-//                            val gmmIntentUri = Uri.parse("google.navigation:q=${it.position.latitude},${it.position.longitude}")
-//                            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-//                            mapIntent.setPackage("com.google.android.apps.maps")
-//                            startActivity(mapIntent)
-//                        })
+                    calendarDaysPager.adapter = CalendarFragmentAdapter(this@EventDetailFragment, value)
 
 
                     TabLayoutMediator(calendarDaysTabs, calendarDaysPager) { tab, position ->
@@ -127,6 +160,30 @@ class EventDetailFragment : BaseFragment() {
                     (eventSuggestionsList.adapter as EventExtraAdapter).updateDataset(value.eventsSuggestions)
                     (eventContactList.adapter as EventContactAdapter).updateContacts(value.eventsContacts)
 
+                    enableShareLocation.observe(viewLifecycleOwner) {
+                        it?.let { state ->
+                            when (state) {
+                                State.GRANTED ->
+                                    if (sharePosition.isChecked) {
+                                        LocationForegroundService.startLocationService(requireContext())
+                                    } else {
+                                        LocationForegroundService.stopLocationService(requireContext())
+                                    }
+                                State.DENIED ->
+                                    Toast.makeText(requireContext(), "DEVI DARE I PMERMESSI STRUNZ", Toast.LENGTH_LONG).show()
+                                State.TO_BE_ASKED -> {
+
+                                }
+                            }
+                        }
+
+                    }
+
+                    sharePosition.isEnabled = Date().before(value.dateFrom) && Date().after(value.dateTo) || BuildConfig.MOCK_DATA
+
+                    sharePosition.setOnClickListener { _ ->
+                        permissionRequest.launch(LOCATION_PERMISSIONS)
+                    }
 
                 }
 

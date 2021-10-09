@@ -33,7 +33,6 @@
         style="@style/text.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="@id/activity_background"
         app:layout_constraintEnd_toEndOf="@id/activity_background"
         app:layout_constraintStart_toStartOf="@id/activity_background"
@@ -41,59 +40,28 @@
         tools:text="CAZZO" />
 
     <TextView
+        android:id="@+id/activity_date"
+        style="@style/title.bold"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="@id/activity_background"
+        app:layout_constraintStart_toStartOf="@id/activity_name"
+        app:layout_constraintTop_toBottomOf="@id/activity_background"
+        tools:text="24 november" />
+    <TextView
         android:id="@+id/activity_description"
         style="@style/text"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:ellipsize="end"
         android:alpha="0"
-        android:paddingStart="16dp"
         android:paddingTop="4dp"
-        android:paddingEnd="16dp"
         android:paddingBottom="4dp"
-        app:layout_constraintEnd_toEndOf="@id/activity_background"
-        app:layout_constraintStart_toStartOf="@id/activity_background"
-        app:layout_constraintTop_toBottomOf="@id/activity_background" />
-
-    <TextView
-        android:id="@+id/activity_day"
-        style="@style/title.bold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:alpha="0"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_description"
-        tools:text="24 november" />
-
-    <TextView
-        android:id="@+id/activity_time_from"
-        style="@style/title.bold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:alpha="0"
-        android:gravity="center"
-        android:paddingBottom="2dp"
-        app:layout_constraintEnd_toStartOf="@id/activity_time_to"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_day"
-        tools:text="9:00" />
-
-    <TextView
-        android:id="@+id/activity_time_to"
-        style="@style/title.bold"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:alpha="0"
-        android:gravity="center"
-        android:paddingBottom="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/activity_time_from"
-        app:layout_constraintTop_toBottomOf="@id/activity_day"
-        tools:text="19:00" />
+        app:layout_constraintEnd_toEndOf="@id/activity_date"
+        app:layout_constraintStart_toStartOf="@id/activity_date"
+        app:layout_constraintTop_toBottomOf="@id/activity_date" />
 
     <ImageView
         android:id="@+id/activity_detail_button"
@@ -120,6 +88,5 @@
         app:layout_constraintEnd_toStartOf="@id/activity_detail_button"
         app:layout_constraintStart_toStartOf="@id/activity_time_from"
         app:layout_constraintTop_toBottomOf="@id/activity_time_from" />
-
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
