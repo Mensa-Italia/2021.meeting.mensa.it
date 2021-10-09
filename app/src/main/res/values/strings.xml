@@ -19,6 +19,8 @@
     <string name="label_contacts">Contatti</string>
     <string name="label_mensa_event">Eventi mensa</string>
     <string name="email_title">Invia una email</string>
+    <string name="no_events_label">Non ci sono eventi da visualizzare. Riprovare più tardi</string>
+    <string name="no_data_event_label">Dettagli evento non disponibili</string>
     <string name="label_time_00">00:00</string>
     <string name="label_time_01">01:00</string>
     <string name="label_time_02">02:00</string>

@@ -17,7 +17,23 @@ fun <T> T.log(): T {
     return this
 }
 
-fun mockEmpty() = ResponseGetEvents(listOf())
+// fun mockEmpty() = ResponseGetEvents(listOf())
+
+
+
+//fun mockNoEventItemWithDate() = ResponseGetEventDetails(
+//    1, "Roma", "",
+//    dateFormat.parse("23/11/2022") ?: Date(),
+//    dateFormat.parse("25/11/2022") ?: Date(),
+//    ItemType.EVENT,
+//    "https://lh3.googleusercontent.com/proxy/NlEMIJcoTJjFSzTI6qWThU_ok-wFibpowhD-gGcL3DPcCKLALL_KK47lNAdMQ6OJxwBQzx_r3fCKZw7yAT98CYBJZn2y3CgwDH7WC8fYeVNbdVpWgMJSe3WykQW0szozjRE",
+//    Position("via vedremo", "bla bla bla", 41.9109, 12.4818),
+//    "",
+//    "",
+//    "",
+//    listOf(), listOf(), listOf(), listOf()).log()
+
+
 
 fun mockGetEventResponse() = ResponseGetEvents(
     listOf(
