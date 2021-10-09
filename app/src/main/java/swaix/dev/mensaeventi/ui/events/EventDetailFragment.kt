@@ -1,27 +1,22 @@
 package swaix.dev.mensaeventi.ui.events
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import swaix.dev.mensaeventi.R
-import swaix.dev.mensaeventi.adapters.EventCalendarAdapter
 import swaix.dev.mensaeventi.adapters.EventContactAdapter
 import swaix.dev.mensaeventi.adapters.EventExtraAdapter
+import swaix.dev.mensaeventi.adapters.CalendarFragmentAdapter
 import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.EventDetailFragmentBinding
 import swaix.dev.mensaeventi.model.EventItemWithDate
@@ -44,6 +39,7 @@ class EventDetailFragment : BaseFragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(EventDetailFragmentBinding.bind(view)) {
+
 
             eventDetailsToolbar.eventName.text = (args.item.name + " " + args.item.dateFrom.yearString()).asHtml()
 
@@ -106,17 +102,22 @@ class EventDetailFragment : BaseFragment() {
                             it.dateFrom.shortDayString()
                         }
 
-                    calendarDaysPager.adapter = EventCalendarAdapter(
-                        days,
-                        {
-                            findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
-                        },
-                        {
-                            val gmmIntentUri = Uri.parse("google.navigation:q=${it.position.latitude},${it.position.longitude}")
-                            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-                            mapIntent.setPackage("com.google.android.apps.maps")
-                            startActivity(mapIntent)
-                        })
+//                    eventTest.data = value.eventActivities
+//                    eventTest.startCalc()
+
+                    calendarDaysPager.adapter = CalendarFragmentAdapter(this@EventDetailFragment, value )
+
+//                    calendarDaysPager.adapter = EventCalendarAdapter(
+//                        days,
+//                        {
+//                            findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(it))
+//                        },
+//                        {
+//                            val gmmIntentUri = Uri.parse("google.navigation:q=${it.position.latitude},${it.position.longitude}")
+//                            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+//                            mapIntent.setPackage("com.google.android.apps.maps")
+//                            startActivity(mapIntent)
+//                        })
 
 
                     TabLayoutMediator(calendarDaysTabs, calendarDaysPager) { tab, position ->

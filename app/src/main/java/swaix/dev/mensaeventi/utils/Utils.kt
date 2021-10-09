@@ -4,14 +4,27 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
+import android.graphics.Color
 import android.net.Uri
 import android.widget.Toast
+import androidx.annotation.IdRes
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.Item
+import kotlin.random.Random
 
+fun Int.Companion.randomColor(): Int{
+    return Color.argb(255,
+        Random.nextInt(256),
+        Random.nextInt(256),
+        Random.nextInt(256))
+}
+
+fun Context.getIdResByName(name: String):  Int {
+    return resources.getIdentifier(name,"id", packageName)
+}
 
 fun Fragment.setContactClickListener(it: Item) {
     when (it) {

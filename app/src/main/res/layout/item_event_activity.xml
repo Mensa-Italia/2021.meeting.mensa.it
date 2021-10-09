@@ -101,7 +101,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
         android:src="@android:drawable/ic_dialog_info"
-        app:layout_constraintBottom_toTopOf="@+id/directions"
+        app:layout_constraintBottom_toTopOf="@+id/activity_direction_button"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/divider_guide_right"
@@ -109,7 +109,7 @@
         app:tint="@color/accent" />
 
     <ImageView
-        android:id="@+id/directions"
+        android:id="@+id/activity_direction_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@android:drawable/ic_menu_directions"

@@ -14,8 +14,16 @@ fun Date.yearString(): String {
 }
 
 fun Date.hourMinuteString(): String {
-    val yearFormat = SimpleDateFormat("HH:ss", Locale.ITALIAN)
+    val yearFormat = SimpleDateFormat("HH:mm", Locale.ITALIAN)
     return yearFormat.format(this)
+}
+fun Date.hour(): Int {
+    val yearFormat = SimpleDateFormat("HH", Locale.ITALIAN)
+    return yearFormat.format(this).toInt()
+}
+fun Date.minutes(): Int {
+    val yearFormat = SimpleDateFormat("mm", Locale.ITALIAN)
+    return yearFormat.format(this).toInt()
 }
 fun Date.dateString(): String {
     val yearFormat = SimpleDateFormat("dd MMMM yyyy HH:ss", Locale.ITALIAN)
