@@ -1,14 +1,15 @@
 package swaix.dev.mensaeventi.api
 
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 import swaix.dev.mensaeventi.model.*
 
 interface ApiService {
-    @GET("events.asp")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    @GET("getevents.asp")
     suspend fun getEvents(): Response<ResponseGetEvents>
 
-    @GET("eventDetails.asp")
-    suspend fun getEventDetails(@Path("eventID") id: String): Response<ResponseGetEventDetails>
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    @GET("geteventdetails.asp")
+    suspend fun getEventDetails(@Query("eventID") id: String): Response<ResponseGetEventDetails>
 }

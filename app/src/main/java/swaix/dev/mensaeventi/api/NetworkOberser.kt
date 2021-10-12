@@ -16,6 +16,7 @@ abstract class NetworkObserver<T>(private val loadingManager: LoadingManager?= n
             }
             is NetworkResult.Error -> {
                 onError(value.message)
+                loadingManager?.onLoading(false)
             }
             is NetworkResult.Loading -> {
                 loadingManager?.onLoading(value.isLoading)

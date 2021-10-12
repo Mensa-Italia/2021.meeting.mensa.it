@@ -50,4 +50,6 @@
     <string name="label_start_share_position">Inizio condivisione posizione…</string>
     <string name="label_location_update">Posizione attuale: %1$f, %2$f</string>
     <string name="label_remove_location_updates">stop</string>
+    <string name="label_login">login</string>
+    <string name="label_check_in">CHECK-IN</string>
 </resources>

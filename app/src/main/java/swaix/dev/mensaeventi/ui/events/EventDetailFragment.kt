@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -39,48 +38,52 @@ class EventDetailFragment : BaseFragment() {
 
     private val args: EventDetailFragmentArgs by navArgs()
 
-
+    lateinit var binding: EventDetailFragmentBinding
     lateinit var permissionRequest: ActivityResultLauncher<Array<String>>
-    private var enableShareLocation = MutableLiveData(State.TO_BE_ASKED)
+    lateinit var cameraPermissionRequest: ActivityResultLauncher<Array<String>>
+
 
     companion object {
-        val LOCATION_PERMISSIONS = arrayOf(
+        private val LOCATION_PERMISSIONS = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
+        private val CAMERA_PERMISSIONS = arrayOf(
+            Manifest.permission.CAMERA
+        )
+
+        private const val STATE_LENS_FACING = "lens_facing"
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val locationPermissionsArray = arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
-
         permissionRequest =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-                val state = if (permissions.entries.filter { it.value == true }.size == locationPermissionsArray.size)
-                    State.GRANTED
+                if (permissions.entries.filter { it.value == true }.size == LOCATION_PERMISSIONS.size){
+                    if (binding.sharePosition.isChecked) {
+                        LocationForegroundService.startLocationService(requireContext())
+                    } else {
+                        LocationForegroundService.stopLocationService(requireContext())
+                    }
+                }
                 else
-                    State.DENIED
-                enableShareLocation.postValue(state)
+                    Toast.makeText(requireContext(), "DEVI DARE I PERMESSI MANUALMENTE", Toast.LENGTH_LONG).show()
+            }
+
+        cameraPermissionRequest =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                if (permissions.entries.filter { it.value == true }.size == CAMERA_PERMISSIONS.size)
+                    findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToBarcodeReaderFragment())
+                else
+                    Toast.makeText(requireContext(), "DEVI DARE I PERMESSI MANUALMENTE", Toast.LENGTH_LONG).show()
             }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return EventDetailFragmentBinding.inflate(inflater, container, false).root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume: ???")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause: ????")
+        binding = EventDetailFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     @SuppressLint("SetTextI18n")
@@ -164,29 +167,16 @@ class EventDetailFragment : BaseFragment() {
                     (eventSuggestionsList.adapter as EventExtraAdapter).updateDataset(value.eventsSuggestions)
                     (eventContactList.adapter as EventContactAdapter).updateContacts(value.eventsContacts)
 
-                    enableShareLocation.observe(viewLifecycleOwner) {
-                        it?.let { state ->
-                            when (state) {
-                                State.GRANTED ->
-                                    if (sharePosition.isChecked) {
-                                        LocationForegroundService.startLocationService(requireContext())
-                                    } else {
-                                        LocationForegroundService.stopLocationService(requireContext())
-                                    }
-                                State.DENIED ->
-                                    Toast.makeText(requireContext(), "DEVI DARE I PMERMESSI STRUNZ", Toast.LENGTH_LONG).show()
-                                State.TO_BE_ASKED -> {
 
-                                }
-                            }
-                        }
 
+                    sharePosition.isEnabled = Date().before(value.dateFrom) && Date().after(value.dateTo) || BuildConfig.DEV
+
+                    sharePosition.setOnClickListener {
+                        permissionRequest.launch(LOCATION_PERMISSIONS)
                     }
 
-                    sharePosition.isEnabled = Date().before(value.dateFrom) && Date().after(value.dateTo) || BuildConfig.MOCK_DATA
-
-                    sharePosition.setOnClickListener { _ ->
-                        permissionRequest.launch(LOCATION_PERMISSIONS)
+                    checkIn.setOnClickListener {
+                        cameraPermissionRequest.launch(CAMERA_PERMISSIONS)
                     }
 
                 }
@@ -196,8 +186,7 @@ class EventDetailFragment : BaseFragment() {
     }
 
 
-
-    private fun checkForEmptyState(view: View, value: ResponseGetEventDetails){
+    private fun checkForEmptyState(view: View, value: ResponseGetEventDetails) {
         var counter = 0
         with(EventDetailFragmentBinding.bind(view)) {
             if (value.description.isEmpty()) counter++
@@ -225,6 +214,5 @@ class EventDetailFragment : BaseFragment() {
             emptyStateMessage.visibility = if (counter == 5) View.VISIBLE else View.GONE
         }
     }
-
 
 }

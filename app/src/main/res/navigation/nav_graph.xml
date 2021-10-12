@@ -26,12 +26,15 @@
         <action
             android:id="@+id/action_eventDetailFragment_to_eventDetailExtraFragment"
             app:destination="@id/eventDetailExtraFragment" />
+        <action
+            android:id="@+id/action_eventDetailFragment_to_barcodeReaderFragment"
+            app:destination="@id/barcodeReaderFragment" />
     </fragment>
     <fragment
         android:id="@+id/eventDetailExtraFragment"
         android:name="swaix.dev.mensaeventi.ui.events.EventDetailExtraFragment"
-        tools:layout="@layout/event_details_extra_fragment"
-        android:label="EventDetailExtraFragment" >
+        android:label="EventDetailExtraFragment"
+        tools:layout="@layout/event_details_extra_fragment">
         <argument
             android:name="extra"
             app:argType="swaix.dev.mensaeventi.model.EventItem" />
@@ -39,9 +42,15 @@
     <fragment
         android:id="@+id/eventCalendarSlide"
         android:name="swaix.dev.mensaeventi.ui.events.EventCalendarSlide"
-        android:label="EventCalendarSlide" >
+        android:label="EventCalendarSlide"
+        tools:layout="@layout/layout_timeline_calendar">
         <action
             android:id="@+id/action_eventCalendarSlide_to_eventDetailExtraFragment"
             app:destination="@id/eventDetailExtraFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/barcodeReaderFragment"
+        android:name="swaix.dev.mensaeventi.ui.barcode.BarcodeReaderFragment"
+        android:label="BarcodeReaderFragment"
+        tools:layout="@layout/barcode_reader_fragment" />
 </navigation>

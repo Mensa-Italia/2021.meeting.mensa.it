@@ -17,8 +17,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import swaix.dev.mensaeventi.R
 import android.os.HandlerThread
-
-
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 
 class LocationForegroundService : Service() {
@@ -26,7 +25,7 @@ class LocationForegroundService : Service() {
         private const val ACTION_START = "start"
         private const val ACTION_END = "end"
         private const val CHANNEL_ID = "LocationForegroundServiceChannel"
-        private const val NOTIFICATION_ID_SERVICE = 1
+//        private const val NOTIFICATION_ID_SERVICE = 1
         private const val FOREGROUND_NOTE_ID = 2
         const val NEW_LOCATION = "new_location"
         const val STOP_SERVICE = "stop_service"
@@ -72,7 +71,6 @@ class LocationForegroundService : Service() {
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private lateinit var mLocationCallback: LocationCallback
     var isRunning = false
-    private val handlerThread = HandlerThread("Service")
 
     override fun onCreate() {
         super.onCreate()
@@ -85,7 +83,7 @@ class LocationForegroundService : Service() {
                 try {
                     mFusedLocationClient.lastLocation
                         .addOnCompleteListener { task ->
-                            if (task.isSuccessful && task.result != null) {
+                            if (task.isSuccessful) {
                                 mLocation = task.result
                                 notify(NEW_LOCATION)
                                 val broadcastIntent = Intent()
