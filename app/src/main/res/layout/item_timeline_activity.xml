@@ -71,6 +71,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
         android:alpha="0"
+        android:visibility="gone"
         android:src="@drawable/ic_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/activity_time_to"
@@ -78,6 +79,7 @@
         app:layout_constraintTop_toBottomOf="@id/activity_time_to" />
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/activity_direction_button"
         android:layout_width="50dp"
         android:layout_height="50dp"

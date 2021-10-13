@@ -89,19 +89,19 @@ class EventContactAdapter(private val hasEmptyState: Boolean = false, private va
     override fun getItemViewType(position: Int): Int {
         return when {
             hasLoadingState && isLoading -> {
-//                Log.d(TAG, "${this::class.java.name} getItemViewType: LOADING_ROW")
+//                Timber.d("${this::class.java.name} getItemViewType: LOADING_ROW")
                 LOADING_ROW
             }
             hasEmptyState && dataSet.isEmpty() -> {
-//                Log.d(TAG, "${this::class.java.name} getItemViewType: EMPTY_ROW")
+//                Timber.d("${this::class.java.name} getItemViewType: EMPTY_ROW")
                 EMPTY_ROW
             }
             dataSet.isNotEmpty() && dataSet[position] is Item.Header -> {
-//                Log.d(TAG, "${this::class.java.name} getItemViewType: HEADER_ITEM")
+//                Timber.d("${this::class.java.name} getItemViewType: HEADER_ITEM")
                 HEADER_ITEM
             }
             else -> {
-//                Log.d(TAG, "${this::class.java.name} getItemViewType: ITEM_ROW")
+//                Timber.d("${this::class.java.name} getItemViewType: ITEM_ROW")
                 ITEM_ROW
             }
         }

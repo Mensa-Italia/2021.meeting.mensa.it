@@ -1,6 +1,5 @@
 package swaix.dev.mensaeventi.di
 
-import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -17,7 +16,7 @@ import swaix.dev.mensaeventi.api.ApiHelper
 import swaix.dev.mensaeventi.api.ApiHelperImpl
 import swaix.dev.mensaeventi.api.ApiService
 import swaix.dev.mensaeventi.repository.DataRepository
-import swaix.dev.mensaeventi.utils.TAG
+import timber.log.Timber
 import javax.inject.Singleton
 
 @Module
@@ -45,12 +44,12 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun getGson() : Gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm Z").create()
+    fun getGson(): Gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm Z").create()
 
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: String, gson: Gson): Retrofit {
-        Log.d(TAG, "provideRetrofit: $baseUrl")
+        Timber.d("provideRetrofit: $baseUrl")
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(baseUrl)

@@ -1,7 +1,6 @@
 package swaix.dev.mensaeventi.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,7 @@ import swaix.dev.mensaeventi.api.LoadingManager
 import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
 import swaix.dev.mensaeventi.model.ResponseGetEvents
-import swaix.dev.mensaeventi.utils.TAG
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -63,9 +62,9 @@ class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
 
     override fun onLoading(isLoading: Boolean) {
         if (isLoading) {
-            Log.d(TAG, "onLoading: $isLoading")
+            Timber.d("onLoading: $isLoading")
         } else {
-            Log.d(TAG, "onLoading: $isLoading")
+            Timber.d("onLoading: $isLoading")
         }
     }
 

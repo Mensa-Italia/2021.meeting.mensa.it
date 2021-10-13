@@ -31,15 +31,15 @@ abstract class GenericAdapter<R>(private val hasEmptyState: Boolean = false, pri
     override fun getItemViewType(position: Int): Int {
         return when {
             hasLoadingState && isLoading -> {
-//                Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: LOADING_ROW")
+//                Timber.d("${this@GenericAdapter::class.java.name} getItemViewType: LOADING_ROW")
                 LOADING_ROW
             }
             hasEmptyState && items.isEmpty() -> {
-//                Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: EMPTY_ROW")
+//                Timber.d("${this@GenericAdapter::class.java.name} getItemViewType: EMPTY_ROW")
                 EMPTY_ROW
             }
             else -> {
-//                Log.d(TAG, "${this@GenericAdapter::class.java.name} getItemViewType: ITEM_ROW")
+//                Timber.d("${this@GenericAdapter::class.java.name} getItemViewType: ITEM_ROW")
                 ITEM_ROW
             }
         }

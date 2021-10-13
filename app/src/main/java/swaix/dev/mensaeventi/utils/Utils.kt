@@ -4,9 +4,11 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import swaix.dev.mensaeventi.R
@@ -80,4 +82,8 @@ fun String.openInBrowser(context: Context) {
 }
 
 
+
+fun Context.hasPermissions(vararg permissions: String) = permissions.all {
+    ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+}
 

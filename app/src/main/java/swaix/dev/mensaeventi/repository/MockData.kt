@@ -1,9 +1,8 @@
 package swaix.dev.mensaeventi.repository
 
-import android.util.Log
 import com.google.gson.GsonBuilder
 import swaix.dev.mensaeventi.model.*
-import swaix.dev.mensaeventi.utils.TAG
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -13,12 +12,11 @@ var dateTimeFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 fun <T> T.log(): T {
     val gson = GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm Z").create()
     val json = gson.toJson(this)
-    Log.d(TAG, "*** TO JSON *** $json")
+    Timber.d("*** TO JSON *** $json")
     return this
 }
 
 // fun mockEmpty() = ResponseGetEvents(listOf())
-
 
 
 //fun mockNoEventItemWithDate() = ResponseGetEventDetails(
@@ -34,11 +32,12 @@ fun <T> T.log(): T {
 //    listOf(), listOf(), listOf(), listOf()).log()
 
 
-
 fun mockGetEventResponse() = ResponseGetEvents(
     listOf(
         EventItemWithDate(
-            1, "Roma", "Porca Putténa! Nel mio ufficio non tollero uranisti te l'ho detto mille volte di non chiamarmi vecchio; abbiamo mangiato salame e prosciutto affrettato? M'avete preso per un coglione sono nichilista, nun me rompe li cojoni. I ricchioni si dividono in due grandi categorie è una famiglia schifosa; io vado a messa ogni domenica mattina? Marcolino un giorno ti dò una bottiglieta d'amaro qua a tracolla te la dò io beneficio benissimo così; che cagachezzo che è questo.",
+            1,
+            "Roma",
+            "Porca Putténa! Nel mio ufficio non tollero uranisti te l'ho detto mille volte di non chiamarmi vecchio; abbiamo mangiato salame e prosciutto affrettato? M'avete preso per un coglione sono nichilista, nun me rompe li cojoni. I ricchioni si dividono in due grandi categorie è una famiglia schifosa; io vado a messa ogni domenica mattina? Marcolino un giorno ti dò una bottiglieta d'amaro qua a tracolla te la dò io beneficio benissimo così; che cagachezzo che è questo.",
             dateFormat.parse("23/11/2022") ?: Date(),
             dateFormat.parse("25/11/2022") ?: Date(),
             ItemType.EVENT,
@@ -75,7 +74,9 @@ fun mockGetEventResponse() = ResponseGetEvents(
 
 
 fun mockGetEventDetailsResponse() = ResponseGetEventDetails(
-    1, "Roma", "Porca Putténa! Nel mio ufficio non tollero uranisti te l'ho detto mille volte di non chiamarmi vecchio; abbiamo mangiato salame e prosciutto affrettato? M'avete preso per un coglione sono nichilista, nun me rompe li cojoni. I ricchioni si dividono in due grandi categorie è una famiglia schifosa; io vado a messa ogni domenica mattina? Marcolino un giorno ti dò una bottiglieta d'amaro qua a tracolla te la dò io beneficio benissimo così; che cagachezzo che è questo.",
+    1,
+    "Roma",
+    "Porca Putténa! Nel mio ufficio non tollero uranisti te l'ho detto mille volte di non chiamarmi vecchio; abbiamo mangiato salame e prosciutto affrettato? M'avete preso per un coglione sono nichilista, nun me rompe li cojoni. I ricchioni si dividono in due grandi categorie è una famiglia schifosa; io vado a messa ogni domenica mattina? Marcolino un giorno ti dò una bottiglieta d'amaro qua a tracolla te la dò io beneficio benissimo così; che cagachezzo che è questo.",
     dateFormat.parse("23/11/2022") ?: Date(),
     dateFormat.parse("25/11/2022") ?: Date(),
     ItemType.EVENT,

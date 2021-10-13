@@ -6,9 +6,7 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -16,9 +14,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.databinding.LayoutSearchBarLabelBinding
-
-
-
+import timber.log.Timber
 
 
 @SuppressLint("ClickableViewAccessibility")
@@ -57,7 +53,7 @@ class SearchBarLabel @JvmOverloads constructor(
             searchLabel.text = titleString
             root.setTransitionListener(object : TransitionListener {
                 override fun onTransitionStarted(motionLayout: MotionLayout, i: Int, i1: Int) {
-                    Log.i(TAG, "onTransitionStarted: ")
+                    Timber.i("onTransitionStarted: ")
                 }
 
                 override fun onTransitionChange(motionLayout: MotionLayout, i: Int, i1: Int, v: Float) {

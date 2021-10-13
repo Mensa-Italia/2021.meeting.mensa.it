@@ -3,7 +3,6 @@ package swaix.dev.mensaeventi.ui.events
 import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +27,7 @@ import swaix.dev.mensaeventi.model.EventItemWithDate
 import swaix.dev.mensaeventi.model.ResponseGetEventDetails
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.*
+import timber.log.Timber
 import java.util.*
 
 
@@ -61,24 +61,31 @@ class EventDetailFragment : BaseFragment() {
 
         permissionRequest =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-                if (permissions.entries.filter { it.value == true }.size == LOCATION_PERMISSIONS.size){
-                    if (binding.sharePosition.isChecked) {
-                        LocationForegroundService.startLocationService(requireContext())
-                    } else {
-                        LocationForegroundService.stopLocationService(requireContext())
-                    }
-                }
-                else
+                if (permissions.entries.filter { it.value == true }.size == LOCATION_PERMISSIONS.size) {
+                    manageLocationService()
+                } else
                     Toast.makeText(requireContext(), "DEVI DARE I PERMESSI MANUALMENTE", Toast.LENGTH_LONG).show()
             }
 
         cameraPermissionRequest =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
                 if (permissions.entries.filter { it.value == true }.size == CAMERA_PERMISSIONS.size)
-                    findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToBarcodeReaderFragment(args.item))
+                    openBarcodeReader()
                 else
                     Toast.makeText(requireContext(), "DEVI DARE I PERMESSI MANUALMENTE", Toast.LENGTH_LONG).show()
             }
+    }
+
+    private fun openBarcodeReader() {
+        findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToBarcodeReaderFragment(args.item))
+    }
+
+    private fun manageLocationService() {
+        if (binding.sharePosition.isChecked) {
+            LocationForegroundService.startLocationService(requireContext())
+        } else {
+            LocationForegroundService.stopLocationService(requireContext())
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -118,7 +125,7 @@ class EventDetailFragment : BaseFragment() {
             eventHotelsSearch.addListener(object : SearchBarLabel.OnEventListener {
 
                 override fun onTextChanged(value: String) {
-                    Log.d(TAG, "onTextChanged: $value")
+                    Timber.d("onTextChanged: $value")
                     (eventHotelsList.adapter as EventExtraAdapter).filter(value)
                 }
             })
@@ -126,7 +133,7 @@ class EventDetailFragment : BaseFragment() {
             eventSuggestionsSearch.addListener(object : SearchBarLabel.OnEventListener {
 
                 override fun onTextChanged(value: String) {
-                    Log.d(TAG, "onTextChanged: $value")
+                    Timber.d("onTextChanged: $value")
                     (eventSuggestionsList.adapter as EventExtraAdapter).filter(value)
                 }
             })
@@ -172,11 +179,17 @@ class EventDetailFragment : BaseFragment() {
                     sharePosition.isEnabled = Date().before(value.dateFrom) && Date().after(value.dateTo) || BuildConfig.DEV
 
                     sharePosition.setOnClickListener {
-                        permissionRequest.launch(LOCATION_PERMISSIONS)
+                        if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
+                            manageLocationService()
+                        else
+                            permissionRequest.launch(LOCATION_PERMISSIONS)
                     }
 
                     checkIn.setOnClickListener {
-                        cameraPermissionRequest.launch(CAMERA_PERMISSIONS)
+                        if (requireContext().hasPermissions(*CAMERA_PERMISSIONS))
+                            openBarcodeReader()
+                        else
+                            cameraPermissionRequest.launch(CAMERA_PERMISSIONS)
                     }
 
                 }
@@ -184,6 +197,42 @@ class EventDetailFragment : BaseFragment() {
             })
         }
     }
+
+/*
+    private fun getRequiredPermissions(): Array<String?> {
+        return try {
+            val info: PackageInfo = requireActivity().packageManager.getPackageInfo(requireActivity().packageName, PackageManager.GET_PERMISSIONS)
+            val ps = info.requestedPermissions
+            if (ps != null && ps.isNotEmpty()) {
+                ps
+            } else {
+                arrayOfNulls(0)
+            }
+        } catch (e: Exception) {
+            arrayOfNulls(0)
+        }
+    }
+
+    private fun allPermissionsGranted(): Boolean {
+        for (permission in getRequiredPermissions()) {
+            permission?.let {
+                if (!isPermissionGranted(requireContext(), it)) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    private fun isPermissionGranted(context: Context, permission: String): Boolean {
+        if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+        ) {
+            Timber.i("Permission granted: $permission")
+            return true
+        }
+        Timber.i("Permission NOT granted: $permission")
+        return false
+    }*/
 
 
     private fun checkForEmptyState(view: View, value: ResponseGetEventDetails) {

@@ -10,14 +10,12 @@ import android.location.Location
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import swaix.dev.mensaeventi.R
-import android.os.HandlerThread
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import timber.log.Timber
 
 
 class LocationForegroundService : Service() {
@@ -25,7 +23,8 @@ class LocationForegroundService : Service() {
         private const val ACTION_START = "start"
         private const val ACTION_END = "end"
         private const val CHANNEL_ID = "LocationForegroundServiceChannel"
-//        private const val NOTIFICATION_ID_SERVICE = 1
+
+        //        private const val NOTIFICATION_ID_SERVICE = 1
         private const val FOREGROUND_NOTE_ID = 2
         const val NEW_LOCATION = "new_location"
         const val STOP_SERVICE = "stop_service"
@@ -90,11 +89,11 @@ class LocationForegroundService : Service() {
                                 broadcastIntent.action = NEW_LOCATION
                                 sendBroadcast(broadcastIntent)
                             } else {
-                                Log.w(TAG, "Failed to get location.")
+                                Timber.w("Failed to get location.")
                             }
                         }
                 } catch (unlikely: SecurityException) {
-                    Log.e(TAG, "Lost location permission.$unlikely")
+                    Timber.e("Lost location permission.$unlikely")
                 }
             }
         }
@@ -127,16 +126,12 @@ class LocationForegroundService : Service() {
 
 
     private fun notify(action: String) {
-        var notifyCheckForeground = false
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        val notifications = notificationManager.activeNotifications
-        for (notification in notifications) {
-            if (notification.id == FOREGROUND_NOTE_ID) {
-                notifyCheckForeground = true
-                break
-            }
-        }
-        Log.v(javaClass.simpleName, "Is foreground visible: $notifyCheckForeground")
+       val notifyCheckForeground=  notificationManager.activeNotifications.filter {
+            it.id == FOREGROUND_NOTE_ID
+        }.any()
+
+        Timber.v("Is foreground visible: $notifyCheckForeground")
         if (notifyCheckForeground) {
             notificationManager.notify(FOREGROUND_NOTE_ID, buildForegroundNotification(action))
         } else {

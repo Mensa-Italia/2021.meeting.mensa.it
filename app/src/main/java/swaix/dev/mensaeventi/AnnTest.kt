@@ -1,7 +1,6 @@
 package swaix.dev.mensaeventi
 
-import android.util.Log
-import swaix.dev.mensaeventi.utils.TAG
+import timber.log.Timber
 
 
 abstract class TestSuite {
@@ -19,7 +18,7 @@ abstract class TestSuite {
     init {
         getTests().forEach {
 //            executeTest {
-                it.executeSteps()
+            it.executeSteps()
 //            }
         }
     }
@@ -29,20 +28,20 @@ abstract class TestSuite {
 abstract class Test(private val steps: () -> Unit) {
     fun executeSteps() {
         // DO SOMETHING
-        Log.d(TAG, "prima dei test")
+        Timber.d("prima dei test")
         steps.invoke()
-        Log.d(TAG, "dopo dei test")
+        Timber.d("dopo dei test")
         // DO SOMETHING ELSE
     }
 }
 
 class T1 : Test({
-    Log.d(TAG, "corpo t1")
+    Timber.d("corpo t1")
     // definire gli steps
 })
 
 class T2 : Test({
-    Log.d(TAG, "corpo t2")
+    Timber.d("corpo t2")
     // definire gli steps
 })
 
