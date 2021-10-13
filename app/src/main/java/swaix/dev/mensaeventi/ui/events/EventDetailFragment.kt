@@ -75,7 +75,7 @@ class EventDetailFragment : BaseFragment() {
         cameraPermissionRequest =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
                 if (permissions.entries.filter { it.value == true }.size == CAMERA_PERMISSIONS.size)
-                    findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToBarcodeReaderFragment())
+                    findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToBarcodeReaderFragment(args.item))
                 else
                     Toast.makeText(requireContext(), "DEVI DARE I PERMESSI MANUALMENTE", Toast.LENGTH_LONG).show()
             }

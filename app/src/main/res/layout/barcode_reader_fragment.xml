@@ -4,6 +4,131 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <uk.co.brightec.kbarcode.BarcodeView
+        android:id="@+id/view_barcode"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:previewScaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/camera_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/camera_bot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/camera_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/camera_left_inner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/camera_right_inner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6"/>
+
+<androidx.constraintlayout.widget.Guideline
+        android:id="@+id/camera_top_inner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4"/>
+
+<androidx.constraintlayout.widget.Guideline
+        android:id="@+id/camera_bottom_inner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/camera_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8"/>
 
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/button_anchor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9"/>
+
+    <View
+        android:elevation="5dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/camera_left"
+        app:layout_constraintTop_toTopOf="@id/camera_top"
+        app:layout_constraintEnd_toEndOf="@id/camera_left_inner"
+        app:layout_constraintBottom_toBottomOf="@id/camera_top_inner"
+        android:background="@drawable/background_green_top_left"/>
+
+    <View
+        android:elevation="5dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/camera_right_inner"
+        app:layout_constraintTop_toTopOf="@id/camera_top"
+        app:layout_constraintEnd_toEndOf="@id/camera_right"
+        app:layout_constraintBottom_toBottomOf="@id/camera_top_inner"
+        android:background="@drawable/background_green_top_right"/>
+
+    <View
+        android:elevation="5dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/camera_right_inner"
+        app:layout_constraintTop_toTopOf="@id/camera_bottom_inner"
+        app:layout_constraintEnd_toEndOf="@id/camera_right"
+        app:layout_constraintBottom_toBottomOf="@id/camera_bot"
+        android:background="@drawable/background_green_bottom_right"/>
+
+    <View
+        android:elevation="5dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/camera_left"
+        app:layout_constraintTop_toTopOf="@id/camera_bottom_inner"
+        app:layout_constraintEnd_toEndOf="@id/camera_left_inner"
+        app:layout_constraintBottom_toBottomOf="@id/camera_bot"
+        android:background="@drawable/background_green_bottom_left"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_qr_code"
+        android:padding="16dp"
+        android:elevation="16dp"
+        android:background="@drawable/background_rounded"
+        app:layout_constraintBottom_toBottomOf="@id/button_anchor"
+        app:layout_constraintTop_toTopOf="@id/button_anchor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="16dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

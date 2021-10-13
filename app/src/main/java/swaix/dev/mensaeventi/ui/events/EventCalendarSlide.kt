@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.transition.TransitionManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +19,6 @@ import swaix.dev.mensaeventi.databinding.LayoutTimelineCalendarBinding
 import swaix.dev.mensaeventi.model.EventItemWithDate
 import swaix.dev.mensaeventi.utils.*
 import java.util.*
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 
 class EventCalendarSlide : Fragment() {
 
@@ -29,7 +26,6 @@ class EventCalendarSlide : Fragment() {
         return LayoutTimelineCalendarBinding.inflate(inflater, container, false).root
     }
 
-    @ExperimentalTime
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         arguments?.let {
@@ -39,14 +35,6 @@ class EventCalendarSlide : Fragment() {
 
     }
 
-
-    @ExperimentalTime
-    fun daysDiff(c1: Calendar, c2: Calendar): Long {
-        val diffInMillis = c1.timeInMillis - c2.timeInMillis
-        return Duration.hours(diffInMillis).inWholeHours
-    }
-
-    @ExperimentalTime
     private fun LayoutTimelineCalendarBinding.bindView(data: List<EventItemWithDate>) {
 
         val minDate = data.map {
@@ -67,8 +55,6 @@ class EventCalendarSlide : Fragment() {
 
             c1.time = minDate
             c2.time = maxDate
-
-            val diff = daysDiff(c1, c2)
 
 
             val minHour = c1.get(Calendar.HOUR_OF_DAY)
@@ -94,8 +80,6 @@ class EventCalendarSlide : Fragment() {
             calendarFlow.referencedIds = listOfGridViewsId.toIntArray()
 
 
-            Log.d(TAG, "$diff ")
-
             val resultList = mutableListOf<Pair<EventItemWithDate, View>>()
 
             data.forEachIndexed { index, eventItemWithDate ->
@@ -107,7 +91,7 @@ class EventCalendarSlide : Fragment() {
                     activityName.text = eventItemWithDate.name.asHtml()
                     activityDescription.text = eventItemWithDate.description.asHtml()
 
-                    activityDate.text = resources.getString(R.string.date_time_label, eventItemWithDate.dateFrom.dayString(), eventItemWithDate.dateFrom.hourMinuteString() , eventItemWithDate.dateTo.hourMinuteString())
+                    activityDate.text = resources.getString(R.string.date_time_label, eventItemWithDate.dateFrom.dayString(), eventItemWithDate.dateFrom.hourMinuteString(), eventItemWithDate.dateTo.hourMinuteString())
 
                     activityDetailButton.setOnClickListener {
                         findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(eventItemWithDate))

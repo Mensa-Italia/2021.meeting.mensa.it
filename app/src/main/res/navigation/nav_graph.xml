@@ -52,5 +52,22 @@
         android:id="@+id/barcodeReaderFragment"
         android:name="swaix.dev.mensaeventi.ui.barcode.BarcodeReaderFragment"
         android:label="BarcodeReaderFragment"
-        tools:layout="@layout/barcode_reader_fragment" />
+        tools:layout="@layout/barcode_reader_fragment" >
+        <action
+            android:id="@+id/action_barcodeReaderFragment_to_checkInFragment"
+            app:destination="@id/checkInFragment"
+            app:popUpTo="@id/eventDetailFragment" />
+        <argument
+            android:name="event"
+            app:argType="swaix.dev.mensaeventi.model.EventItemWithDate" />
+    </fragment>
+    <dialog
+        android:id="@+id/checkInFragment"
+        android:name="swaix.dev.mensaeventi.ui.checkIn.CheckInFragment"
+        android:label="check_in_fragment"
+        tools:layout="@layout/check_in_fragment" >
+        <argument
+            android:name="event"
+            app:argType="swaix.dev.mensaeventi.model.EventItemWithDate" />
+    </dialog>
 </navigation>
