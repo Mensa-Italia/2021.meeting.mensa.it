@@ -69,7 +69,6 @@ class LocationForegroundService : Service() {
     }
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private lateinit var mLocationCallback: LocationCallback
-    var isRunning = false
 
     override fun onCreate() {
         super.onCreate()
@@ -111,12 +110,10 @@ class LocationForegroundService : Service() {
         if (ACTION_END == intent?.action) {
             stopForeground(true)
             stopSelf()
-            isRunning = false
             val broadcastIntent = Intent()
             broadcastIntent.action = STOP_SERVICE
             sendBroadcast(broadcastIntent)
         } else {
-            isRunning = true
             notify(intent?.action ?: "ERROR")
 
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
@@ -127,16 +124,26 @@ class LocationForegroundService : Service() {
 
     private fun notify(action: String) {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-       val notifyCheckForeground=  notificationManager.activeNotifications.filter {
-            it.id == FOREGROUND_NOTE_ID
-        }.any()
+        val notifyCheckForeground = notificationManager.isNotifyForeground(FOREGROUND_NOTE_ID)
 
         Timber.v("Is foreground visible: $notifyCheckForeground")
+
         if (notifyCheckForeground) {
             notificationManager.notify(FOREGROUND_NOTE_ID, buildForegroundNotification(action))
         } else {
             startForeground(FOREGROUND_NOTE_ID, buildForegroundNotification(action))
         }
+    }
+
+    fun isNotifyForeground(): Boolean {
+        return (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).isNotifyForeground(FOREGROUND_NOTE_ID)
+    }
+
+    private fun NotificationManager.isNotifyForeground(id: Int): Boolean {
+        val notifyCheckForeground = activeNotifications.filter {
+            it.id == id
+        }.any()
+        return notifyCheckForeground
     }
 
     private fun buildForegroundNotification(_action: String): Notification {

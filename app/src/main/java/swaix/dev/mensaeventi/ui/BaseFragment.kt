@@ -31,7 +31,7 @@ open class BaseFragment : Fragment() {
             ) {
                 val binder: LocationForegroundService.LocationForegroundServiceBinder = service as LocationForegroundService.LocationForegroundServiceBinder
                 val myService = binder.service
-                baseViewModel.locationServiceEnable.postValue(myService.isRunning)
+                baseViewModel.locationServiceEnable.postValue(myService.isNotifyForeground())
             }
 
             override fun onServiceDisconnected(arg0: ComponentName) {}

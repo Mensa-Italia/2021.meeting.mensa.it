@@ -67,7 +67,7 @@
         android:label="check_in_fragment"
         tools:layout="@layout/check_in_fragment" >
         <argument
-            android:name="event"
-            app:argType="swaix.dev.mensaeventi.model.EventItemWithDate" />
+            android:name="eventId"
+            app:argType="integer" />
     </dialog>
 </navigation>
