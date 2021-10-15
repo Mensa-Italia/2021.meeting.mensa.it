@@ -38,7 +38,8 @@
 
     <TextView
         android:id="@+id/time_from"
-        style="@style/text.bold"
+        style="@style/LatoBold.14"
+        android:textColor="@color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -51,7 +52,8 @@
 
     <TextView
         android:id="@+id/time_to"
-        style="@style/text.bold"
+        style="@style/LatoBold.14"
+        android:textColor="@color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -63,7 +65,8 @@
 
     <TextView
         android:id="@+id/event_activity_name"
-        style="@style/text.bold"
+        style="@style/LatoBold.14"
+        android:textColor="@color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
@@ -79,7 +82,8 @@
 
     <TextView
         android:id="@+id/event_activity_descrition"
-        style="@style/text"
+        style="@style/LatoRegular.14"
+        android:textColor="@color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"

@@ -46,8 +46,7 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
             if (args.extra is EventItemWithDate) {
                 with((args.extra as EventItemWithDate)) {
                     activityDay.text = dateFrom.dayString()
-                    activityTimeTo.text = dateTo.hourMinuteString()
-                    activityTimeFrom.text = dateFrom.hourMinuteString()
+                    activityTime.text = dateFrom.hourMinuteString() + " - " + dateTo.hourMinuteString()
                 }
             }
 

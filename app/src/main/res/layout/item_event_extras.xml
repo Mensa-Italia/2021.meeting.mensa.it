@@ -21,7 +21,8 @@
 
     <TextView
         android:id="@+id/extra_name"
-        style="@style/text.bold.white"
+        style="@style/LatoBold.14"
+        android:textColor="@color/white"
         android:layout_width="0dp"
         android:gravity="center"
         android:layout_height="wrap_content"

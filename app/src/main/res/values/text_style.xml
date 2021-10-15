@@ -35,4 +35,38 @@
     </style>
 
 
+    <!--Textsize-->
+    <style name="LatoRegular">
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+
+    <style name="LatoRegular.10">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="LatoRegular.14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="LatoRegular.24">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="LatoBold">
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+
+    <style name="LatoBold.10">
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="LatoBold.14">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="LatoBold.24">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+
 </resources>

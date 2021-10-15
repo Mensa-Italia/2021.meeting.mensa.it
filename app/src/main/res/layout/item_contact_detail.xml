@@ -20,6 +20,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        style="@style/LatoRegular.10"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/image"

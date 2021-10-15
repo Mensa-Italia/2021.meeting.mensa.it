@@ -33,7 +33,8 @@
 
     <TextView
         android:id="@+id/event_city"
-        style="@style/title.bold.white"
+        style="@style/LatoBold.24"
+        android:textColor="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
@@ -52,12 +53,14 @@
 
     <TextView
         android:id="@+id/date_label"
-        style="@style/date_style.white"
+        style="@style/LatoRegular.14"
+        android:textColor="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingEnd="8dp"
         android:paddingBottom="8dp"
         android:textAlignment="textEnd"
+        android:hyphenationFrequency="normal"
         app:layout_constraintBottom_toBottomOf="@id/imageEvent"
         app:layout_constraintEnd_toEndOf="@id/imageEvent"
         tools:text="dal 10 al 18 November 2021" />

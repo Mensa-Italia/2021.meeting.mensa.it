@@ -9,11 +9,12 @@
 
     <TextView
         android:id="@+id/dialog_title"
-        style="@style/title.bold"
+        style="@style/LatoBold.24"
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:padding="24dp"
-        android:text="Inserisci i tuoi dati:"
+        android:text="Inserisci i tuoi dati"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -89,6 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="CHECK-IN"
+        style="@style/LatoBold.14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dialog_check_in_mensa_id" />

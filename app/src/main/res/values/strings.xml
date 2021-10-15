@@ -51,6 +51,6 @@
     <string name="label_location_update">Posizione attuale: %1$f, %2$f</string>
     <string name="label_remove_location_updates">stop</string>
     <string name="label_login">login</string>
-    <string name="label_check_in">CHECK-IN</string>
+    <string name="label_check_in">Check-in</string>
     <string name="label_qr_code">Inquadra il QR-code</string>
 </resources>

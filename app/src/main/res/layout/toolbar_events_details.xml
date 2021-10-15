@@ -48,7 +48,8 @@
 
     <TextView
         android:id="@+id/event_name"
-        style="@style/title.bold.white"
+        style="@style/LatoBold.24"
+        android:textColor="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="16dp"

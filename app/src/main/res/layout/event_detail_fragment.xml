@@ -48,7 +48,8 @@
 
             <TextView
                 android:id="@+id/description_label"
-                style="@style/title.bold"
+                style="@style/LatoBold.24"
+                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -59,7 +60,8 @@
 
             <TextView
                 android:id="@+id/event_description"
-                style="@style/text"
+                style="@style/LatoRegular.14"
+                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingStart="16dp"
@@ -73,7 +75,8 @@
 
             <TextView
                 android:id="@+id/check_in"
-                style="@style/title.bold"
+                style="@style/LatoBold.24"
+                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -85,7 +88,8 @@
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/share_position"
-                style="@style/text"
+                style="@style/LatoRegular.14"
+                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -96,7 +100,8 @@
 
             <TextView
                 android:id="@+id/event_hotels"
-                style="@style/title.bold"
+                style="@style/LatoBold.24"
+                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -126,7 +131,8 @@
 
             <TextView
                 android:id="@+id/event_suggestions"
-                style="@style/title.bold"
+                style="@style/LatoBold.24"
+                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -156,7 +162,8 @@
 
             <TextView
                 android:id="@+id/event_contact_label"
-                style="@style/title.bold"
+                style="@style/LatoBold.24"
+                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
@@ -180,7 +187,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_600"
-                style="@style/title.bold"
+                style="@style/LatoBold.24"
                 android:text="@string/no_data_event_label"
                 android:padding="16dp"
                 android:gravity="center"

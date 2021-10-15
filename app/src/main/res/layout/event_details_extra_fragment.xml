@@ -35,84 +35,77 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/detail_event_color_with_alpha"
-        app:layout_constraintBottom_toBottomOf="@id/activity_time_to"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/googleMap" />
-
     <TextView
         android:id="@+id/name"
-        style="@style/title.bold.white"
+        style="@style/LatoBold.24"
+        android:textColor="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="16dp"
+        android:background="@color/primary_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/googleMap"
-        tools:text="ROMA" />
+        tools:text="Titolo" />
 
     <TextView
         android:id="@+id/activity_day"
-        style="@style/title.bold.white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:textColor="@color/black"
+        style="@style/LatoBold.14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name"
-        tools:text="24 november" />
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        tools:text="24 november"
+        app:drawableLeftCompat="@drawable/ic_calendar" />
 
     <TextView
-        android:id="@+id/activity_time_from"
-        style="@style/title.bold.white"
+        android:id="@+id/activity_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/LatoBold.14"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:gravity="center"
-        android:paddingBottom="8dp"
-        app:layout_constraintEnd_toStartOf="@id/activity_time_to"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/black"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/activity_day"
-        tools:text="9:00" />
-
-    <TextView
-        android:id="@+id/activity_time_to"
-        style="@style/title.bold.white"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:gravity="center"
-        android:paddingBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/activity_time_from"
-        app:layout_constraintTop_toBottomOf="@id/activity_day"
-        tools:text="19:00" />
+        tools:text="9:00 - 18:00"
+        app:drawableLeftCompat="@drawable/ic_clock" />
 
     <TextView
         android:id="@+id/activity_description"
-        style="@style/text"
+        style="@style/LatoRegular.14"
+        android:textColor="@color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_time_to"
+        app:layout_constraintTop_toBottomOf="@id/activity_time"
         tools:text="LOREM IPSUM" />
 
     <TextView
         android:id="@+id/event_detail_extra_contact_label"
-        style="@style/title.bold"
+        style="@style/LatoBold.24"
+        android:textColor="@color/black"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         android:text="@string/label_contacts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,6 +117,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
