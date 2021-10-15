@@ -63,12 +63,12 @@
             android:id="@+id/activity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:scaleX="1.5"
             android:scaleY="1.5"
-            motion:layout_constraintStart_toStartOf="@id/activity_background"
-            motion:layout_constraintTop_toTopOf="@id/activity_background" />
+            motion:layout_constraintStart_toStartOf="@id/activity_date"
+            motion:layout_constraintTop_toTopOf="@id/activity_background"
+            android:layout_marginStart="16dp" />
         <Constraint
             android:id="@+id/activity_date"
             android:layout_width="0dp"
@@ -76,8 +76,11 @@
             android:alpha="1"
             motion:layout_constraintBottom_toTopOf="@id/activity_day"
             motion:layout_constraintEnd_toEndOf="@id/activity_background"
-            motion:layout_constraintStart_toStartOf="@id/activity_name"
-            motion:layout_constraintTop_toBottomOf="@id/activity_name" />
+            motion:layout_constraintStart_toStartOf="@id/activity_background"
+            motion:layout_constraintTop_toBottomOf="@id/activity_name"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp" />
         <Constraint
             android:id="@+id/activity_description"
             android:layout_width="0dp"
@@ -86,20 +89,21 @@
             motion:layout_constraintBottom_toTopOf="@id/activity_detail_button"
             motion:layout_constraintEnd_toEndOf="@id/activity_date"
             motion:layout_constraintStart_toStartOf="@id/activity_date"
-            motion:layout_constraintTop_toBottomOf="@id/activity_date" />
+            motion:layout_constraintTop_toBottomOf="@id/activity_date"
+            android:layout_marginTop="8dp" />
 
         <Constraint
             android:id="@+id/activity_detail_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_marginBottom="8dp"
             android:visibility="visible"
             android:alpha="1"
             motion:layout_constraintBottom_toBottomOf="@id/activity_background"
             motion:layout_constraintEnd_toEndOf="@id/activity_background"
-            motion:layout_constraintStart_toEndOf="@id/activity_direction_button" />
+            motion:layout_constraintStart_toEndOf="@id/activity_direction_button"
+            motion:layout_constraintTop_toBottomOf="@+id/activity_description"
+            android:layout_marginTop="8dp" />
         <Constraint
             android:id="@+id/activity_direction_button"
             android:layout_width="50dp"
@@ -109,7 +113,19 @@
             android:visibility="visible"
             motion:layout_constraintBottom_toBottomOf="@id/activity_background"
             motion:layout_constraintEnd_toStartOf="@id/activity_detail_button"
-            motion:layout_constraintStart_toStartOf="@id/activity_background" />
+            motion:layout_constraintStart_toStartOf="@id/activity_background"
+            motion:layout_constraintTop_toBottomOf="@+id/activity_description"
+            android:layout_marginTop="8dp" />
+        <Constraint
+            android:id="@+id/background_icons"
+            motion:layout_constraintEnd_toEndOf="@id/activity_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@id/activity_background"
+            android:visibility="visible"
+            android:alpha="1"
+            motion:layout_constraintStart_toStartOf="@id/activity_background"
+            motion:layout_constraintTop_toBottomOf="@id/activity_description" />
 
     </ConstraintSet>
 </MotionScene>

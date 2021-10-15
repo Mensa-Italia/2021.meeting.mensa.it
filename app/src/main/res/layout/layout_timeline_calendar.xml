@@ -9,14 +9,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.12" />
 
     <TextView
         android:id="@+id/t00"
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_00" />
 
     <TextView
@@ -24,7 +26,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_01" />
 
     <TextView
@@ -32,7 +36,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_02" />
 
     <TextView
@@ -40,7 +46,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_03" />
 
     <TextView
@@ -48,7 +56,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_04" />
 
     <TextView
@@ -56,7 +66,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_05" />
 
     <TextView
@@ -64,7 +76,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_06" />
 
     <TextView
@@ -72,7 +86,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_07" />
 
     <TextView
@@ -80,7 +96,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_08" />
 
     <TextView
@@ -88,7 +106,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_09" />
 
     <TextView
@@ -96,7 +116,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_10" />
 
     <TextView
@@ -104,7 +126,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_11" />
 
     <TextView
@@ -112,7 +136,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_12" />
 
     <TextView
@@ -120,7 +146,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_13" />
 
     <TextView
@@ -128,7 +156,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_14" />
 
     <TextView
@@ -136,7 +166,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_15" />
 
     <TextView
@@ -144,7 +176,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_16" />
 
     <TextView
@@ -152,7 +186,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_17" />
 
     <TextView
@@ -160,7 +196,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_18" />
 
     <TextView
@@ -168,7 +206,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_19" />
 
     <TextView
@@ -176,7 +216,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_20" />
 
     <TextView
@@ -184,7 +226,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_21" />
 
     <TextView
@@ -192,7 +236,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_22" />
 
     <TextView
@@ -200,7 +246,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_23" />
 
     <TextView
@@ -208,7 +256,9 @@
         style="@style/LatoRegular.10"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:gravity="top|center_horizontal"
+        android:textColor="@color/black"
+        android:gravity="top"
+        android:paddingStart="6dp"
         android:text="@string/label_time_24" />
 
     <androidx.constraintlayout.helper.widget.Flow

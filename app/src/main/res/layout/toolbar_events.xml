@@ -25,7 +25,7 @@
 
     <TextView
         android:id="@+id/event_text"
-        style="@style/LatoBold.14"
+        style="@style/LatoBold.24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0"
