@@ -16,6 +16,11 @@ import swaix.dev.mensaeventi.utils.LocationForegroundService
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.NEW_LOCATION
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.START_SERVICE
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.STOP_SERVICE
+import android.content.pm.ApplicationInfo
+
+import android.content.pm.PackageManager
+import timber.log.Timber
+import java.lang.Exception
 
 
 @AndroidEntryPoint
@@ -38,6 +43,7 @@ class HomeActivity : AppCompatActivity() {
 //        with(binding.root) {
 //            setTransition(R.id.fab_closed, R.id.fab_middle)
 //        }
+
     }
 
 
