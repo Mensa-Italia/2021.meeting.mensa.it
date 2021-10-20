@@ -31,17 +31,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/background_gradient_alpha_rounded"
+        android:rotation="180"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="7:3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/event_city"
         style="@style/LatoBold.24"
         android:textColor="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:textAlignment="textEnd"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@id/imageEvent"
-        app:layout_constraintBottom_toTopOf="@id/date_label"
+        app:layout_constraintTop_toTopOf="@id/imageEvent"
         tools:text="ROMA" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -57,9 +68,8 @@
         android:textColor="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp"
-        android:textAlignment="textEnd"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:hyphenationFrequency="normal"
         app:layout_constraintBottom_toBottomOf="@id/imageEvent"
         app:layout_constraintEnd_toEndOf="@id/imageEvent"

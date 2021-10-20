@@ -8,7 +8,7 @@
     <gradient
         android:angle="15"
         android:centerColor="#0000"
-        android:centerY="45%"
+        android:centerY="65%"
         android:endColor="@color/detail_event_color_with_alpha"
         android:startColor="#0000"
         android:type="linear" />
