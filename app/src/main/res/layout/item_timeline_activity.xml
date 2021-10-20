@@ -72,7 +72,6 @@
         android:layout_height="0dp"
         android:alpha="0"
         android:background="@drawable/background_activity_timeline_icons"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/activity_background"
         app:layout_constraintEnd_toEndOf="@id/activity_background"
         app:layout_constraintStart_toStartOf="@id/activity_background" />

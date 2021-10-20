@@ -6,11 +6,13 @@
 
 
     <TextView
-        android:layout_marginStart="16dp"
         android:id="@+id/contact_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/LatoBold.14"
+        android:paddingBottom="4dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/primary_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

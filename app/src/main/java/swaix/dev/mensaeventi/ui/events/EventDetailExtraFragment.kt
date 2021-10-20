@@ -45,9 +45,14 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
             activityDescription.text = args.extra.description.asHtml()
             if (args.extra is EventItemWithDate) {
                 with((args.extra as EventItemWithDate)) {
+                    activityDay.visibility = if (dateFrom.dayString().isBlank()) View.GONE else View.VISIBLE
+                    activityTime.visibility = if (dateFrom.hourMinuteString().isBlank()) View.GONE else View.VISIBLE
                     activityDay.text = dateFrom.dayString()
                     activityTime.text = dateFrom.hourMinuteString() + " - " + dateTo.hourMinuteString()
                 }
+            } else {
+                activityDay.visibility = View.GONE
+                activityTime.visibility = View.GONE
             }
 
             eventDetailExtraContactList.adapter = EventContactAdapter {

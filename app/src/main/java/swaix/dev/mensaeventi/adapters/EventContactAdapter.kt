@@ -140,12 +140,12 @@ sealed class SealedContactBinding(binding: ViewBinding) : OnBindViewHolder(bindi
 
                 when (item) {
                     is Item.Telephone -> {
-                        image.setImageResource(R.drawable.ic_phone_call_icon)
+                        image.setImageResource(R.drawable.ic_phone)
                     }
-                    is Item.Email -> image.setImageResource(R.drawable.ic_email_icon)
+                    is Item.Email -> image.setImageResource(R.drawable.ic_mail)
                     is Item.Header -> {
                     }
-                    is Item.Link -> image.setImageResource(R.drawable.ic_web_icon)
+                    is Item.Link -> image.setImageResource(R.drawable.ic_link)
                 }
                 root.setOnClickListener {
                     onclick(item)
