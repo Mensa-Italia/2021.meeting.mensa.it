@@ -13,9 +13,11 @@ import javax.inject.Inject
 class EventsViewModel @Inject constructor(private val repository: DataRepository) : ViewModel() {
     private val _events: MutableLiveData<NetworkResult<ResponseGetEvents>> = MutableLiveData()
     private val _eventDetails: MutableLiveData<NetworkResult<ResponseGetEventDetails>> = MutableLiveData()
+    private val _isUserCheckedIn: MutableLiveData<NetworkResult<ResponseIsUserCheckedIn>> = MutableLiveData()
 
     val events: LiveData<NetworkResult<ResponseGetEvents>> = _events
     val eventDetails: LiveData<NetworkResult<ResponseGetEventDetails>> = _eventDetails
+    val isUserCheckedIn: LiveData<NetworkResult<ResponseIsUserCheckedIn>> = _isUserCheckedIn
 
     fun fetchEventsResponse() {
         viewModelScope.launch {
@@ -25,10 +27,18 @@ class EventsViewModel @Inject constructor(private val repository: DataRepository
         }
     }
 
-    fun fetEventDetails(id: String){
+    fun fetchEventDetails(id: String){
         viewModelScope.launch {
             repository.getEventDetails(id).collect {
                 _eventDetails.value = it
+            }
+        }
+    }
+
+    fun fetchIsUserCheckedIn(eventId: String){
+        viewModelScope.launch {
+            repository.isUserCheckedIn(eventId).collect {
+                _isUserCheckedIn.value = it
             }
         }
     }

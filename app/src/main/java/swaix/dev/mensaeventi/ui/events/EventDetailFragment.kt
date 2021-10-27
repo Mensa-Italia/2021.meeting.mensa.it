@@ -3,6 +3,7 @@ package swaix.dev.mensaeventi.ui.events
 import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import swaix.dev.mensaeventi.BuildConfig
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.CalendarFragmentAdapter
 import swaix.dev.mensaeventi.adapters.EventContactAdapter
@@ -25,6 +25,7 @@ import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.EventDetailFragmentBinding
 import swaix.dev.mensaeventi.model.EventItemWithDate
 import swaix.dev.mensaeventi.model.ResponseGetEventDetails
+import swaix.dev.mensaeventi.model.ResponseIsUserCheckedIn
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.*
 import timber.log.Timber
@@ -41,6 +42,7 @@ class EventDetailFragment : BaseFragment() {
     lateinit var binding: EventDetailFragmentBinding
     lateinit var permissionRequest: ActivityResultLauncher<Array<String>>
     lateinit var cameraPermissionRequest: ActivityResultLauncher<Array<String>>
+    private var eventId: String = ""
 
 
     companion object {
@@ -62,7 +64,7 @@ class EventDetailFragment : BaseFragment() {
         permissionRequest =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
                 if (permissions.entries.filter { it.value == true }.size == LOCATION_PERMISSIONS.size) {
-                    manageLocationService()
+                    manageLocationService(eventId)
                 } else
                     Toast.makeText(requireContext(), "DEVI DARE I PERMESSI MANUALMENTE", Toast.LENGTH_LONG).show()
             }
@@ -80,9 +82,9 @@ class EventDetailFragment : BaseFragment() {
         findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToBarcodeReaderFragment(args.item))
     }
 
-    private fun manageLocationService() {
-        if (binding.sharePosition.isChecked) {
-            LocationForegroundService.startLocationService(requireContext())
+    private fun manageLocationService(eventId: String) {
+        if (binding.sharePosition.isChecked && eventId.isNotEmpty()) {
+            LocationForegroundService.startLocationService(requireContext(), eventId)
         } else {
             LocationForegroundService.stopLocationService(requireContext())
         }
@@ -120,7 +122,7 @@ class EventDetailFragment : BaseFragment() {
 
             eventDescription.text = args.item.description.asHtml()
 
-            viewModel.fetEventDetails(args.item.id.toString())
+            viewModel.fetchEventDetails(args.item.id.toString())
 
             eventHotelsSearch.addListener(object : SearchBarLabel.OnEventListener {
 
@@ -174,16 +176,33 @@ class EventDetailFragment : BaseFragment() {
                     (eventSuggestionsList.adapter as EventExtraAdapter).updateDataset(value.eventsSuggestions)
                     (eventContactList.adapter as EventContactAdapter).updateContacts(value.eventsContacts)
 
+                    baseViewModel.hasCheckedIn.observe(viewLifecycleOwner, {
+                        if (!it.isNullOrEmpty()) {
+                            if (requireContext().isLogged())
+                                viewModel.fetchIsUserCheckedIn(requireContext().getAccountPassword())
+                            baseViewModel.hasCheckedIn.postValue("")
+                        }
+                    })
+
+                    sharePosition.visibility = View.GONE
+                    if (requireContext().isLogged())
+                        viewModel.fetchIsUserCheckedIn(requireContext().getAccountPassword())
+                    viewModel.isUserCheckedIn.observe(viewLifecycleOwner, object : NetworkObserver<ResponseIsUserCheckedIn>() {
+                        override fun onSuccess(value: ResponseIsUserCheckedIn) {
+                            eventId = value.eventId
+                            TransitionManager.beginDelayedTransition(root)
+                            sharePosition.visibility = if (value.isCheckedIn) View.VISIBLE else View.GONE
+                            sharePosition.setOnClickListener {
+                                if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
+                                    manageLocationService(value.eventId)
+                                else
+                                    permissionRequest.launch(LOCATION_PERMISSIONS)
+                            }
+                        }
+                    })
 
 
-                    sharePosition.isEnabled = Date().before(value.dateFrom) && Date().after(value.dateTo) || BuildConfig.DEV
 
-                    sharePosition.setOnClickListener {
-                        if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
-                            manageLocationService()
-                        else
-                            permissionRequest.launch(LOCATION_PERMISSIONS)
-                    }
 
                     checkIn.setOnClickListener {
                         if (requireContext().hasPermissions(*CAMERA_PERMISSIONS))

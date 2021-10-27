@@ -13,18 +13,26 @@ import android.os.IBinder
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import com.google.android.gms.location.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
+import swaix.dev.mensaeventi.repository.DataRepository
 import timber.log.Timber
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class LocationForegroundService : Service() {
     companion object {
         private const val ACTION_START = "start"
         private const val ACTION_END = "end"
         private const val CHANNEL_ID = "LocationForegroundServiceChannel"
 
-        //        private const val NOTIFICATION_ID_SERVICE = 1
         private const val FOREGROUND_NOTE_ID = 2
         const val NEW_LOCATION = "new_location"
         const val STOP_SERVICE = "stop_service"
@@ -35,9 +43,10 @@ class LocationForegroundService : Service() {
         const val MAX_WAIT_TIME: Long = UPDATE_INTERVAL_IN_MILLISECONDS * 2
         const val FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS: Long = UPDATE_INTERVAL_IN_MILLISECONDS / 2
 
-        fun startLocationService(context: Context) {
+        fun startLocationService(context: Context, eventId: String) {
             val intent = Intent(context, LocationForegroundService::class.java)
             intent.action = ACTION_START
+            intent.putExtras(bundleOf(EVENT_ID to eventId))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)
             } else {
@@ -54,11 +63,13 @@ class LocationForegroundService : Service() {
                 context.startService(intent)
             }
         }
-
-
     }
 
 
+    @Inject
+    lateinit var repository: DataRepository
+
+    private var eventId: String? = null
     private val mBinder: IBinder = LocationForegroundServiceBinder()
     private lateinit var mLocation: Location
     private val mLocationRequest: LocationRequest = LocationRequest.create().apply {
@@ -87,6 +98,14 @@ class LocationForegroundService : Service() {
                                 val broadcastIntent = Intent()
                                 broadcastIntent.action = NEW_LOCATION
                                 sendBroadcast(broadcastIntent)
+
+                                if (baseContext.isLogged() && !eventId.isNullOrEmpty()) {
+                                    CoroutineScope(Dispatchers.IO + Job()).launch {
+                                        repository.pushPosition(eventId!!, baseContext.getAccountPassword(), mLocation.latitude, mLocation.longitude).collect {
+                                            Timber.d("PositionUpdated : ${it.message}")
+                                        }
+                                    }
+                                }
                             } else {
                                 Timber.w("Failed to get location.")
                             }
@@ -116,6 +135,7 @@ class LocationForegroundService : Service() {
         } else {
             notify(intent?.action ?: "ERROR")
 
+            eventId = intent?.extras?.getString(EVENT_ID)
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
         }
         return START_NOT_STICKY

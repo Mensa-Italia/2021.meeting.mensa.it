@@ -15,8 +15,8 @@ class ResponseGetEventDetails(
     mail: String,
     link: String,
     telephoneNumber: String,
-    val eventActivities: List<EventItemWithDate>,
-    val eventHotel: List<EventItem>,
-    val eventsSuggestions: List<EventItem>,
-    val eventsContacts: List<EventItem>,
+    val eventActivities: List<EventItemWithDate> = listOf(),
+    val eventHotel: List<EventItem> = listOf(),
+    val eventsSuggestions: List<EventItem> = listOf(),
+    val eventsContacts: List<EventItem> = listOf(),
 ) : EventItemWithDate(id, name, description, dateFrom, dateTo, type, imageURL, position, mail, link, telephoneNumber), Serializable

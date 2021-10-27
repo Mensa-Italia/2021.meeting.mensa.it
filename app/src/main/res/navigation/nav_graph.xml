@@ -68,6 +68,6 @@
         tools:layout="@layout/check_in_fragment" >
         <argument
             android:name="eventId"
-            app:argType="integer" />
+            app:argType="string" />
     </dialog>
 </navigation>

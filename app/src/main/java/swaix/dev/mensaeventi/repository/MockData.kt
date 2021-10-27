@@ -72,6 +72,7 @@ fun mockGetEventResponse() = ResponseGetEvents(
     )
 ).log()
 
+fun mockPutUser() = AckResponse(ResponseValue.OK)
 
 fun mockGetEventDetailsResponse() = ResponseGetEventDetails(
     1,

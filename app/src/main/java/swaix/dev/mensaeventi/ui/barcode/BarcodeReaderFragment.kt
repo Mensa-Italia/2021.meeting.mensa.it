@@ -45,7 +45,7 @@ class BarcodeReaderFragment : BaseFragment() {
                         showErrorMessage(it)
                     }else{
                         viewBarcode.vibrate()
-                        findNavController().navigate(BarcodeReaderFragmentDirections.actionBarcodeReaderFragmentToCheckInFragment(parsed.idEvent.toInt()))
+                        findNavController().navigate(BarcodeReaderFragmentDirections.actionBarcodeReaderFragmentToCheckInFragment(parsed.idEvent))
                     }
                 } catch (i: JsonSyntaxException) {
                     showErrorMessage(it)
