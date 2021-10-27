@@ -189,18 +189,21 @@ class EventDetailFragment : BaseFragment() {
                         viewModel.fetchIsUserCheckedIn(requireContext().getAccountPassword())
                     viewModel.isUserCheckedIn.observe(viewLifecycleOwner, object : NetworkObserver<ResponseIsUserCheckedIn>() {
                         override fun onSuccess(value: ResponseIsUserCheckedIn) {
-                            eventId = value.eventId
+                            eventId = value.eventIdQR
                             TransitionManager.beginDelayedTransition(root)
-                            sharePosition.visibility = if (value.isCheckedIn) View.VISIBLE else View.GONE
+                            sharePosition.visibility = if (value.isCheckedIn && value.eventId == args.item.id) View.VISIBLE else View.GONE
                             sharePosition.setOnClickListener {
                                 if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
-                                    manageLocationService(value.eventId)
+                                    manageLocationService(value.eventIdQR)
                                 else
                                     permissionRequest.launch(LOCATION_PERMISSIONS)
                             }
+
+                            descriptionLabel.setOnClickListener {
+                                findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
+                            }
                         }
                     })
-
 
 
 

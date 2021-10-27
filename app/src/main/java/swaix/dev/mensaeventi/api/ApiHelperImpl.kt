@@ -11,5 +11,5 @@ class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
     override suspend fun putUser(name: String, surname: String, eventId: String, mensaId: String): Response<AckResponse> = apiService.putUser(name, surname, eventId, mensaId, Date().dateString())
     override suspend fun isUserCheckedIn(mensaId: String): Response<ResponseIsUserCheckedIn> = apiService.isUserCheckedIn(mensaId)
     override suspend fun putUserPosition(eventId: String,  mensaId: String,latitude: Double, longitude: Double): Response<AckResponse> = apiService.putUserPosition(eventId, mensaId, latitude, longitude)
-    override suspend fun getUsersPositions(eventId: String, mensaId: String): Response<ResponseGetEventDetails> = apiService.getUsersPositions(eventId, mensaId)
+    override suspend fun getUsersPositions(eventId: String, mensaId: String): Response<ResponseGetUserPositions> = apiService.getUsersPositions(eventId, mensaId)
 }

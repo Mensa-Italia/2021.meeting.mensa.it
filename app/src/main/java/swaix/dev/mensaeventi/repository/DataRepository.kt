@@ -1,6 +1,7 @@
 package swaix.dev.mensaeventi.repository
 
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import swaix.dev.mensaeventi.BuildConfig.MOCK_DATA
@@ -11,6 +12,7 @@ import swaix.dev.mensaeventi.model.*
 
 @ActivityRetainedScoped
 class DataRepository(private val apiHelper: ApiHelper) : BaseApiResponse() {
+
 
     suspend fun getEvents(): Flow<NetworkResult<ResponseGetEvents>> {
         return flow {
@@ -70,5 +72,25 @@ class DataRepository(private val apiHelper: ApiHelper) : BaseApiResponse() {
                 emit(NetworkResult.Loading(false))
             }
         }
+    }
+
+    var activateUserPositionFetch = false
+
+    suspend fun getUserPositions(eventId: String, mensaId: String): Flow<NetworkResult<ResponseGetUserPositions>> {
+        activateUserPositionFetch = true
+        return flow {
+            if (MOCK_DATA) {
+//                emit(NetworkResult.Success(mockGetEventDetailsResponse()))
+            } else {
+                while(activateUserPositionFetch) {
+                    emit(safeApiCall { apiHelper.getUsersPositions(eventId, mensaId) })
+                    delay(10000)
+                }
+            }
+        }
+    }
+
+    fun stopGetUserPositions() {
+        activateUserPositionFetch = false
     }
 }

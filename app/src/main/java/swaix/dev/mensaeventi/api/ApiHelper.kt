@@ -9,5 +9,5 @@ interface ApiHelper {
     suspend fun putUser(name: String, surname: String, eventId: String, mensaId: String): Response<AckResponse>
     suspend fun isUserCheckedIn(mensaId: String): Response<ResponseIsUserCheckedIn>
     suspend fun putUserPosition(eventId: String,  mensaId: String,latitude: Double, longitude: Double): Response<AckResponse>
-    suspend fun getUsersPositions(eventId: String, mensaId: String): Response<ResponseGetEventDetails>
+    suspend fun getUsersPositions(eventId: String, mensaId: String): Response<ResponseGetUserPositions>
 }

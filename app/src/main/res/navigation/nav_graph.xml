@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_eventDetailFragment_to_barcodeReaderFragment"
             app:destination="@id/barcodeReaderFragment" />
+        <action
+            android:id="@+id/action_eventDetailFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/eventDetailExtraFragment"
@@ -70,4 +73,14 @@
             android:name="eventId"
             app:argType="string" />
     </dialog>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="swaix.dev.mensaeventi.ui.map.MapFragment"
+        android:label="map_fragment"
+        tools:layout="@layout/map_fragment" >
+        <argument
+            android:name="eventId"
+            app:argType="string" />
+        <argument android:name="mensaId" />
+    </fragment>
 </navigation>

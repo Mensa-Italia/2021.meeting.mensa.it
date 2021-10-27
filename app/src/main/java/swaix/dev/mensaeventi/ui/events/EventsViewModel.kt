@@ -1,11 +1,17 @@
 package swaix.dev.mensaeventi.ui.events
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.api.NetworkResult
-import swaix.dev.mensaeventi.model.*
+import swaix.dev.mensaeventi.model.ResponseGetEventDetails
+import swaix.dev.mensaeventi.model.ResponseGetEvents
+import swaix.dev.mensaeventi.model.ResponseGetUserPositions
+import swaix.dev.mensaeventi.model.ResponseIsUserCheckedIn
 import swaix.dev.mensaeventi.repository.DataRepository
 import javax.inject.Inject
 
@@ -21,13 +27,13 @@ class EventsViewModel @Inject constructor(private val repository: DataRepository
 
     fun fetchEventsResponse() {
         viewModelScope.launch {
-            repository.getEvents().collect { values->
+            repository.getEvents().collect { values ->
                 _events.value = values
             }
         }
     }
 
-    fun fetchEventDetails(id: String){
+    fun fetchEventDetails(id: String) {
         viewModelScope.launch {
             repository.getEventDetails(id).collect {
                 _eventDetails.value = it
@@ -35,12 +41,11 @@ class EventsViewModel @Inject constructor(private val repository: DataRepository
         }
     }
 
-    fun fetchIsUserCheckedIn(eventId: String){
+    fun fetchIsUserCheckedIn(eventId: String) {
         viewModelScope.launch {
             repository.isUserCheckedIn(eventId).collect {
                 _isUserCheckedIn.value = it
             }
         }
     }
-
 }

@@ -4,10 +4,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
-import swaix.dev.mensaeventi.model.ResponseGetEventDetails
-import swaix.dev.mensaeventi.model.ResponseGetEvents
-import swaix.dev.mensaeventi.model.AckResponse
-import swaix.dev.mensaeventi.model.ResponseIsUserCheckedIn
+import swaix.dev.mensaeventi.model.*
 
 interface ApiService {
     @Headers("Content-Type:application/json; charset=ISO-8859-1")
@@ -32,5 +29,5 @@ interface ApiService {
 
     @Headers("Content-Type:application/json; charset=ISO-8859-1")
     @GET("getUsersPositions.asp")
-    suspend fun getUsersPositions(@Query("idevento") eventId: String, @Query("idutenteunivoco") mensaId: String): Response<ResponseGetEventDetails>
+    suspend fun getUsersPositions(@Query("idevento") eventId: String, @Query("idutenteunivoco") mensaId: String): Response<ResponseGetUserPositions>
 }
