@@ -26,7 +26,6 @@
         android:layout_height="0dp"
         android:background="@drawable/background_gradient_alpha_rounded"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="7:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -37,7 +36,6 @@
         android:background="@drawable/background_gradient_alpha_rounded"
         android:rotation="180"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="7:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -74,8 +72,5 @@
         app:layout_constraintBottom_toBottomOf="@id/imageEvent"
         app:layout_constraintEnd_toEndOf="@id/imageEvent"
         tools:text="dal 10 al 18 November 2021" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
