@@ -200,7 +200,10 @@ class EventDetailFragment : BaseFragment() {
                             }
 
                             descriptionLabel.setOnClickListener {
-                                findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
+                                if (sharePosition.isChecked)
+                                    findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
+                                else
+                                    Toast.makeText(requireContext(), "Per visualizzare la posizione degli altri devi attivare la condivisione della tua posizione", Toast.LENGTH_LONG).show()
                             }
                         }
                     })

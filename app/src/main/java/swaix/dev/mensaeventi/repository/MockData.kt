@@ -72,7 +72,22 @@ fun mockGetEventResponse() = ResponseGetEvents(
     )
 ).log()
 
+fun mockIsUserCheckedIn() = ResponseIsUserCheckedIn(
+    true,
+    1,
+    "D3DD69A3444B8443805DAEF45B62AE6706952F76942360372B6B344151F0456E",
+)
+
 fun mockPutUser() = AckResponse(ResponseValue.OK)
+
+fun muckGetUserPositions() = ResponseGetUserPositions(
+    listOf(
+        UserPosition("a", "a", 41.8618483,12.5635183 ),
+        UserPosition("b", "b", 41.8618483,12.5635183 ),
+        UserPosition("c", "c", 41.8618483,12.5635183 ),
+        UserPosition("d", "d", 41.8618483,12.5635183 ),
+    )
+)
 
 fun mockGetEventDetailsResponse() = ResponseGetEventDetails(
     1,

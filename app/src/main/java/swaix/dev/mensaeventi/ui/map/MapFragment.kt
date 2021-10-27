@@ -13,20 +13,22 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.clustering.ClusterItem
+import com.google.maps.android.clustering.ClusterManager
 import dagger.hilt.android.AndroidEntryPoint
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.api.LoadingManager
 import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
 import swaix.dev.mensaeventi.model.ResponseGetUserPositions
+import swaix.dev.mensaeventi.model.UserPosition
 import timber.log.Timber
 
 
 @AndroidEntryPoint
 class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
 
-    private lateinit var mMap: GoogleMap
+    private lateinit var map: GoogleMap
 
     private val args: MapFragmentArgs by navArgs()
     private val viewModel: MapViewModel by viewModels()
@@ -56,33 +58,11 @@ class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
+        map = googleMap
         viewModel.userPositions.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetUserPositions>(this) {
             override fun onSuccess(value: ResponseGetUserPositions) {
-                if (value.positions.any()) {
-                    value.positions.forEach {
-                        val marker = LatLng(it.latitude, it.longitude)
-                        mMap.addMarker(MarkerOptions().position(marker).title(it.name + " " + it.surname))
-                    }
-
-                    val minItem = value.positions.find {
-                        it.latitude == value.positions.minOf { min ->
-                            min.latitude
-                        }
-                    }
-                    val maxItem = value.positions.find {
-                        it.latitude == value.positions.maxOf { max ->
-                            max.latitude
-                        }
-                    }
-                    if (maxItem != null && minItem != null) {
-                        val bounds = LatLngBounds(LatLng(minItem.latitude, minItem.longitude), LatLng(maxItem.latitude, maxItem.longitude))
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bounds.center, 12f))
-                    }
-                }
+                setUpClusterer(value.positions)
             }
-
         })
         // Add a marker in Sydney and move the camera
     }
@@ -93,6 +73,72 @@ class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
         } else {
             Timber.d("onLoading: $isLoading")
         }
+    }
+
+    // Declare a variable for the cluster manager.
+    private lateinit var clusterManager: ClusterManager<MyItem>
+
+    private fun setUpClusterer(positions: List<UserPosition>) {
+        // Position the map.
+
+        // Initialize the manager with the context and the map.
+        // (Activity extends context, so we can pass 'this' in the constructor.)
+        clusterManager = ClusterManager(context, map)
+
+        // Point the map's listeners at the listeners implemented by the cluster
+        // manager.
+        map.setOnCameraIdleListener(clusterManager)
+//        map.setOnMarkerClickListener(clusterManager)
+
+        addItems(positions)
+
+    }
+    var isFirstTime = true
+
+    private fun addItems(positions: List<UserPosition>) {
+
+        clusterManager.clearItems()
+        if (positions.any()) {
+            val builder = LatLngBounds.builder()
+            positions.forEach {
+                val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name)
+                clusterManager.addItem(item)
+                builder.include(LatLng(it.latitude, it.longitude))
+            }
+            if(isFirstTime) {
+                val bounds = builder.build()
+                val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
+                map.moveCamera(cu)
+                map.animateCamera(CameraUpdateFactory.zoomTo(13f), 2000, null)
+                isFirstTime = false
+            }
+        }
+        clusterManager.cluster()
+    }
+
+
+
+    inner class MyItem(
+        lat: Double,
+        lng: Double,
+        private val title: String,
+        private val snippet: String
+    ) : ClusterItem {
+
+        private val position: LatLng = LatLng(lat, lng)
+
+        override fun getPosition(): LatLng {
+            return position
+        }
+
+        override fun getTitle(): String {
+            return title
+        }
+
+        override fun getSnippet(): String {
+            return snippet
+        }
+
     }
 
 

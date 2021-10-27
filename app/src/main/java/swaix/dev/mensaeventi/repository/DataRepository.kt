@@ -53,7 +53,7 @@ class DataRepository(private val apiHelper: ApiHelper) : BaseApiResponse() {
     suspend fun isUserCheckedIn(eventId: String): Flow<NetworkResult<ResponseIsUserCheckedIn>> {
         return flow {
             if (MOCK_DATA) {
-//                emit(NetworkResult.Success(mockGetEventDetailsResponse()))
+                emit(NetworkResult.Success(mockIsUserCheckedIn()))
             } else {
                 emit(NetworkResult.Loading(true))
                 emit(safeApiCall { apiHelper.isUserCheckedIn(eventId) })
@@ -65,7 +65,7 @@ class DataRepository(private val apiHelper: ApiHelper) : BaseApiResponse() {
     suspend fun pushPosition(eventId: String, mensaId: String, latitude: Double, longitude: Double): Flow<NetworkResult<AckResponse>> {
         return flow {
             if (MOCK_DATA) {
-//                emit(NetworkResult.Success(mockGetEventDetailsResponse()))
+                emit(NetworkResult.Success(mockPutUser()))
             } else {
                 emit(NetworkResult.Loading(true))
                 emit(safeApiCall { apiHelper.putUserPosition(eventId, mensaId, latitude, longitude) })
@@ -80,7 +80,7 @@ class DataRepository(private val apiHelper: ApiHelper) : BaseApiResponse() {
         activateUserPositionFetch = true
         return flow {
             if (MOCK_DATA) {
-//                emit(NetworkResult.Success(mockGetEventDetailsResponse()))
+                emit(NetworkResult.Success(muckGetUserPositions()))
             } else {
                 while(activateUserPositionFetch) {
                     emit(safeApiCall { apiHelper.getUsersPositions(eventId, mensaId) })
