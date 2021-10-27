@@ -18,7 +18,7 @@
     <string name="label_activities">Calendario</string>
     <string name="label_no_data">Nessun Elemento</string>
     <string name="label_contacts">Contatti</string>
-    <string name="label_mensa_event">Eventi mensa</string>
+    <string name="label_mensa_event">Mensa Eventi</string>
     <string name="email_title">Invia una email</string>
     <string name="no_events_label">Non ci sono eventi da visualizzare. Riprovare più tardi</string>
     <string name="no_data_event_label">Dettagli evento non disponibili</string>

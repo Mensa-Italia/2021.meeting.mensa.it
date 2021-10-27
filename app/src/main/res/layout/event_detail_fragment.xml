@@ -132,7 +132,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_hotels_list"
                 android:layout_width="0dp"
-                android:layout_height="215dp"
+                android:layout_height="140dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +167,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_suggestions_list"
                 android:layout_width="0dp"
-                android:layout_height="215dp"
+                android:layout_height="140dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"

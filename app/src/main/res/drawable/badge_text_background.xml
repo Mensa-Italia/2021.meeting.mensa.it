@@ -4,8 +4,8 @@
         android:angle="15"
         android:centerY="5%"
         android:startColor="#0000"
-        android:centerColor="#5000"
-        android:endColor="@color/restaurant_badge_color_bg"
+        android:centerColor="#0000"
+        android:endColor="@color/black"
         android:type="linear"        />
 
     <corners android:bottomLeftRadius="16dp" android:bottomRightRadius="16dp"

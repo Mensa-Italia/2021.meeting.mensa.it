@@ -43,6 +43,7 @@ class EventExtraViewHolder(binding: ItemEventExtrasBinding) : OnBindViewHolder(b
         with(ItemEventExtrasBinding.bind(itemView)) {
 
             extraName.text = item.name
+            extraName.background = ContextCompat.getDrawable(itemView.context, R.drawable.badge_text_background)
 
             Glide.with(itemView.context)
                 .load(item.imageURL)
@@ -54,12 +55,10 @@ class EventExtraViewHolder(binding: ItemEventExtrasBinding) : OnBindViewHolder(b
 
             when(item.type){
                 ItemType.HOTEL -> {
-                    extraName.background = ContextCompat.getDrawable(itemView.context, R.drawable.badge_hotel_text_background)
-                    badge.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.badge_hotel_icon))
+//                    badge.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.badge_hotel_icon))
                 }
                 ItemType.RESTAURANT -> {
-                    extraName.background = ContextCompat.getDrawable(itemView.context, R.drawable.badge_restaurant_text_background)
-                    badge.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.badge_restaurant_icon))
+//                    badge.setImageDrawable(ContextCompat.getDrawable(itemView.context, R.drawable.badge_restaurant_icon))
                 }
                 else ->{}
             }

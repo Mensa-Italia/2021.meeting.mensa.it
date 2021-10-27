@@ -89,6 +89,7 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
                     showInfoWindow()
                 }?.setIcon(
                     requireContext().bitmapFromVector(
+                        // TODO cambiare icone
                         when (args.extra.type) {
                             ItemType.HOTEL -> R.drawable.ic_hotel
                             ItemType.RESTAURANT -> R.drawable.ic_restaurant
