@@ -54,4 +54,7 @@
     <string name="label_login">login</string>
     <string name="label_check_in">Check-in</string>
     <string name="label_qr_code">Inquadra il QR-code</string>
+    <string name="confirm_label">Conferma</string>
+    <string name="cancel_label">Annulla</string>
+    <string name="insert_your_data_label">Inserisci i tuoi dati</string>
 </resources>
