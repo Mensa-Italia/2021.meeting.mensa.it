@@ -43,7 +43,7 @@
     <TextView
         android:id="@+id/event_city"
         style="@style/LatoBold.24"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -63,7 +63,7 @@
     <TextView
         android:id="@+id/date_label"
         style="@style/LatoRegular.14"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

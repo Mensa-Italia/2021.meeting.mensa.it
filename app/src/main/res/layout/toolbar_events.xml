@@ -31,7 +31,7 @@
         android:alpha="0"
         android:padding="16dp"
         android:text="@string/label_mensa_event"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="@id/logo_mensa"
         app:layout_constraintStart_toEndOf="@id/logo_mensa"
         app:layout_constraintTop_toTopOf="@id/logo_mensa" />

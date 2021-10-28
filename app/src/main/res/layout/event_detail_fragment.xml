@@ -86,7 +86,6 @@
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/share_position"
                 style="@style/LatoRegular.14"
-                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -113,7 +112,6 @@
             <TextView
                 android:id="@+id/event_description"
                 style="@style/LatoRegular.14"
-                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -127,7 +125,6 @@
             <TextView
                 android:id="@+id/event_hotels"
                 style="@style/LatoBold.24"
-                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -162,7 +159,6 @@
             <TextView
                 android:id="@+id/event_suggestions"
                 style="@style/LatoBold.24"
-                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -197,7 +193,6 @@
             <TextView
                 android:id="@+id/event_contact_label"
                 style="@style/LatoBold.24"
-                android:textColor="@color/black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
