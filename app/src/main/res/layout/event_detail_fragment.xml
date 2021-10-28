@@ -61,34 +61,6 @@
                 app:layout_constraintTop_toBottomOf="@id/calendar_days_tabs" />
 
             <TextView
-                android:id="@+id/description_label"
-                style="@style/LatoBold.24"
-                android:textColor="@color/black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/label_description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/calendar_days_pager" />
-
-            <TextView
-                android:id="@+id/event_description"
-                style="@style/LatoRegular.14"
-                android:textColor="@color/black"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description_label"
-                tools:text="LOREM IPSUM" />
-
-            <TextView
                 android:id="@+id/check_in"
                 style="@style/LatoBold.24"
                 android:elevation="5dp"
@@ -109,7 +81,7 @@
                 android:text="@string/label_check_in"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/event_description" />
+                app:layout_constraintTop_toBottomOf="@id/calendar_days_pager" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/share_position"
@@ -125,6 +97,34 @@
                 app:layout_constraintTop_toBottomOf="@id/check_in" />
 
             <TextView
+                android:id="@+id/description_label"
+                style="@style/LatoBold.24"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/label_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/share_position" />
+
+            <TextView
+                android:id="@+id/event_description"
+                style="@style/LatoRegular.14"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_label"
+                tools:text="LOREM IPSUM" />
+
+            <TextView
                 android:id="@+id/event_hotels"
                 style="@style/LatoBold.24"
                 android:textColor="@color/black"
@@ -132,11 +132,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/label_hotels"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/share_position" />
+                app:layout_constraintTop_toBottomOf="@id/event_description" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/event_hotels_list"
