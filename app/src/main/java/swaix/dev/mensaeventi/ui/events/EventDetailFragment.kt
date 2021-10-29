@@ -201,9 +201,9 @@ class EventDetailFragment : BaseFragment() {
                                     else
                                         permissionRequest.launch(LOCATION_PERMISSIONS)
                                     showParticipants.visibility = if (sharePosition.isChecked) View.VISIBLE else View.GONE
-
                                 }
 
+                                showParticipants.visibility = if (sharePosition.isChecked) View.VISIBLE else View.GONE
                                 checkIn.visibility = View.GONE
                                 showParticipants.setOnClickListener {
                                     if (sharePosition.isChecked)
@@ -213,7 +213,6 @@ class EventDetailFragment : BaseFragment() {
                                 }
 
                             } else {
-
                                 showParticipants.visibility = View.GONE
                                 checkIn.visibility = View.VISIBLE
                                 sharePosition.visibility = View.GONE
