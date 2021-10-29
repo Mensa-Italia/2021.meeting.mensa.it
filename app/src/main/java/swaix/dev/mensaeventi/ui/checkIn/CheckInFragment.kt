@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.api.NetworkObserver
 import swaix.dev.mensaeventi.databinding.CheckInFragmentBinding
 import swaix.dev.mensaeventi.model.AckResponse
@@ -47,9 +48,19 @@ class CheckInFragment : DialogFragment() {
                 val name = dialogCheckInName.editText?.text.toString()
                 val surname = dialogCheckInSurname.editText?.text.toString()
                 val mensaId = dialogCheckInMensaId.editText?.text.toString()
-                requireContext().createAccount(name, surname, mensaId)
-
-                viewModel.saveUser(name, surname, args.eventId, mensaId)
+                if (name.isEmpty()){
+                    dialogCheckInName.editText?.error = resources.getString(R.string.mandatory_label)
+                }
+                if (surname.isEmpty()){
+                    dialogCheckInSurname.editText?.error = resources.getString(R.string.mandatory_label)
+                }
+                if (mensaId.isEmpty()){
+                    dialogCheckInMensaId.editText?.error = resources.getString(R.string.mandatory_label)
+                }
+                if (name.isNotEmpty() && surname.isNotEmpty() && mensaId.isNotEmpty()){
+                    requireContext().createAccount(name, surname, mensaId)
+                    viewModel.saveUser(name, surname, args.eventId, mensaId)
+                }
             }
 
             viewModel.putUserResp.observe(viewLifecycleOwner, object : NetworkObserver<AckResponse>() {

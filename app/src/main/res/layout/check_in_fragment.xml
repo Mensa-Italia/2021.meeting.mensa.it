@@ -7,46 +7,90 @@
     android:background="@drawable/background_rounded"
     tools:context=".ui.checkIn.CheckInFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.4"/>
-
     <ImageView
         android:id="@+id/logo_mensa_background"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:alpha="0.1"
         android:src="@drawable/logo_mensa"
-        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline_center_vertical"/>
+        app:layout_constraintStart_toEndOf="@id/guideline_center_vertical" />
 
     <TextView
         android:id="@+id/dialog_title"
         style="@style/LatoBold.24"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="48dp"
         android:gravity="center_vertical"
         android:text="@string/insert_your_data_label"
-        android:layout_marginStart="48dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dialog_checking_button"
+        style="@style/LatoBold.18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/background_rounded_blue"
+        android:elevation="5dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:text="@string/confirm_label"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_check_in_mensa_id" />
+
+    <TextView
+        android:id="@+id/dialog_close"
+        style="@style/LatoBold.18"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/background_rounded_blue"
+        android:elevation="5dp"
+        android:gravity="center"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:text="@string/cancel_label"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/dialog_checking_button"
+        app:layout_constraintStart_toStartOf="@id/dialog_checking_button"
+        app:layout_constraintTop_toBottomOf="@id/dialog_checking_button"
+        app:layout_constraintVertical_bias="0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dialog_check_in_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:endIconMode="clear_text"
+        app:endIconTint="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dialog_title">
@@ -54,7 +98,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome" />
+            android:inputType="text"
+            style="@style/EditTextStyle"
+            android:hint="@string/name_label" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -64,7 +110,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:endIconMode="clear_text"
+        app:endIconTint="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dialog_check_in_name">
@@ -72,7 +119,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Cognome" />
+            android:inputType="text"
+            style="@style/EditTextStyle"
+            android:hint="@string/surname_label" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -82,60 +131,18 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:endIconMode="clear_text"
+        app:endIconTint="?attr/colorPrimary"
         app:layout_constraintTop_toBottomOf="@id/dialog_check_in_surname">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mensa ID" />
+            android:inputType="text"
+            style="@style/EditTextStyle"
+            android:hint="@string/mensa_id_label" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/dialog_checking_button"
-        style="@style/LatoBold.18"
-        android:elevation="5dp"
-        android:textColor="@color/white"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:gravity="center_vertical"
-        android:background="@drawable/background_rounded_blue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/confirm_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dialog_check_in_mensa_id"  />
-
-    <TextView
-        android:id="@+id/dialog_close"
-        style="@style/LatoBold.18"
-        android:elevation="5dp"
-        android:textColor="@color/white"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:gravity="center_vertical"
-        android:background="@drawable/background_rounded_blue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/cancel_label"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dialog_checking_button"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

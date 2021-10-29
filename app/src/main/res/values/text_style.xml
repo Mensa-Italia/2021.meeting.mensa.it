@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--EditText-->
+    <style name="EditTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:lines">1</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="date_style" parent="TextAppearance.AppCompat.Small">
         <item name="android:hyphenationFrequency">normal</item>
     </style>
@@ -46,6 +59,10 @@
 
     <style name="LatoRegular.14">
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="LatoRegular.18">
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="LatoRegular.24">

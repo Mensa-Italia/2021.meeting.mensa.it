@@ -57,4 +57,9 @@
     <string name="confirm_label">Conferma</string>
     <string name="cancel_label">Annulla</string>
     <string name="insert_your_data_label">Inserisci i tuoi dati</string>
+    <string name="name_label">Nome</string>
+    <string name="surname_label">Cognome</string>
+    <string name="mensa_id_label">Mensa ID</string>
+    <string name="mandatory_label">Obbligatorio</string>
+
 </resources>
