@@ -187,28 +187,39 @@ class EventDetailFragment : BaseFragment() {
                     sharePosition.visibility = View.GONE
                     if (requireContext().isLogged())
                         viewModel.fetchIsUserCheckedIn(requireContext().getAccountPassword())
+
                     viewModel.isUserCheckedIn.observe(viewLifecycleOwner, object : NetworkObserver<ResponseIsUserCheckedIn>() {
                         override fun onSuccess(value: ResponseIsUserCheckedIn) {
                             eventId = value.eventIdQR
                             TransitionManager.beginDelayedTransition(root)
-                            sharePosition.visibility = if (value.isCheckedIn && value.eventId == args.item.id) View.VISIBLE else View.GONE
-                            sharePosition.setOnClickListener {
-                                if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
-                                    manageLocationService(value.eventIdQR)
-                                else
-                                    permissionRequest.launch(LOCATION_PERMISSIONS)
-                            }
+                            if (value.isCheckedIn && value.eventId == args.item.id) {
+                                sharePosition.visibility = View.VISIBLE
+                                sharePosition.setOnClickListener {
+                                    TransitionManager.beginDelayedTransition(root)
+                                    if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
+                                        manageLocationService(value.eventIdQR)
+                                    else
+                                        permissionRequest.launch(LOCATION_PERMISSIONS)
+                                    showParticipants.visibility = if (sharePosition.isChecked) View.VISIBLE else View.GONE
 
-                            descriptionLabel.setOnClickListener {
-                                if (sharePosition.isChecked)
-                                    findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
-                                else
-                                    Toast.makeText(requireContext(), "Per visualizzare la posizione degli altri devi attivare la condivisione della tua posizione", Toast.LENGTH_LONG).show()
+                                }
+
+                                checkIn.visibility = View.GONE
+                                showParticipants.setOnClickListener {
+                                    if (sharePosition.isChecked)
+                                        findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
+                                    else
+                                        Toast.makeText(requireContext(), "Per visualizzare la posizione degli altri devi attivare la condivisione della tua posizione", Toast.LENGTH_LONG).show()
+                                }
+
+                            } else {
+
+                                showParticipants.visibility = View.GONE
+                                checkIn.visibility = View.VISIBLE
+                                sharePosition.visibility = View.GONE
                             }
                         }
                     })
-
-
 
                     checkIn.setOnClickListener {
                         if (requireContext().hasPermissions(*CAMERA_PERMISSIONS))

@@ -174,6 +174,7 @@ class BarcodeReaderFragment : BaseFragment() {
                                 showErrorMessage(text)
                             } else {
                                 root.vibrate()
+                                // Aggiungo questo perchè altrimenti a volte crasha...
                                 lifecycleScope.launchWhenResumed {
                                     findNavController().navigate(BarcodeReaderFragmentDirections.actionBarcodeReaderFragmentToCheckInFragment(parsed.idEvent))
                                 }

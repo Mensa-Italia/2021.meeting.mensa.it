@@ -61,5 +61,6 @@
     <string name="surname_label">Cognome</string>
     <string name="mensa_id_label">Mensa ID</string>
     <string name="mandatory_label">Obbligatorio</string>
+    <string name="label_show_participant">Visualizza partecipanti</string>
 
 </resources>
