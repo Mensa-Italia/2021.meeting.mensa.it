@@ -16,11 +16,11 @@ open class BaseFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        checkIfEnabled()
     }
 
     override fun onResume() {
         super.onResume()
+        checkIfEnabled()
     }
 
     private fun checkIfEnabled() {
