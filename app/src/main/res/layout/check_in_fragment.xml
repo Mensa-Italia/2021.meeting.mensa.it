@@ -140,7 +140,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="number"
             style="@style/EditTextStyle"
             android:hint="@string/mensa_id_label" />
     </com.google.android.material.textfield.TextInputLayout>
