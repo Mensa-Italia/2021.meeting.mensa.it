@@ -215,6 +215,7 @@ class EventDetailFragment : BaseFragment() {
                         }
                     })
 
+                    checkIn.visibility = View.VISIBLE
                     checkIn.setOnClickListener {
                         if (requireContext().hasPermissions(*CAMERA_PERMISSIONS))
                             openBarcodeReader()
