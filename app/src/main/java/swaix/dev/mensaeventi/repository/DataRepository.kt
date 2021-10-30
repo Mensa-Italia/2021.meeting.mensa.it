@@ -64,15 +64,13 @@ class DataRepository(private val apiHelper: ApiHelper) : BaseApiResponse() {
         }
     }
 
-    var activateUserPositionFetch = false
 
     fun getUserPositions(eventId: String, mensaId: String): Flow<NetworkResult<ResponseGetUserPositions>> {
-        activateUserPositionFetch = true
         return flow {
             if (MOCK_DATA) {
                 emit(NetworkResult.Success(muckGetUserPositions()))
             } else {
-                while(activateUserPositionFetch) {
+                while (true) {
                     emit(safeApiCall { apiHelper.getUsersPositions(eventId, mensaId) })
                     delay(10000)
                 }

@@ -112,11 +112,6 @@ class BarcodeReaderFragment : BaseFragment() {
 
     @androidx.camera.core.ExperimentalGetImage
     private fun bindAnalyseUseCase() {
-        // Note that if you know which format of barcode your app is dealing with, detection will be
-        // faster to specify the supported barcode formats one by one, e.g.
-        // BarcodeScannerOptions.Builder()
-        //     .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-        //     .build();
         val barcodeScanner: BarcodeScanner = BarcodeScanning.getClient()
 
         if (cameraProvider == null) {
@@ -138,7 +133,7 @@ class BarcodeReaderFragment : BaseFragment() {
 
         try {
             cameraProvider!!.bindToLifecycle(
-                /* lifecycleOwner= */this,
+               this,
                 cameraSelector!!,
                 analysisUseCase
             )
@@ -192,38 +187,9 @@ class BarcodeReaderFragment : BaseFragment() {
             .addOnFailureListener {
                 Timber.e(it.message ?: it.toString())
             }.addOnCompleteListener {
-                // When the image is from CameraX analysis use case, must call image.close() on received
-                // images when finished using them. Otherwise, new images may not be received or the camera
-                // may stall.
                 imageProxy.close()
             }
     }
-
-
-    //            viewBarcode.onCameraErrorListener = OnCameraErrorListener {
-//                Timber.e("****** onCameraErrorListener: $it")
-//
-//            }
-//
-//            viewBarcode.barcode.observe(viewLifecycleOwner, {
-//                val gson = Gson()
-//                try {
-//                    val parsed = gson.fromJson(it.displayValue, BarcodeModel::class.java)
-//                    if (parsed.idEvent.isNullOrEmpty()) {
-//                        showErrorMessage(it)
-//                    } else {
-//                        viewBarcode.vibrate()
-//                        findNavController().navigate(BarcodeReaderFragmentDirections.actionBarcodeReaderFragmentToCheckInFragment(parsed.idEvent))
-//                    }
-//                } catch (i: JsonSyntaxException) {
-//                    showErrorMessage(it)
-//                }
-//
-//                lastBarcodeRead = it.displayValue ?: ""
-//            })
-//        }
-//    }
-//
 
 
     private fun BarcodeReaderFragmentBinding.showErrorMessage(text: String) {
