@@ -25,10 +25,9 @@ class CameraXViewModel @Inject constructor(application: MensaApp) : AndroidViewM
         get() {
             if (cameraProviderLiveData == null) {
                 cameraProviderLiveData = MutableLiveData()
-                val cameraProviderFuture =
-                    ProcessCameraProvider.getInstance(getApplication())
+                val cameraProviderFuture = ProcessCameraProvider.getInstance(getApplication())
                 cameraProviderFuture.addListener(
-                    Runnable {
+                    {
                         try {
                             cameraProviderLiveData!!.setValue(cameraProviderFuture.get())
                         } catch (e: ExecutionException) {
