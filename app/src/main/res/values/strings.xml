@@ -62,5 +62,6 @@
     <string name="mensa_id_label">Mensa ID</string>
     <string name="mandatory_label">Obbligatorio</string>
     <string name="label_show_participant">Visualizza partecipanti</string>
+    <string name="message_share_your_position">Per visualizzare la posizione degli altri devi attivare la condivisione della tua posizione</string>
 
 </resources>

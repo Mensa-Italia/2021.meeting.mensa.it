@@ -145,7 +145,7 @@ class EventCalendarSlide : Fragment() {
 
             val maxColumn = resultList.maxOf { it.first.columnOnCalendar }
 
-            resultList.forEachIndexed { index, pair ->
+            resultList.forEach { pair ->
                 val item = pair.first
                 val element = pair.second
 //

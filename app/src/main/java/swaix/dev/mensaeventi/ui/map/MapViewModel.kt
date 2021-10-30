@@ -16,30 +16,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MapViewModel @Inject constructor(private val repository: DataRepository) : ViewModel() {
 
-
-    private val _userPositions: MutableLiveData<NetworkResult<ResponseGetUserPositions>> = MutableLiveData()
-    val userPositions: LiveData<NetworkResult<ResponseGetUserPositions>> = _userPositions
-
-
-    fun switchUserPosition(eventId: String, mensaId: String) {
-        if (repository.activateUserPositionFetch) {
-            stopUserPositions()
-        } else {
-            fetchUserPositions(eventId, mensaId)
-        }
-    }
-
-    private fun fetchUserPositions(eventId: String, mensaId: String) {
-        viewModelScope.launch {
-            repository.getUserPositions(eventId, mensaId).collect {
-                _userPositions.value = it
-            }
-        }
-    }
-
-    private fun stopUserPositions() {
-        repository.stopGetUserPositions()
-    }
-
+    fun getUsersPositions(eventId: String, mensaId: String) = repository.getUserPositions(eventId, mensaId)
 
 }

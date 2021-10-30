@@ -53,9 +53,6 @@ class EventDetailFragment : BaseFragment() {
         private val CAMERA_PERMISSIONS = arrayOf(
             Manifest.permission.CAMERA
         )
-
-        private const val STATE_LENS_FACING = "lens_facing"
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -209,7 +206,7 @@ class EventDetailFragment : BaseFragment() {
                                     if (sharePosition.isChecked)
                                         findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
                                     else
-                                        Toast.makeText(requireContext(), "Per visualizzare la posizione degli altri devi attivare la condivisione della tua posizione", Toast.LENGTH_LONG).show()
+                                        Toast.makeText(requireContext(), R.string.message_share_your_position, Toast.LENGTH_LONG).show()
                                 }
 
                             } else {
@@ -232,43 +229,6 @@ class EventDetailFragment : BaseFragment() {
             })
         }
     }
-
-/*
-    private fun getRequiredPermissions(): Array<String?> {
-        return try {
-            val info: PackageInfo = requireActivity().packageManager.getPackageInfo(requireActivity().packageName, PackageManager.GET_PERMISSIONS)
-            val ps = info.requestedPermissions
-            if (ps != null && ps.isNotEmpty()) {
-                ps
-            } else {
-                arrayOfNulls(0)
-            }
-        } catch (e: Exception) {
-            arrayOfNulls(0)
-        }
-    }
-
-    private fun allPermissionsGranted(): Boolean {
-        for (permission in getRequiredPermissions()) {
-            permission?.let {
-                if (!isPermissionGranted(requireContext(), it)) {
-                    return false
-                }
-            }
-        }
-        return true
-    }
-
-    private fun isPermissionGranted(context: Context, permission: String): Boolean {
-        if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
-        ) {
-            Timber.i("Permission granted: $permission")
-            return true
-        }
-        Timber.i("Permission NOT granted: $permission")
-        return false
-    }*/
-
 
     private fun checkForEmptyState(view: View, value: ResponseGetEventDetails) {
         var counter = 0

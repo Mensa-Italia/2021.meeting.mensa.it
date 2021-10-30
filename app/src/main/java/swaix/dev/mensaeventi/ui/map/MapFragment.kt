@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -16,17 +19,18 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.api.LoadingManager
-import swaix.dev.mensaeventi.api.NetworkObserver
+import swaix.dev.mensaeventi.api.NetworkResult
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
-import swaix.dev.mensaeventi.model.ResponseGetUserPositions
 import swaix.dev.mensaeventi.model.UserPosition
 import timber.log.Timber
 
 
 @AndroidEntryPoint
-class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
+class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
 
@@ -49,31 +53,31 @@ class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
 
     override fun onResume() {
         super.onResume()
-        viewModel.switchUserPosition(args.eventId, args.mensaId)
+//        viewModel.switchUserPosition(args.eventId, args.mensaId)
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.switchUserPosition(args.eventId, args.mensaId)
+//        viewModel.switchUserPosition(args.eventId, args.mensaId)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        viewModel.userPositions.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetUserPositions>(this) {
-            override fun onSuccess(value: ResponseGetUserPositions) {
-                setUpClusterer(value.positions)
-            }
-        })
+
+        lifecycleScope.launch {
+            viewModel.getUsersPositions(args.eventId, args.mensaId)
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect {
+                    if (it is NetworkResult.Success) {
+                        setUpClusterer(it.data?.positions ?: listOf())
+                    }
+                }
+        }
+
+
         // Add a marker in Sydney and move the camera
     }
 
-    override fun onLoading(isLoading: Boolean) {
-        if (isLoading) {
-            Timber.d("onLoading: $isLoading")
-        } else {
-            Timber.d("onLoading: $isLoading")
-        }
-    }
 
     // Declare a variable for the cluster manager.
     private lateinit var clusterManager: ClusterManager<MyItem>
@@ -93,6 +97,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
         addItems(positions)
 
     }
+
     var isFirstTime = true
 
     private fun addItems(positions: List<UserPosition>) {
@@ -105,7 +110,7 @@ class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
                 clusterManager.addItem(item)
                 builder.include(LatLng(it.latitude, it.longitude))
             }
-            if(isFirstTime) {
+            if (isFirstTime) {
                 val bounds = builder.build()
                 val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
                 map.moveCamera(cu)
@@ -115,7 +120,6 @@ class MapFragment : Fragment(), OnMapReadyCallback, LoadingManager {
         }
         clusterManager.cluster()
     }
-
 
 
     inner class MyItem(

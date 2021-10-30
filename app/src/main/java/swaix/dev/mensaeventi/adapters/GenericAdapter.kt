@@ -57,7 +57,11 @@ abstract class GenericAdapter<R>(private val hasEmptyState: Boolean = false, pri
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    fun showLoading() {
+        isLoading = true
+        _dataSet = listOf()
+    }
+
     fun updateDataset(list: List<R>) {
         isLoading = false
         _dataSet = list

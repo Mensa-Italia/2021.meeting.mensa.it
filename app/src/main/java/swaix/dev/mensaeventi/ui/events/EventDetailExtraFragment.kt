@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -38,7 +37,6 @@ import swaix.dev.mensaeventi.utils.setContactClickListener
 @AndroidEntryPoint
 class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
-    private val viewModel: EventsViewModel by viewModels()
 
     private val args: EventDetailExtraFragmentArgs by navArgs()
 
@@ -78,7 +76,6 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
 
 
     override fun onMapReady(googleMap: GoogleMap) {
-        viewModel.fetchEventsResponse()
         mMap = googleMap
         with(args.extra.position) {
             val position = LatLng(latitude, longitude)
