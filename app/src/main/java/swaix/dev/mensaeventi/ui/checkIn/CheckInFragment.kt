@@ -9,14 +9,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
+import swaix.dev.mensaeventi.adapters.EventAdapter
 import swaix.dev.mensaeventi.api.NetworkObserver
+import swaix.dev.mensaeventi.api.NetworkResult
 import swaix.dev.mensaeventi.databinding.CheckInFragmentBinding
 import swaix.dev.mensaeventi.model.AckResponse
 import swaix.dev.mensaeventi.ui.BaseViewModel
 import swaix.dev.mensaeventi.utils.*
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CheckInFragment : DialogFragment() {
@@ -59,16 +67,17 @@ class CheckInFragment : DialogFragment() {
                 }
                 if (name.isNotEmpty() && surname.isNotEmpty() && mensaId.isNotEmpty()){
                     requireContext().createAccount(name, surname, mensaId)
-                    viewModel.saveUser(name, surname, args.eventId, mensaId)
+                    lifecycleScope.launch {
+                        viewModel.putUser(name, surname, args.eventId, mensaId)
+                            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                            .collect {
+                                Timber.d("**** HAS CHECKEDIN POST VALUE")
+                                baseViewModel.hasCheckedIn_.postValue(args.eventId)
+                                dismiss()
+                            }
+                    }
                 }
             }
-
-            viewModel.putUserResp.observe(viewLifecycleOwner, object : NetworkObserver<AckResponse>() {
-                override fun onSuccess(value: AckResponse) {
-                    baseViewModel.hasCheckedIn.postValue(args.eventId)
-                    dismiss()
-                }
-            })
         }
     }
 }

@@ -7,6 +7,6 @@ class BaseViewModel : ViewModel() {
 
     val locationServiceEnable = MutableLiveData(false)
 
-    val hasCheckedIn : MutableLiveData<String?> = MutableLiveData(null)
+    val hasCheckedIn_ : MutableLiveData<String> = MutableLiveData()
 
 }

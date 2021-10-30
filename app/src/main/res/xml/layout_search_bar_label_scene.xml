@@ -9,7 +9,6 @@
         <OnClick
             motion:clickAction="toggle"
             motion:targetId="@id/search_icon" />
-<!--        <KeyFrameSet></KeyFrameSet>-->
     </Transition>
 
     <ConstraintSet android:id="@+id/searchStart"/>

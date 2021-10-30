@@ -31,6 +31,17 @@
         app:layout_constraintTop_toTopOf="@id/activity_background"
         tools:text="Titolo" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/detail_icon"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/activity_name"
+        app:layout_constraintStart_toStartOf="@id/activity_name"
+        app:layout_constraintEnd_toEndOf="@id/activity_name"
+        app:lottie_rawRes="@raw/search_close_lottie"
+        android:scaleType="centerCrop"/>
+
     <TextView
         android:id="@+id/activity_date"
         style="@style/LatoBold.14"

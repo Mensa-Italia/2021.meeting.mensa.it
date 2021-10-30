@@ -148,6 +148,13 @@ class EventDetailFragment : BaseFragment() {
                 setContactClickListener(it)
             }
 
+            baseViewModel.hasCheckedIn_.observe(viewLifecycleOwner, {
+                Timber.d("**** HAS CHECKEDIN get VALUE: $it")
+                if (!it.isNullOrEmpty() && requireContext().isLogged()){
+                    Timber.d("**** HAS CHECKEDIN && account created")
+                    viewModel.fetchIsUserCheckedIn(requireContext().getAccountPassword())
+                }
+            })
 
             viewModel.eventDetails.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEventDetails>() {
                 override fun onSuccess(value: ResponseGetEventDetails) {
@@ -173,49 +180,44 @@ class EventDetailFragment : BaseFragment() {
                     (eventSuggestionsList.adapter as EventExtraAdapter).updateDataset(value.eventsSuggestions)
                     (eventContactList.adapter as EventContactAdapter).updateContacts(value.eventsContacts)
 
-                    baseViewModel.hasCheckedIn.observe(viewLifecycleOwner, {
-                        if (!it.isNullOrEmpty()) {
-                            if (requireContext().isLogged())
-                                viewModel.fetchIsUserCheckedIn(requireContext().getAccountPassword())
-                            baseViewModel.hasCheckedIn.postValue("")
-                        }
-                    })
 
                     sharePosition.visibility = View.GONE
                     if (requireContext().isLogged())
                         viewModel.fetchIsUserCheckedIn(requireContext().getAccountPassword())
+                    else
+                        checkIn.visibility = View.VISIBLE
 
-                    viewModel.isUserCheckedIn.observe(viewLifecycleOwner, object : NetworkObserver<ResponseIsUserCheckedIn>() {
-                        override fun onSuccess(value: ResponseIsUserCheckedIn) {
-                            eventId = value.eventIdQR
-                            TransitionManager.beginDelayedTransition(root)
-                            if (value.isCheckedIn && value.eventId == args.item.id) {
-                                sharePosition.visibility = View.VISIBLE
-                                sharePosition.setOnClickListener {
-                                    TransitionManager.beginDelayedTransition(root)
-                                    if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
-                                        manageLocationService(value.eventIdQR)
-                                    else
-                                        permissionRequest.launch(LOCATION_PERMISSIONS)
+                    viewModel.isUserCheckedIn.observe(viewLifecycleOwner,
+                        object : NetworkObserver<ResponseIsUserCheckedIn>() {
+                            override fun onSuccess(value: ResponseIsUserCheckedIn) {
+                                eventId = value.eventIdQR
+                                TransitionManager.beginDelayedTransition(root)
+                                if (value.isCheckedIn && value.eventId == args.item.id) {
+                                    sharePosition.visibility = View.VISIBLE
+                                    sharePosition.setOnClickListener {
+                                        TransitionManager.beginDelayedTransition(root)
+                                        if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
+                                            manageLocationService(value.eventIdQR)
+                                        else
+                                            permissionRequest.launch(LOCATION_PERMISSIONS)
+                                        showParticipants.visibility = if (sharePosition.isChecked) View.VISIBLE else View.GONE
+                                    }
+
                                     showParticipants.visibility = if (sharePosition.isChecked) View.VISIBLE else View.GONE
+                                    checkIn.visibility = View.GONE
+
+                                    showParticipants.setOnClickListener {
+                                        findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
+                                    }
+
+                                } else {
+                                    checkIn.visibility = View.VISIBLE
+                                    showParticipants.visibility = View.GONE
+                                    sharePosition.visibility = View.GONE
                                 }
-
-                                showParticipants.visibility = if (sharePosition.isChecked) View.VISIBLE else View.GONE
-                                checkIn.visibility = View.GONE
-
-                                showParticipants.setOnClickListener {
-                                    findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
-                                }
-
-                            } else {
-                                showParticipants.visibility = View.GONE
-                                checkIn.visibility = View.VISIBLE
-                                sharePosition.visibility = View.GONE
                             }
-                        }
-                    })
+                        })
 
-                    checkIn.visibility = View.VISIBLE
                     checkIn.setOnClickListener {
                         if (requireContext().hasPermissions(*CAMERA_PERMISSIONS))
                             openBarcodeReader()

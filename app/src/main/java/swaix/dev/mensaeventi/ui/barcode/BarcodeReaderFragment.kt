@@ -19,6 +19,7 @@ import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import swaix.dev.mensaeventi.databinding.BarcodeReaderFragmentBinding
 import swaix.dev.mensaeventi.model.BarcodeModel
 import swaix.dev.mensaeventi.ui.BaseFragment
@@ -63,8 +64,6 @@ class BarcodeReaderFragment : BaseFragment() {
         binding = BarcodeReaderFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-    var lastBarcodeRead: String = ""
 
     @androidx.camera.core.ExperimentalGetImage
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -159,14 +158,16 @@ class BarcodeReaderFragment : BaseFragment() {
             .addOnSuccessListener { barcodes ->
                 with(binding) {
 
-                    barcodes.filterNotNull().forEach { barcode ->
+                    if(barcodes.any()){
+                        val barcode = barcodes.first()
                         Timber.d(barcode.rawValue)
                         val gson = Gson()
                         try {
                             val text = barcode.displayValue ?: ""
                             val parsed = gson.fromJson(text, BarcodeModel::class.java)
                             if (parsed.idEvent.isNullOrEmpty()) {
-                                showErrorMessage(text)
+                                Toast.makeText(requireContext(), "QR-Code non valido", Toast.LENGTH_LONG).show()
+                                root.vibrate()
                             } else {
                                 root.vibrate()
                                 // Aggiungo questo perchè altrimenti a volte crasha...
@@ -175,12 +176,12 @@ class BarcodeReaderFragment : BaseFragment() {
                                 }
                             }
                         } catch (i: JsonSyntaxException) {
-                            showErrorMessage(barcode.rawValue ?: "N/A")
+                            Toast.makeText(requireContext(), "QR-Code non valido", Toast.LENGTH_LONG).show()
+                            root.vibrate()
                         }
 
-                        lastBarcodeRead = barcode.displayValue ?: ""
-
                     }
+
 
                 }
             }
@@ -192,12 +193,6 @@ class BarcodeReaderFragment : BaseFragment() {
     }
 
 
-    private fun BarcodeReaderFragmentBinding.showErrorMessage(text: String) {
-        if (lastBarcodeRead != text) {
-            Toast.makeText(requireContext(), "QR-Code non valido", Toast.LENGTH_LONG).show()
-            root.vibrate()
-        }
-    }
 
     companion object {
         private const val RATIO_4_3_VALUE = 4.0 / 3.0

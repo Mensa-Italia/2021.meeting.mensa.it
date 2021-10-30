@@ -15,15 +15,17 @@ import javax.inject.Inject
 @HiltViewModel
 class CheckInViewModel @Inject constructor(private val repository: DataRepository) : ViewModel() {
 
-    private val _putUserResp: MutableLiveData<NetworkResult<AckResponse>> = MutableLiveData()
 
-    val putUserResp: LiveData<NetworkResult<AckResponse>> = _putUserResp
-
-    fun saveUser(name: String, surname: String, eventId: String, mensaId: String) {
-        viewModelScope.launch {
-            repository.putUser(name, surname, eventId, mensaId).collect { values->
-                _putUserResp.value = values
-            }
-        }
-    }
+    fun putUser(name: String, surname: String, eventId: String, mensaId: String) = repository.putUser(name, surname, eventId, mensaId)
+//    private val _putUserResp: MutableLiveData<NetworkResult<AckResponse>> = MutableLiveData()
+//
+//    val putUserResp: LiveData<NetworkResult<AckResponse>> = _putUserResp
+//
+//    fun saveUser(name: String, surname: String, eventId: String, mensaId: String) {
+//        viewModelScope.launch {
+//            repository.putUser(name, surname, eventId, mensaId).collect { values->
+//                _putUserResp.value = values
+//            }
+//        }
+//    }
 }
