@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -26,11 +28,12 @@ import swaix.dev.mensaeventi.api.LoadingManager
 import swaix.dev.mensaeventi.api.NetworkResult
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
 import swaix.dev.mensaeventi.model.UserPosition
+import swaix.dev.mensaeventi.ui.BaseFragment
 import timber.log.Timber
 
 
 @AndroidEntryPoint
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
 
@@ -49,16 +52,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         (childFragmentManager.findFragmentById(R.id.googleMap) as SupportMapFragment?)?.apply {
             getMapAsync(this@MapFragment)
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-//        viewModel.switchUserPosition(args.eventId, args.mensaId)
-    }
 
-    override fun onPause() {
-        super.onPause()
-//        viewModel.switchUserPosition(args.eventId, args.mensaId)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -78,6 +73,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         // Add a marker in Sydney and move the camera
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        baseViewModel.locationServiceEnable.observe(viewLifecycleOwner, {
+            if(!it){
+                Toast.makeText(requireContext(), R.string.location_service_off, Toast.LENGTH_LONG).show()
+                findNavController().navigateUp()
+            }
+        })
+
+    }
 
     // Declare a variable for the cluster manager.
     private lateinit var clusterManager: ClusterManager<MyItem>

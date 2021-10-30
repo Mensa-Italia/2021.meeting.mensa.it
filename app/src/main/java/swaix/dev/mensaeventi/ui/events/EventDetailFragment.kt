@@ -202,11 +202,9 @@ class EventDetailFragment : BaseFragment() {
 
                                 showParticipants.visibility = if (sharePosition.isChecked) View.VISIBLE else View.GONE
                                 checkIn.visibility = View.GONE
+
                                 showParticipants.setOnClickListener {
-                                    if (sharePosition.isChecked)
-                                        findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
-                                    else
-                                        Toast.makeText(requireContext(), R.string.message_share_your_position, Toast.LENGTH_LONG).show()
+                                    findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
                                 }
 
                             } else {

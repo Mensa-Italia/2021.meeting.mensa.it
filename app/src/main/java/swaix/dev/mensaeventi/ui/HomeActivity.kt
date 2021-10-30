@@ -1,26 +1,17 @@
 package swaix.dev.mensaeventi.ui
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import android.os.IBinder
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.launch
-import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.databinding.ActivityHomeBinding
-import swaix.dev.mensaeventi.utils.LocationForegroundService
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.NEW_LOCATION
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.START_SERVICE
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.STOP_SERVICE
-import android.content.pm.ApplicationInfo
-
-import android.content.pm.PackageManager
-import timber.log.Timber
-import java.lang.Exception
 
 
 @AndroidEntryPoint
@@ -36,6 +27,7 @@ class HomeActivity : AppCompatActivity() {
 
 
         val mIntentFilter = IntentFilter()
+        mIntentFilter.addAction(START_SERVICE)
         mIntentFilter.addAction(STOP_SERVICE)
         registerReceiver(mReceiver, mIntentFilter)
 
@@ -45,7 +37,6 @@ class HomeActivity : AppCompatActivity() {
 //        }
 
     }
-
 
 
     // region animation COMMENTATA FINCHE NON VERRA IMPLEMENTATO IL LOGIN NON CANCELLARE!!
@@ -169,14 +160,14 @@ class HomeActivity : AppCompatActivity() {
     private val mReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
             when (p1?.action) {
-                STOP_SERVICE -> {
-                    baseViewModel.locationServiceEnable.postValue(false)
-                }
                 START_SERVICE -> {
                     baseViewModel.locationServiceEnable.postValue(true)
                 }
+                STOP_SERVICE -> {
+                    baseViewModel.locationServiceEnable.postValue(false)
+                }
                 NEW_LOCATION -> {
-                    // FARE LA CHIAMATA per aggiornare la posizione
+
                 }
             }
         }

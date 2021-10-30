@@ -15,10 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -57,7 +54,8 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
                     activityDay.visibility = if (dateFrom.dayString().isBlank()) View.GONE else View.VISIBLE
                     activityTime.visibility = if (dateFrom.hourMinuteString().isBlank()) View.GONE else View.VISIBLE
                     activityDay.text = dateFrom.dayString()
-                    activityTime.text = dateFrom.hourMinuteString() + " - " + dateTo.hourMinuteString()
+                    val dateHourMinute = dateFrom.hourMinuteString() + " - " + dateTo.hourMinuteString()
+                    activityTime.text = dateHourMinute
                 }
             } else {
                 activityDay.visibility = View.GONE
@@ -77,11 +75,11 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        with(args.extra.position) {
-            val position = LatLng(latitude, longitude)
-            viewLifecycleOwner.lifecycleScope.launch {
+        val position = LatLng(args.extra.position.latitude, args.extra.position.longitude)
+        lifecycleScope.launch {
+            with(mMap){
                 delay(1200)
-                mMap.addMarker(MarkerOptions().position(position).title(args.extra.name))?.apply {
+                addMarker(MarkerOptions().position(position).title(args.extra.name))?.apply {
 
                     showInfoWindow()
                 }?.setIcon(
@@ -97,13 +95,16 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
                         }
                     )
                 )
+
+                animateCamera(CameraUpdateFactory.newLatLngZoom(position, 13.0f))
+                uiSettings.setAllGesturesEnabled(false)
+
             }
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 17.0f))
-            mMap.uiSettings.setAllGesturesEnabled(false)
+
         }
     }
 
-    private fun Context.bitmapFromVector(vectorResId: Int): BitmapDescriptor? {
+    private fun Context.bitmapFromVector(vectorResId: Int): BitmapDescriptor {
         val vectorDrawable = ContextCompat.getDrawable(this, vectorResId)
         vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
         val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
@@ -111,4 +112,6 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
+
+
 }

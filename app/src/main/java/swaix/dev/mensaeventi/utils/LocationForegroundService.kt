@@ -29,8 +29,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LocationForegroundService : Service() {
     companion object {
-        private const val ACTION_START = "start"
-        private const val ACTION_END = "end"
         private const val CHANNEL_ID = "LocationForegroundServiceChannel"
 
         private const val FOREGROUND_NOTE_ID = 2
@@ -45,7 +43,7 @@ class LocationForegroundService : Service() {
 
         fun startLocationService(context: Context, eventId: String) {
             val intent = Intent(context, LocationForegroundService::class.java)
-            intent.action = ACTION_START
+            intent.action = START_SERVICE
             intent.putExtras(bundleOf(EVENT_ID to eventId))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)
@@ -56,7 +54,7 @@ class LocationForegroundService : Service() {
 
         fun stopLocationService(context: Context) {
             val intent = Intent(context, LocationForegroundService::class.java)
-            intent.action = ACTION_END
+            intent.action = STOP_SERVICE
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(intent)
             } else {
@@ -126,15 +124,17 @@ class LocationForegroundService : Service() {
 
     @SuppressLint("MissingPermission")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (ACTION_END == intent?.action) {
+
+        val action = intent?.action ?:"ERROR"
+        val broadcastIntent = Intent()
+        broadcastIntent.action = action
+        sendBroadcast(broadcastIntent)
+
+        if (STOP_SERVICE == action) {
             stopForeground(true)
             stopSelf()
-            val broadcastIntent = Intent()
-            broadcastIntent.action = STOP_SERVICE
-            sendBroadcast(broadcastIntent)
         } else {
-            notify(intent?.action ?: "ERROR")
-
+            notify(action)
             eventId = intent?.extras?.getString(EVENT_ID)
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
         }
@@ -193,7 +193,7 @@ class LocationForegroundService : Service() {
         }
 
         val intent = Intent(this, LocationForegroundService::class.java).apply {
-            action = ACTION_END
+            action = STOP_SERVICE
         }
         val pIntent = PendingIntent.getService(this, 112, intent, PendingIntent.FLAG_IMMUTABLE)
 
