@@ -10,7 +10,7 @@ import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.google.maps.android.ui.IconGenerator
 import android.view.View
-import kotlinx.android.synthetic.main.marker_custom.view.*
+import android.widget.TextView
 import swaix.dev.mensaeventi.R
 
 
@@ -28,7 +28,7 @@ open class CustomClusterRenderer(val mContext: Context, map: GoogleMap, clusterM
 
         iconGenerator?.setBackground(null)
         val inflatedView: View = View.inflate(mContext, R.layout.marker_custom, null)
-        inflatedView.initials_marker.text = item.getInitials()
+        inflatedView.findViewById<TextView>(R.id.initials_marker).text = item.getInitials()
         iconGenerator?.setContentView(inflatedView)
 
         markerOptions.icon(iconGenerator?.makeIcon()?.let { BitmapDescriptorFactory.fromBitmap(it)})

@@ -2,11 +2,10 @@ package swaix.dev.mensaeventi.utils
 
 import android.accounts.Account
 import android.accounts.AccountManager
-import android.app.Activity
 import android.content.Context
 import androidx.core.os.bundleOf
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
 import timber.log.Timber
@@ -37,7 +36,7 @@ fun Context.getAccountPassword(): String {
     }
 }
 
-fun Context.createAccount(name: String, surname: String, mensaId: String, onAccountCreated: ()->Any = {}) {
+fun Context.createAccount(name: String, surname: String, mensaId: String, onAccountCreated: () -> Any = {}) {
     with(accountManager()) {
         Account(name, getString(R.string.account)).let { account ->
             bundleOf(NAME to name, SURNAME to surname, MENSA_ID to mensaId).let { bundle ->
@@ -50,11 +49,11 @@ fun Context.createAccount(name: String, surname: String, mensaId: String, onAcco
     }
 }
 
-suspend fun Activity.deleteAccount() {
-    GlobalScope.async {
-        with(accountManager()) {
+suspend fun Fragment.deleteAccount() {
+    lifecycleScope.launch {
+        with(requireActivity().accountManager()) {
             accounts.forEach {
-                removeAccount(it, this@deleteAccount, {
+                removeAccount(it, requireActivity(), {
 
                 }, null)
             }
