@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,8 +23,6 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
@@ -33,6 +32,7 @@ import swaix.dev.mensaeventi.model.UserPosition
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.LocationForegroundService
 import swaix.dev.mensaeventi.utils.hasPermissions
+import swaix.dev.mensaeventi.utils.manage
 import java.util.*
 
 
@@ -85,12 +85,12 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
                 sharePositionLabel.isSelected = it
             })
 
-                sharePositionIcon.setOnClickListener {
-                    if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
-                        manageLocationService()
-                    else
-                        permissionRequest.launch(LOCATION_PERMISSIONS)
-                }
+            sharePositionIcon.setOnClickListener {
+                if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
+                    manageLocationService()
+                else
+                    permissionRequest.launch(LOCATION_PERMISSIONS)
+            }
 
         }
     }
@@ -101,18 +101,16 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         lifecycleScope.launch {
             viewModel.getUsersPositions(args.eventId, args.mensaId)
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                .collect {
-                    if (it is NetworkResult.Success) {
-                        setUpClusterer(it.data?.positions ?: listOf())
-                    }
+                .collect { networkResult ->
+                    networkResult.manage(onSuccess = {
+                        setUpClusterer(it.positions )
+                    }, onError = {
+                        Toast.makeText(requireContext(), "Errore durante il recupero dei dati, riprovare", Toast.LENGTH_LONG).show()
+                        findNavController().navigateUp()
+                    })
                 }
+
         }
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
     private lateinit var clusterManager: ClusterManager<MyItem>
@@ -150,7 +148,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         if (positions.any() && binding.sharePositionIcon.isSelected) {
             val builder = LatLngBounds.builder()
             positions.forEach {
-                val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name, it.name.substring(0,1).uppercase(Locale.getDefault())+" "+it.surname.substring(0,1).uppercase(Locale.getDefault()))
+                val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name, it.name.substring(0, 1).uppercase(Locale.getDefault()) + " " + it.surname.substring(0, 1).uppercase(Locale.getDefault()))
                 clusterManager.addItem(item)
                 builder.include(LatLng(it.latitude, it.longitude))
             }

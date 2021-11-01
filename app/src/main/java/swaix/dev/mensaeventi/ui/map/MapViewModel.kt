@@ -15,7 +15,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MapViewModel @Inject constructor(private val repository: DataRepository) : ViewModel() {
-
     fun getUsersPositions(eventId: String, mensaId: String) = repository.getUserPositions(eventId, mensaId)
-
 }

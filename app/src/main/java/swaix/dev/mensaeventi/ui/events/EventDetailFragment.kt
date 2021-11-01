@@ -11,21 +11,25 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.CalendarFragmentAdapter
 import swaix.dev.mensaeventi.adapters.EventContactAdapter
 import swaix.dev.mensaeventi.adapters.EventExtraAdapter
-import swaix.dev.mensaeventi.api.NetworkObserver
+import swaix.dev.mensaeventi.api.NetworkResult
 import swaix.dev.mensaeventi.databinding.EventDetailFragmentBinding
 import swaix.dev.mensaeventi.model.EventItemWithDate
 import swaix.dev.mensaeventi.model.ResponseGetEventDetails
-import swaix.dev.mensaeventi.model.ResponseIsUserCheckedIn
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.*
 import timber.log.Timber
@@ -41,6 +45,7 @@ class EventDetailFragment : BaseFragment() {
 
     lateinit var binding: EventDetailFragmentBinding
     lateinit var cameraPermissionRequest: ActivityResultLauncher<Array<String>>
+    lateinit var eventDetails: ResponseGetEventDetails
     private var eventId: String = ""
 
 
@@ -93,8 +98,6 @@ class EventDetailFragment : BaseFragment() {
 
             eventDescription.text = args.item.description.asHtml()
 
-            viewModel.fetchEventDetails(args.item.id.toString())
-
             eventHotelsSearch.addListener(object : SearchBarLabel.OnEventListener {
 
                 override fun onTextChanged(value: String) {
@@ -123,73 +126,95 @@ class EventDetailFragment : BaseFragment() {
 
             baseViewModel.hasCheckedIn_.observe(viewLifecycleOwner, {
                 Timber.d("**** HAS CHECKEDIN get VALUE: $it")
-                if (!it.isNullOrEmpty() && requireContext().isLogged()){
+                if (!it.isNullOrEmpty() && requireContext().isLogged()) {
                     Timber.d("**** HAS CHECKEDIN && account created")
-                    viewModel.fetchIsUserCheckedIn(requireContext().getAccountPassword())
+                    fetchIsUserCheckedIn()
                 }
             })
-
-            viewModel.eventDetails.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEventDetails>() {
-                override fun onSuccess(value: ResponseGetEventDetails) {
-                    (eventHotelsList.adapter as EventExtraAdapter).updateDataset(value.eventHotel)
-
-                    checkForEmptyState(view, value)
-
-                    val days: Map<String, List<EventItemWithDate>> = value.eventActivities
-                        .sortedBy {
-                            it.dateFrom
-                        }
-                        .groupBy {
-                            it.dateFrom.shortDayString()
-                        }
-
-                    calendarDaysPager.adapter = CalendarFragmentAdapter(this@EventDetailFragment, value)
+            lifecycleScope.launch {
+                viewModel.getEventDetails(args.item.id.toString())
+                    .collect { networkResult ->
+                        networkResult.manage(onSuccess = {
+                            manageSuccessResponse(it)
+                        }, onError = {
+                            Toast.makeText(requireContext(), "Errore durante il recupero dei dati, riprovare", Toast.LENGTH_LONG).show()
+                            findNavController().navigateUp()
+                        })
+                    }
+            }
+        }
+    }
 
 
-                    TabLayoutMediator(calendarDaysTabs, calendarDaysPager) { tab, position ->
-                        tab.text = days.keys.toTypedArray()[position]
-                    }.attach()
+    private fun EventDetailFragmentBinding.manageSuccessResponse(value: ResponseGetEventDetails) {
+        eventDetails = value
+        (eventHotelsList.adapter as EventExtraAdapter).updateDataset(value.eventHotel)
+        checkForEmptyState(root, value)
 
-                    (eventSuggestionsList.adapter as EventExtraAdapter).updateDataset(value.eventsSuggestions)
-                    (eventContactList.adapter as EventContactAdapter).updateContacts(value.eventsContacts)
+        val days: Map<String, List<EventItemWithDate>> = value.eventActivities
+            .sortedBy {
+                it.dateFrom
+            }
+            .groupBy {
+                it.dateFrom.shortDayString()
+            }
+
+         calendarDaysPager.adapter = CalendarFragmentAdapter(this@EventDetailFragment, value)
+
+        TabLayoutMediator(calendarDaysTabs, calendarDaysPager) { tab, position ->
+            tab.text = days.keys.toTypedArray()[position]
+        }.attach()
+
+        (eventSuggestionsList.adapter as EventExtraAdapter).updateDataset(value.eventsSuggestions)
+        (eventContactList.adapter as EventContactAdapter).updateContacts(value.eventsContacts)
+
+        showMap.visibility = View.GONE
+        if (requireContext().isLogged())
+            fetchIsUserCheckedIn()
+        else
+            checkIn.visibility = View.VISIBLE
+
+        checkIn.setOnClickListener {
+            if (requireContext().hasPermissions(*CAMERA_PERMISSIONS))
+                openBarcodeReader()
+            else
+                cameraPermissionRequest.launch(CAMERA_PERMISSIONS)
+        }
+    }
 
 
-                    showMap.visibility = View.GONE
-                    if (requireContext().isLogged())
-                        viewModel.fetchIsUserCheckedIn(requireContext().getAccountPassword())
-                    else
-                        checkIn.visibility = View.VISIBLE
+    private fun fetchIsUserCheckedIn() {
+        with(binding) {
+            lifecycleScope.launch {
+                viewModel.isUserCheckedIn(requireContext().getAccountPassword())
+                    .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                    .collect { networkResult ->
+                        when (networkResult) {
+                            is NetworkResult.Success -> {
+                                networkResult.data?.let { value ->
+                                    eventId = value.eventIdQR
+                                    TransitionManager.beginDelayedTransition(root)
+                                    if (value.isCheckedIn && value.eventId == args.item.id) {
+                                        showMap.visibility = View.VISIBLE
+                                        checkIn.visibility = View.GONE
 
-                    viewModel.isUserCheckedIn.observe(viewLifecycleOwner,
-                        object : NetworkObserver<ResponseIsUserCheckedIn>() {
-                            override fun onSuccess(value: ResponseIsUserCheckedIn) {
-                                eventId = value.eventIdQR
-                                TransitionManager.beginDelayedTransition(root)
-                                if (value.isCheckedIn && value.eventId == args.item.id) {
-                                    showMap.visibility = View.VISIBLE
-                                    checkIn.visibility = View.GONE
+                                        showMap.setOnClickListener {
+                                            findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword(), eventDetails))
+                                        }
 
-                                    showMap.setOnClickListener {
-                                        findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
+                                    } else {
+                                        checkIn.visibility = View.VISIBLE
+                                        showMap.visibility = View.GONE
                                     }
-
-                                } else {
-                                    checkIn.visibility = View.VISIBLE
-                                    showMap.visibility = View.GONE
                                 }
                             }
-                        })
-
-                    checkIn.setOnClickListener {
-                        if (requireContext().hasPermissions(*CAMERA_PERMISSIONS))
-                            openBarcodeReader()
-                        else
-                            cameraPermissionRequest.launch(CAMERA_PERMISSIONS)
+                            is NetworkResult.Error -> {
+                            }
+                            else -> {
+                            }
+                        }
                     }
-
-                }
-
-            })
+            }
         }
     }
 

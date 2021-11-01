@@ -17,6 +17,7 @@ import swaix.dev.mensaeventi.api.LoadingManager
 import swaix.dev.mensaeventi.api.NetworkResult
 import swaix.dev.mensaeventi.databinding.EventsFragmentBinding
 import swaix.dev.mensaeventi.ui.BaseFragment
+import swaix.dev.mensaeventi.utils.manage
 
 
 @AndroidEntryPoint
@@ -40,15 +41,19 @@ class EventsFragment : BaseFragment(), LoadingManager {
             lifecycleScope.launch {
                 viewModel.eventsFlow
                     .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                    .collect {
+
+                    .collect { networkResult ->
                         with(eventList.adapter as EventAdapter) {
-                            when (it) {
-                                is NetworkResult.Success -> updateDataset(it.data?.events ?: listOf())
-                                is NetworkResult.Error -> updateDataset(listOf())
-                                else -> showLoading()
-                            }
+                            networkResult.manage(onSuccess = {
+                                updateDataset(it.events )
+                            }, onError = {
+                                updateDataset(listOf())
+                            }, onLoading = {
+                                showLoading()
+                            })
                         }
                     }
+
             }
 
 //            viewModel.events.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEvents>(this@EventsFragment, {

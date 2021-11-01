@@ -99,9 +99,14 @@ class LocationForegroundService : Service() {
 
                                 if (baseContext.isLogged() && !eventId.isNullOrEmpty()) {
                                     CoroutineScope(Dispatchers.IO + Job()).launch {
-                                        repository.pushPosition(eventId!!, baseContext.getAccountPassword(), mLocation.latitude, mLocation.longitude).collect {
-                                            Timber.d("PositionUpdated : ${it.message}")
-                                        }
+                                        repository.pushPosition(eventId!!, baseContext.getAccountPassword(), mLocation.latitude, mLocation.longitude)
+                                            .collect { networkResult ->
+                                                networkResult.manage(onSuccess = {
+                                                    Timber.d("PositionUpdated : ${it.result}")
+                                                }, onError = {
+                                                    Timber.e("PositionUpdated : network error ")
+                                                } )
+                                            }
                                     }
                                 }
                             } else {
@@ -125,7 +130,7 @@ class LocationForegroundService : Service() {
     @SuppressLint("MissingPermission")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        val action = intent?.action ?:"ERROR"
+        val action = intent?.action ?: "ERROR"
         val broadcastIntent = Intent()
         broadcastIntent.action = action
         sendBroadcast(broadcastIntent)

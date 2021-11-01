@@ -13,6 +13,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.Item
+import swaix.dev.mensaeventi.api.NetworkResult
 import kotlin.random.Random
 
 
@@ -82,8 +83,23 @@ fun String.openInBrowser(context: Context) {
 }
 
 
-
 fun Context.hasPermissions(vararg permissions: String) = permissions.all {
     ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
 }
 
+
+fun <T> NetworkResult<T>.manage( onLoading: ()->Unit = {}, onSuccess: (T) -> Unit, onError: () -> Unit = {}) {
+    when (this) {
+        is NetworkResult.Success -> {
+            data?.let { value ->
+                onSuccess.invoke(value)
+            }
+        }
+        is NetworkResult.Error -> {
+            onError.invoke()
+        }
+        is NetworkResult.Loading ->{
+            onLoading.invoke()
+        }
+    }
+}

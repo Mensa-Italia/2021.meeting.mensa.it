@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,8 +16,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.EventContactAdapter
 import swaix.dev.mensaeventi.databinding.EventDetailsExtraFragmentBinding
@@ -76,31 +73,32 @@ class EventDetailExtraFragment : BaseFragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         val position = LatLng(args.extra.position.latitude, args.extra.position.longitude)
-        lifecycleScope.launch {
-            with(mMap){
-                delay(1200)
-                addMarker(MarkerOptions().position(position).title(args.extra.name))?.apply {
+        with(mMap) {
+            animateCamera(CameraUpdateFactory.newLatLngZoom(position, 13.0f), object : GoogleMap.CancelableCallback {
+                override fun onCancel() {
+                }
 
-                    showInfoWindow()
-                }?.setIcon(
-                    requireContext().bitmapFromVector(
-                        // TODO cambiare icone
-                        when (args.extra.type) {
-                            ItemType.HOTEL -> R.drawable.ic_hotel
-                            ItemType.RESTAURANT -> R.drawable.ic_restaurant
-                            ItemType.ACTIVITY -> R.drawable.ic_event_black_24dp
-                            ItemType.EVENT -> R.drawable.ic_close
-                            ItemType.CONTACT -> R.drawable.ic_close
-                            ItemType.NONE -> R.drawable.ic_close
-                        }
+                override fun onFinish() {
+                    addMarker(MarkerOptions().position(position).title(args.extra.name))?.apply {
+
+                        showInfoWindow()
+                    }?.setIcon(
+                        requireContext().bitmapFromVector(
+                            // TODO cambiare icone
+                            when (args.extra.type) {
+                                ItemType.HOTEL -> R.drawable.ic_hotel
+                                ItemType.RESTAURANT -> R.drawable.ic_restaurant
+                                ItemType.ACTIVITY -> R.drawable.ic_event_black_24dp
+                                ItemType.EVENT -> R.drawable.ic_close
+                                ItemType.CONTACT -> R.drawable.ic_close
+                                ItemType.NONE -> R.drawable.ic_close
+                            }
+                        )
                     )
-                )
+                }
 
-                animateCamera(CameraUpdateFactory.newLatLngZoom(position, 13.0f))
-                uiSettings.setAllGesturesEnabled(false)
-
-            }
-
+            })
+            uiSettings.setAllGesturesEnabled(false)
         }
     }
 

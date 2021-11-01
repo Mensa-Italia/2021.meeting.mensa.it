@@ -82,5 +82,8 @@
             android:name="eventId"
             app:argType="string" />
         <argument android:name="mensaId" />
+        <argument
+            android:name="event"
+            app:argType="swaix.dev.mensaeventi.model.EventItemWithDate" />
     </fragment>
 </navigation>
