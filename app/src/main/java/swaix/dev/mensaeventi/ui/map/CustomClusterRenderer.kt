@@ -8,18 +8,30 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
+import com.google.maps.android.ui.IconGenerator
+import android.view.View
+import kotlinx.android.synthetic.main.marker_custom.view.*
+import swaix.dev.mensaeventi.R
+
 
 open class CustomClusterRenderer(val mContext: Context, map: GoogleMap, clusterManager: ClusterManager<MapFragment.MyItem>) : DefaultClusterRenderer<MapFragment.MyItem>(mContext, map, clusterManager) {
 
-//    private var mClusterIconGenerator: IconGenerator? = null
-//
-//    init {
-//        mClusterIconGenerator = IconGenerator(mContext.applicationContext)
-//    }
+    private var iconGenerator: IconGenerator? = null
+
+    init {
+        iconGenerator = IconGenerator(mContext.applicationContext)
+    }
 
     override fun onBeforeClusterItemRendered(item: MapFragment.MyItem, markerOptions: MarkerOptions) {
         val markerDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
         markerOptions.icon(markerDescriptor).snippet(item.title)
+
+        iconGenerator?.setBackground(null)
+        val inflatedView: View = View.inflate(mContext, R.layout.marker_custom, null)
+        inflatedView.initials_marker.text = item.getInitials()
+        iconGenerator?.setContentView(inflatedView)
+
+        markerOptions.icon(iconGenerator?.makeIcon()?.let { BitmapDescriptorFactory.fromBitmap(it)})
 
 //        when (item?.type) {
 //            "panchine" ->  markerOptions?.icon(BitmapDescriptorFactory.fromResource(R.drawable.marker_panchina))

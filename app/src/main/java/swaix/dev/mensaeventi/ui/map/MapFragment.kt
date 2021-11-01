@@ -1,12 +1,10 @@
 package swaix.dev.mensaeventi.ui.map
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -25,12 +23,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
-import swaix.dev.mensaeventi.api.LoadingManager
 import swaix.dev.mensaeventi.api.NetworkResult
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
 import swaix.dev.mensaeventi.model.UserPosition
 import swaix.dev.mensaeventi.ui.BaseFragment
-import timber.log.Timber
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -108,7 +105,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         if (positions.any()) {
             val builder = LatLngBounds.builder()
             positions.forEach {
-                val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name)
+                val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name, it.name.substring(0,1).uppercase(Locale.getDefault())+" "+it.surname.substring(0,1).uppercase(Locale.getDefault()))
                 clusterManager.addItem(item)
                 builder.include(LatLng(it.latitude, it.longitude))
             }
@@ -128,7 +125,8 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         lat: Double,
         lng: Double,
         private val title: String,
-        private val snippet: String
+        private val snippet: String,
+        private val initials: String
     ) : ClusterItem {
 
         private val position: LatLng = LatLng(lat, lng)
@@ -143,6 +141,10 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
         override fun getSnippet(): String {
             return snippet
+        }
+
+        fun getInitials(): String {
+            return initials
         }
 
 
