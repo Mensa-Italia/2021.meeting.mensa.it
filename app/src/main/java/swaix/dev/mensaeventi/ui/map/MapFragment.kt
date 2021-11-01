@@ -90,12 +90,9 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     private lateinit var clusterManager: ClusterManager<MyItem>
 
-    inner class MyClusterManager(context: Context, map: GoogleMap):  ClusterManager<MyItem>(context, map){
-
-    }
-
     private fun setUpClusterer(positions: List<UserPosition>) {
         clusterManager = ClusterManager(context, map)
+        clusterManager.renderer = context?.let { CustomClusterRenderer(it, map, clusterManager) }
         map.setOnCameraIdleListener(clusterManager)
         addItems(positions)
         binding.numberOfPeopleSharing.text = getString(R.string.label_number_of_people_sharing, positions.size)
