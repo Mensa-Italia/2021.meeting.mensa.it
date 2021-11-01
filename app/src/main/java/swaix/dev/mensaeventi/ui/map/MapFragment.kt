@@ -98,7 +98,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         clusterManager = ClusterManager(context, map)
         map.setOnCameraIdleListener(clusterManager)
         addItems(positions)
-        binding.numberOfPeopleSharing.text = getString(R.string.label_number_of_people_sharing, positions.size)
+        binding.numberOfPeopleSharing.text = resources.getQuantityString(R.plurals.label_number_of_people_sharing, positions.size, positions.size)
     }
 
     var isFirstTime = true
