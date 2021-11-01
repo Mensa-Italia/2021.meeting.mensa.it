@@ -47,7 +47,7 @@
     <string name="label_time_22">22:00</string>
     <string name="label_time_23">23:00</string>
     <string name="label_time_24">24:00</string>
-    <string name="label_share_position">Condividi la tua posizione con gli altri partecipanti</string>
+    <string name="label_share_position">Condividi posizione</string>
     <string name="label_start_share_position">Inizio condivisione posizione…</string>
     <string name="label_location_update">Posizione attuale: %1$f, %2$f</string>
     <string name="label_remove_location_updates">stop</string>
@@ -61,13 +61,13 @@
     <string name="surname_label">Cognome</string>
     <string name="mensa_id_label">Mensa ID</string>
     <string name="mandatory_label">Obbligatorio</string>
-    <string name="label_show_participant">Visualizza partecipanti</string>
+    <string name="label_show_map">Visualizza mappa</string>
     <string name="message_share_your_position">Per visualizzare la posizione degli altri devi attivare la condivisione della tua posizione</string>
     <string name="location_service_off">La condivisione della posizione è stata fermata.</string>
 
     <plurals name="label_number_of_people_sharing">
-        <item quantity="one" formatted="true">Sta condividendo %1$d persona</item>
-        <item quantity="other" formatted="true">Stanno condividendo %1$d persone</item>
+        <item quantity="one" formatted="true">%1$d persona</item>
+        <item quantity="other" formatted="true">%1$d persone</item>
     </plurals>
 
 </resources>

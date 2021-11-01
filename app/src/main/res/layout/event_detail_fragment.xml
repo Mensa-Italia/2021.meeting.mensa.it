@@ -9,7 +9,7 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/collapsing_open_dimen"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme">
 
         <include
             android:id="@+id/event_details_toolbar"
@@ -85,7 +85,7 @@
                 app:layout_constraintTop_toBottomOf="@id/calendar_days_pager" />
 
             <TextView
-                android:id="@+id/show_participants"
+                android:id="@+id/show_map"
                 style="@style/LatoBold.24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="8dp"
-                android:text="@string/label_show_participant"
+                android:text="@string/label_show_map"
                 android:textColor="@color/white"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -113,20 +113,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="show_participants,check_in" />
+                app:constraint_referenced_ids="show_map,check_in" />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/share_position"
-                style="@style/LatoRegular.14"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="@string/label_share_position"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/share_anchor" />
+<!--            <androidx.appcompat.widget.SwitchCompat-->
+<!--                android:id="@+id/share_position"-->
+<!--                style="@style/LatoRegular.14"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:text="@string/label_share_position"-->
+<!--                android:visibility="gone"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/share_anchor" />-->
 
             <TextView
                 android:id="@+id/description_label"
@@ -140,7 +140,7 @@
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/share_position" />
+                app:layout_constraintTop_toBottomOf="@id/share_anchor" />
 
             <TextView
                 android:id="@+id/event_description"

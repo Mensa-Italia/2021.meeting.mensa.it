@@ -13,47 +13,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-<!--    <View-->
-<!--        android:id="@+id/gradient_arrow"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:background="@drawable/background_gradient_top_bottom_alpha_squared"-->
-<!--        app:layout_constraintBottom_toBottomOf="@id/number_of_people_sharing_box"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-
     <View
         android:id="@+id/number_of_people_sharing_box"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:elevation="16dp"
+        android:layout_height="?attr/actionBarSize"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/background_activity_timeline"
+        android:elevation="16dp"
         app:layout_constraintBottom_toBottomOf="@id/back_arrow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
         android:id="@+id/back_arrow"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="0dp"
         android:elevation="16dp"
-        app:layout_constraintDimensionRatio="1:1"
-        android:padding="8dp"
+        android:padding="16dp"
         android:src="@drawable/ic_back_arrow"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="@id/number_of_people_sharing_box"
         app:layout_constraintTop_toTopOf="@id/number_of_people_sharing_box"
         app:tint="?attr/colorOnBackground" />
 
 
     <TextView
-        android:id="@+id/number_of_people_sharing"
+        android:id="@+id/map_toolbar_title"
         style="@style/amu_Bubble.TextAppearance.Dark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -64,5 +52,47 @@
         app:layout_constraintStart_toEndOf="@id/back_arrow"
         app:layout_constraintTop_toTopOf="@id/number_of_people_sharing_box" />
 
+
+    <View
+        android:id="@+id/footer"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:background="?attr/colorSecondary"
+        android:elevation="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/share_position_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/share_icon"
+        app:layout_constraintTop_toBottomOf="@id/number_of_people_sharing_box"
+        app:layout_constraintEnd_toEndOf="@id/number_of_people_sharing_box"
+        android:layout_marginTop="24dp"/>
+
+    <TextView
+        android:id="@+id/share_position_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_share_position"
+        android:textColor="@color/share_icon_color"
+        app:layout_constraintTop_toBottomOf="@id/share_position_icon"
+        app:layout_constraintEnd_toEndOf="@id/share_position_icon"/>
+
+    <TextView
+        android:id="@+id/share_position_people"
+        style="@style/amu_ClusterIcon.TextAppearance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="17dp"
+        android:layout_margin="8dp"
+        android:drawablePadding="4dp"
+        tools:text="prova"
+        app:layout_constraintBottom_toBottomOf="@id/footer"
+        app:layout_constraintEnd_toEndOf="@id/footer"
+        app:layout_constraintTop_toTopOf="@id/footer"
+        app:drawableStartCompat="@drawable/ic_account_eye" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,7 +33,7 @@
     </style>
 
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
+    <style name="AppTheme" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -44,5 +44,15 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/primary_color</item>
     </style>
+
+
+    <style name="AppTheme.AppBarOverlay_">
+        <item name="android:background">@null</item>
+        <item name="background">@null</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="AppTheme.popup" parent="Base.ThemeOverlay.AppCompat.ActionBar"/>
 
 </resources>

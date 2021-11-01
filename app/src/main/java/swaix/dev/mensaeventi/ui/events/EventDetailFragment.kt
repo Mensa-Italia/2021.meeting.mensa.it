@@ -40,16 +40,11 @@ class EventDetailFragment : BaseFragment() {
     private val args: EventDetailFragmentArgs by navArgs()
 
     lateinit var binding: EventDetailFragmentBinding
-    lateinit var permissionRequest: ActivityResultLauncher<Array<String>>
     lateinit var cameraPermissionRequest: ActivityResultLauncher<Array<String>>
     private var eventId: String = ""
 
 
     companion object {
-        private val LOCATION_PERMISSIONS = arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
         private val CAMERA_PERMISSIONS = arrayOf(
             Manifest.permission.CAMERA
         )
@@ -57,14 +52,6 @@ class EventDetailFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        permissionRequest =
-            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-                if (permissions.entries.filter { it.value == true }.size == LOCATION_PERMISSIONS.size) {
-                    manageLocationService(eventId)
-                } else
-                    Toast.makeText(requireContext(), "DEVI DARE I PERMESSI MANUALMENTE", Toast.LENGTH_LONG).show()
-            }
 
         cameraPermissionRequest =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
@@ -79,14 +66,6 @@ class EventDetailFragment : BaseFragment() {
         findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToBarcodeReaderFragment(args.item))
     }
 
-    private fun manageLocationService(eventId: String) {
-        if (binding.sharePosition.isChecked && eventId.isNotEmpty()) {
-            LocationForegroundService.startLocationService(requireContext(), eventId)
-        } else {
-            LocationForegroundService.stopLocationService(requireContext())
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = EventDetailFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -97,11 +76,6 @@ class EventDetailFragment : BaseFragment() {
 
 
         with(EventDetailFragmentBinding.bind(view)) {
-
-            baseViewModel.locationServiceEnable.observe(viewLifecycleOwner, {
-                sharePosition.isChecked = it
-            })
-
             eventDetailsToolbar.eventName.text = (args.item.name + " " + args.item.dateFrom.yearString()).asHtml()
 
             eventDetailsToolbar.backArrow.setOnClickListener {
@@ -130,7 +104,6 @@ class EventDetailFragment : BaseFragment() {
             })
 
             eventSuggestionsSearch.addListener(object : SearchBarLabel.OnEventListener {
-
                 override fun onTextChanged(value: String) {
                     Timber.d("onTextChanged: $value")
                     (eventSuggestionsList.adapter as EventExtraAdapter).filter(value)
@@ -181,7 +154,7 @@ class EventDetailFragment : BaseFragment() {
                     (eventContactList.adapter as EventContactAdapter).updateContacts(value.eventsContacts)
 
 
-                    sharePosition.visibility = View.GONE
+                    showMap.visibility = View.GONE
                     if (requireContext().isLogged())
                         viewModel.fetchIsUserCheckedIn(requireContext().getAccountPassword())
                     else
@@ -193,27 +166,16 @@ class EventDetailFragment : BaseFragment() {
                                 eventId = value.eventIdQR
                                 TransitionManager.beginDelayedTransition(root)
                                 if (value.isCheckedIn && value.eventId == args.item.id) {
-                                    sharePosition.visibility = View.VISIBLE
-                                    sharePosition.setOnClickListener {
-                                        TransitionManager.beginDelayedTransition(root)
-                                        if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
-                                            manageLocationService(value.eventIdQR)
-                                        else
-                                            permissionRequest.launch(LOCATION_PERMISSIONS)
-                                        showParticipants.visibility = if (sharePosition.isChecked) View.VISIBLE else View.GONE
-                                    }
-
-                                    showParticipants.visibility = if (sharePosition.isChecked) View.VISIBLE else View.GONE
+                                    showMap.visibility = View.VISIBLE
                                     checkIn.visibility = View.GONE
 
-                                    showParticipants.setOnClickListener {
+                                    showMap.setOnClickListener {
                                         findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword()))
                                     }
 
                                 } else {
                                     checkIn.visibility = View.VISIBLE
-                                    showParticipants.visibility = View.GONE
-                                    sharePosition.visibility = View.GONE
+                                    showMap.visibility = View.GONE
                                 }
                             }
                         })

@@ -1,15 +1,17 @@
 package swaix.dev.mensaeventi.ui.map
 
+import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -20,6 +22,8 @@ import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
@@ -27,6 +31,8 @@ import swaix.dev.mensaeventi.api.NetworkResult
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
 import swaix.dev.mensaeventi.model.UserPosition
 import swaix.dev.mensaeventi.ui.BaseFragment
+import swaix.dev.mensaeventi.utils.LocationForegroundService
+import swaix.dev.mensaeventi.utils.hasPermissions
 import java.util.*
 
 
@@ -37,7 +43,27 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     private val args: MapFragmentArgs by navArgs()
     private val viewModel: MapViewModel by viewModels()
-    lateinit var binding : MapFragmentBinding
+    private lateinit var binding: MapFragmentBinding
+    private lateinit var permissionRequest: ActivityResultLauncher<Array<String>>
+
+    companion object {
+        private val LOCATION_PERMISSIONS = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        permissionRequest =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                if (permissions.entries.filter { it.value == true }.size == LOCATION_PERMISSIONS.size) {
+                    manageLocationService()
+                } else
+                    Toast.makeText(requireContext(), "DEVI DARE I PERMESSI MANUALMENTE", Toast.LENGTH_LONG).show()
+            }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +79,20 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
             getMapAsync(this@MapFragment)
         }
 
+        with(binding) {
+            baseViewModel.locationServiceEnable.observe(viewLifecycleOwner, {
+                sharePositionIcon.isSelected = it
+                sharePositionLabel.isSelected = it
+            })
 
+                sharePositionIcon.setOnClickListener {
+                    if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
+                        manageLocationService()
+                    else
+                        permissionRequest.launch(LOCATION_PERMISSIONS)
+                }
+
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -69,30 +108,36 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
                 }
         }
 
-
-        // Add a marker in Sydney and move the camera
     }
 
     override fun onResume() {
         super.onResume()
 
-        baseViewModel.locationServiceEnable.observe(viewLifecycleOwner, {
-            if(!it){
-                Toast.makeText(requireContext(), R.string.location_service_off, Toast.LENGTH_LONG).show()
-                findNavController().navigateUp()
-            }
-        })
-
     }
 
     private lateinit var clusterManager: ClusterManager<MyItem>
+
+    private fun manageLocationService() {
+        binding.sharePositionIcon.isSelected = !binding.sharePositionIcon.isSelected
+        binding.sharePositionLabel.isSelected = !binding.sharePositionLabel.isSelected
+
+        val eventId = args.eventId
+
+        if (binding.sharePositionIcon.isSelected && eventId.isNotEmpty()) {
+            LocationForegroundService.startLocationService(requireContext(), eventId)
+        } else {
+            map.clear()
+            clusterManager.clearItems()
+            LocationForegroundService.stopLocationService(requireContext())
+        }
+    }
 
     private fun setUpClusterer(positions: List<UserPosition>) {
         clusterManager = ClusterManager(context, map)
         clusterManager.renderer = context?.let { CustomClusterRenderer(it, map, clusterManager) }
         map.setOnCameraIdleListener(clusterManager)
         addItems(positions)
-        binding.numberOfPeopleSharing.text = resources.getQuantityString(R.plurals.label_number_of_people_sharing, positions.size, positions.size)
+        binding.sharePositionPeople.text = resources.getQuantityString(R.plurals.label_number_of_people_sharing, positions.size, positions.size)
     }
 
     var isFirstTime = true
@@ -102,7 +147,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         map.clear()
         clusterManager.clearItems()
 
-        if (positions.any()) {
+        if (positions.any() && binding.sharePositionIcon.isSelected) {
             val builder = LatLngBounds.builder()
             positions.forEach {
                 val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name, it.name.substring(0,1).uppercase(Locale.getDefault())+" "+it.surname.substring(0,1).uppercase(Locale.getDefault()))
@@ -113,7 +158,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
                 val bounds = builder.build()
                 val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
                 map.moveCamera(cu)
-                map.animateCamera(CameraUpdateFactory.zoomTo(13f), 2000, null)
+                map.animateCamera(CameraUpdateFactory.zoomTo(12f), 2000, null)
                 isFirstTime = false
             }
         }
