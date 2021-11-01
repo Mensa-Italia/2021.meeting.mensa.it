@@ -7,10 +7,62 @@
     android:layout_height="match_parent"
     tools:context=".ui.map.MapFragment">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/googleMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+<!--    <View-->
+<!--        android:id="@+id/gradient_arrow"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:background="@drawable/background_gradient_top_bottom_alpha_squared"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/number_of_people_sharing_box"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    <View
+        android:id="@+id/number_of_people_sharing_box"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:elevation="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/background_activity_timeline"
+        app:layout_constraintBottom_toBottomOf="@id/back_arrow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:elevation="16dp"
+        app:layout_constraintDimensionRatio="1:1"
+        android:padding="8dp"
+        android:src="@drawable/ic_back_arrow"
+        app:layout_constraintStart_toStartOf="@id/number_of_people_sharing_box"
+        app:layout_constraintTop_toTopOf="@id/number_of_people_sharing_box"
+        app:tint="?attr/colorOnBackground" />
+
+
+    <TextView
+        android:id="@+id/number_of_people_sharing"
+        style="@style/amu_Bubble.TextAppearance.Dark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:elevation="16dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/number_of_people_sharing_box"
+        app:layout_constraintEnd_toEndOf="@id/number_of_people_sharing_box"
+        app:layout_constraintStart_toEndOf="@id/back_arrow"
+        app:layout_constraintTop_toTopOf="@id/number_of_people_sharing_box" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

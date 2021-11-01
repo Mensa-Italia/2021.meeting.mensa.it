@@ -1,5 +1,6 @@
 package swaix.dev.mensaeventi.ui.map
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -39,13 +40,15 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     private val args: MapFragmentArgs by navArgs()
     private val viewModel: MapViewModel by viewModels()
+    lateinit var binding : MapFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return MapFragmentBinding.inflate(inflater, container, false).root
+        binding = MapFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,30 +88,26 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     }
 
-    // Declare a variable for the cluster manager.
     private lateinit var clusterManager: ClusterManager<MyItem>
 
+    inner class MyClusterManager(context: Context, map: GoogleMap):  ClusterManager<MyItem>(context, map){
+
+    }
+
     private fun setUpClusterer(positions: List<UserPosition>) {
-        // Position the map.
-
-        // Initialize the manager with the context and the map.
-        // (Activity extends context, so we can pass 'this' in the constructor.)
         clusterManager = ClusterManager(context, map)
-
-        // Point the map's listeners at the listeners implemented by the cluster
-        // manager.
         map.setOnCameraIdleListener(clusterManager)
-//        map.setOnMarkerClickListener(clusterManager)
-
         addItems(positions)
-
+        binding.numberOfPeopleSharing.text = getString(R.string.label_number_of_people_sharing, positions.size)
     }
 
     var isFirstTime = true
 
     private fun addItems(positions: List<UserPosition>) {
 
+        map.clear()
         clusterManager.clearItems()
+
         if (positions.any()) {
             val builder = LatLngBounds.builder()
             positions.forEach {
@@ -148,6 +147,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         override fun getSnippet(): String {
             return snippet
         }
+
 
     }
 

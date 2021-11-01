@@ -64,5 +64,6 @@
     <string name="label_show_participant">Visualizza partecipanti</string>
     <string name="message_share_your_position">Per visualizzare la posizione degli altri devi attivare la condivisione della tua posizione</string>
     <string name="location_service_off">La condivisione della posizione è stata fermata.</string>
+    <string name="label_number_of_people_sharing">Stanno condividendo %1$d persone</string>
 
 </resources>
