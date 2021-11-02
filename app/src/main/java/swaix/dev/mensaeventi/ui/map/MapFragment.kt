@@ -29,10 +29,7 @@ import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
 import swaix.dev.mensaeventi.model.UserPosition
 import swaix.dev.mensaeventi.ui.BaseFragment
-import swaix.dev.mensaeventi.utils.LocationForegroundService
-import swaix.dev.mensaeventi.utils.addMarker
-import swaix.dev.mensaeventi.utils.hasPermissions
-import swaix.dev.mensaeventi.utils.manage
+import swaix.dev.mensaeventi.utils.*
 import java.util.*
 
 
@@ -84,6 +81,8 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
                 sharePositionIcon.isSelected = it
                 sharePositionLabel.isSelected = it
             })
+
+            mapToolbarTitle.text = (args.details.name + " " + args.details.dateFrom.yearString()).asHtml()
 
             sharePositionIcon.setOnClickListener {
                 if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))

@@ -49,10 +49,10 @@
     <TextView
         android:id="@+id/event_name"
         style="@style/LatoBold.24"
-        android:textColor="?attr/colorOnPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="@id/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
