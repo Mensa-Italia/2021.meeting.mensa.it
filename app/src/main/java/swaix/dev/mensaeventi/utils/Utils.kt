@@ -122,10 +122,8 @@ fun GoogleMap.addMarker(context: Context, position: LatLng, eventItem: EventItem
             when (eventItem.type) {
                 ItemType.HOTEL -> R.drawable.ic_hotel
                 ItemType.RESTAURANT -> R.drawable.ic_restaurant
-                ItemType.ACTIVITY -> R.drawable.ic_event_black_24dp
-                ItemType.EVENT -> R.drawable.ic_close
-                ItemType.CONTACT -> R.drawable.ic_close
-                ItemType.NONE -> R.drawable.ic_close
+                ItemType.ACTIVITY -> R.drawable.ic_activity
+                else -> R.drawable.ic_undefined
             }
         )
     )
