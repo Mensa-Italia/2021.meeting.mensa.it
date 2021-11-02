@@ -3,8 +3,8 @@
     xmlns:motion="http://schemas.android.com/apk/res-auto">
 
     <Transition
-        motion:constraintSetEnd="@+id/end"
-        motion:constraintSetStart="@id/start"
+        motion:constraintSetEnd="@+id/activity_end"
+        motion:constraintSetStart="@id/activity_start"
         motion:duration="1000">
         <KeyFrameSet>
             <KeyAttribute
@@ -14,9 +14,9 @@
         </KeyFrameSet>
     </Transition>
 
-    <ConstraintSet android:id="@+id/start" />
+    <ConstraintSet android:id="@+id/activity_start" />
 
-    <ConstraintSet android:id="@+id/end">
+    <ConstraintSet android:id="@+id/activity_end">
         <Constraint
             android:id="@+id/logo_mensa"
             android:layout_width="50dp"

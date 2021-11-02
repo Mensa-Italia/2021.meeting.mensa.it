@@ -93,15 +93,40 @@ class EventCalendarSlide : Fragment() {
 
                     activityDate.text = resources.getString(R.string.date_time_label, eventItemWithDate.dateFrom.dayString(), eventItemWithDate.dateFrom.hourMinuteString(), eventItemWithDate.dateTo.hourMinuteString())
 
-                    activityDetailButton.setOnClickListener {
-                        findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(eventItemWithDate))
-                    }
-                    activityDirectionButton.setOnClickListener {
-                        val gmmIntentUri = Uri.parse("google.navigation:q=${eventItemWithDate.position.latitude},${eventItemWithDate.position.longitude}")
-                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-                        mapIntent.setPackage("com.google.android.apps.maps")
-                        startActivity(mapIntent)
-                    }
+                    root.addTransitionListener(object : MotionLayout.TransitionListener {
+                        override fun onTransitionStarted(motionLayout: MotionLayout?, startId: Int, endId: Int) {
+                        }
+
+                        override fun onTransitionChange(motionLayout: MotionLayout?, startId: Int, endId: Int, progress: Float) {
+                        }
+
+                        override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+                            if (currentId == R.id.activity_end) {
+                                activityDetailButton.isClickable = true
+                                activityDetailButton.setOnClickListener {
+                                    findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToEventDetailExtraFragment(eventItemWithDate))
+                                }
+                                activityDirectionButton.isClickable = true
+                                activityDirectionButton.setOnClickListener {
+                                    val gmmIntentUri = Uri.parse("google.navigation:q=${eventItemWithDate.position.latitude},${eventItemWithDate.position.longitude}")
+                                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                                    mapIntent.setPackage("com.google.android.apps.maps")
+                                    startActivity(mapIntent)
+                                }
+                            } else {
+                                activityDetailButton.setOnClickListener(null)
+                                activityDetailButton.isClickable =false
+                                activityDirectionButton.setOnClickListener(null)
+                                activityDirectionButton.isClickable =false
+                            }
+                        }
+
+                        override fun onTransitionTrigger(motionLayout: MotionLayout?, triggerId: Int, positive: Boolean, progress: Float) {
+                        }
+
+                    })
+
+
                 }
 
                 element.setOnClickListener {
