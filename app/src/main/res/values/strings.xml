@@ -16,7 +16,7 @@
     <string name="label_suggestions">Ti potrebbe interessare…</string>
     <string name="label_suggestions_filter">Filtra suggerimenti</string>
     <string name="label_activities">Calendario</string>
-    <string name="label_no_data">Nessun Elemento</string>
+    <string name="label_no_data">Nessun elemento trovato con questa chiave di ricerca</string>
     <string name="label_contacts">Contatti</string>
     <string name="label_mensa_event">Mensa Eventi</string>
     <string name="email_title">Invia una email</string>

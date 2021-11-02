@@ -34,12 +34,13 @@ open class EventItem(
 
     override fun compareTo(other: EventItem): Int = id.compareTo(other.id)
     override fun search(value: String): Boolean {
+        val upperCase = value.uppercase()
         return when {
-            this.id.toString().contains(value) -> true
-            this.name.contains(value) -> true
-            this.description.contains(value) -> true
-            this.mail.contains(value) -> true
-            this.telephoneNumber.contains(value) -> true
+            this.id.toString().contains(upperCase) -> true
+            this.name.uppercase().contains(upperCase) -> true
+            this.description.uppercase().contains(upperCase) -> true
+            this.mail.uppercase().contains(upperCase) -> true
+            this.telephoneNumber.uppercase().contains(upperCase) -> true
             else -> false
         }
     }
