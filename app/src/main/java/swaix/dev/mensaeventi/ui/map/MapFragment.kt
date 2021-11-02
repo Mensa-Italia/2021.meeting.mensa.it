@@ -78,13 +78,19 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
         with(binding) {
             baseViewModel.locationServiceEnable.observe(viewLifecycleOwner, {
-                sharePositionIcon.isSelected = it
-                sharePositionLabel.isSelected = it
+                sharingPeopleBox.isEnabled = true
+                sharingPeopleBox.isSelected = it
+                binding.sharingPeopleBox.text = getString(if (it) R.string.label_shared_position else R.string.label_share_position)
             })
+
+            backArrow.setOnClickListener {
+                findNavController().navigateUp()
+            }
 
             mapToolbarTitle.text = (args.details.name + " " + args.details.dateFrom.yearString()).asHtml()
 
-            sharePositionIcon.setOnClickListener {
+            sharingPeopleBox.setOnClickListener {
+                sharingPeopleBox.isEnabled = false
                 if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
                     manageLocationService()
                 else
@@ -122,12 +128,8 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
     private lateinit var clusterManager: ClusterManager<MyItem>
 
     private fun manageLocationService() {
-        binding.sharePositionIcon.isSelected = !binding.sharePositionIcon.isSelected
-        binding.sharePositionLabel.isSelected = !binding.sharePositionLabel.isSelected
-
         val eventId = args.eventId
-
-        if (binding.sharePositionIcon.isSelected && eventId.isNotEmpty()) {
+        if (baseViewModel.locationServiceEnable.value == false && eventId.isNotEmpty()) {
             LocationForegroundService.startLocationService(requireContext(), eventId)
         } else {
             clusterManager.clearItems()
@@ -167,7 +169,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun addSharingPeople(positions: List<UserPosition>) {
         clusterManager.clearItems()
-        if (binding.sharePositionIcon.isSelected) {
+        if (binding.sharingPeopleBox.isSelected) {
             positions.forEach {
                 val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name, it.name.first().uppercase(Locale.getDefault()) + " " + it.surname.first().uppercase(Locale.getDefault()))
                 clusterManager.addItem(item)

@@ -41,57 +41,34 @@
 
     <TextView
         android:id="@+id/map_toolbar_title"
+        style="@style/LatoBold.24"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:elevation="16dp"
-        android:text="Titolo"
-        android:layout_marginEnd="48dp"
         android:layout_marginStart="48dp"
-        android:textColor="@color/primary_color"
-        style="@style/LatoBold.24"
+        android:layout_marginEnd="48dp"
+        android:elevation="16dp"
+        android:ellipsize="end"
         android:gravity="center"
         android:maxLines="2"
-        android:ellipsize="end"
+        android:text="Titolo"
+        android:textColor="@color/primary_color"
         app:layout_constraintBottom_toBottomOf="@id/title_box"
         app:layout_constraintEnd_toEndOf="@id/title_box"
         app:layout_constraintStart_toStartOf="@id/title_box"
         app:layout_constraintTop_toTopOf="@id/title_box" />
 
-    <View
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/sharing_people_box"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/background_activity_timeline"
-        android:elevation="16dp"
-        app:layout_constraintStart_toStartOf="@id/share_position_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_box"/>
-
-    <ImageView
-        android:id="@+id/share_position_icon"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/share_icon"
-        android:elevation="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toTopOf="@id/sharing_people_box"
-        app:layout_constraintBottom_toBottomOf="@id/sharing_people_box"
-        app:layout_constraintEnd_toEndOf="@id/sharing_people_box"/>
-
-    <TextView
-        android:id="@+id/share_position_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_share_position"
+        android:elevation="8dp"
         android:textColor="@color/share_icon_color"
-        android:elevation="16dp"
-        android:layout_marginEnd="8dp"
-        android:paddingStart="16dp"
-        app:layout_constraintTop_toTopOf="@id/sharing_people_box"
-        app:layout_constraintBottom_toBottomOf="@id/sharing_people_box"
-        app:layout_constraintEnd_toStartOf="@id/share_position_icon"/>
+        android:drawableEnd="@drawable/share_icon"
+        android:text="@string/label_share_position"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@id/title_box"
+        app:layout_constraintTop_toBottomOf="@id/title_box"/>
 
     <View
         android:id="@+id/footer"
@@ -108,13 +85,13 @@
         style="@style/amu_ClusterIcon.TextAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="17dp"
         android:layout_margin="8dp"
         android:drawablePadding="4dp"
-        tools:text="prova"
+        android:elevation="17dp"
+        app:drawableStartCompat="@drawable/ic_account_eye"
         app:layout_constraintBottom_toBottomOf="@id/footer"
         app:layout_constraintEnd_toEndOf="@id/footer"
         app:layout_constraintTop_toTopOf="@id/footer"
-        app:drawableStartCompat="@drawable/ic_account_eye" />
+        tools:text="prova" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
