@@ -131,13 +131,13 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         if (binding.sharePositionIcon.isSelected && eventId.isNotEmpty()) {
             LocationForegroundService.startLocationService(requireContext(), eventId)
         } else {
-            map.clear()
             clusterManager.clearItems()
             addExtrasMarkers()
             LocationForegroundService.stopLocationService(requireContext())
         }
     }
-var first = true
+
+    var first = true
 
     private fun addExtrasMarkers() {
 
@@ -157,7 +157,7 @@ var first = true
             map.addMarker(requireContext(), position, it)
             builder.include(position)
         }
-        if(first) {
+        if (first) {
             val bounds = builder.build()
             val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
             map.moveCamera(cu)
@@ -167,11 +167,6 @@ var first = true
     }
 
     private fun addSharingPeople(positions: List<UserPosition>) {
-
-//        clusterManager.markerCollection.markers.forEach {
-//            it.remove()
-//        }
-//
         clusterManager.clearItems()
         if (binding.sharePositionIcon.isSelected) {
             positions.forEach {

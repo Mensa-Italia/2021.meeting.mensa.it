@@ -97,7 +97,7 @@ fun Context.hasPermissions(vararg permissions: String) = permissions.all {
 }
 
 
-fun <T> NetworkResult<T>.manage( onLoading: ()->Unit = {}, onSuccess: (T) -> Unit, onError: () -> Unit = {}) {
+fun <T> NetworkResult<T>.manage(onLoading: () -> Unit = {}, onSuccess: (T) -> Unit, onError: (String) -> Unit = {}) {
     when (this) {
         is NetworkResult.Success -> {
             data?.let { value ->
@@ -105,9 +105,9 @@ fun <T> NetworkResult<T>.manage( onLoading: ()->Unit = {}, onSuccess: (T) -> Uni
             }
         }
         is NetworkResult.Error -> {
-            onError.invoke()
+            onError.invoke(message ?: "Errore generico")
         }
-        is NetworkResult.Loading ->{
+        is NetworkResult.Loading -> {
             onLoading.invoke()
         }
     }
