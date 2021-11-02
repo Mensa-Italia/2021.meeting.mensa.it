@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import swaix.dev.mensaeventi.databinding.ActivityHomeBinding
+import swaix.dev.mensaeventi.utils.EVENT_ID
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.NEW_LOCATION
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.START_SERVICE
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.STOP_SERVICE
@@ -165,17 +166,17 @@ class HomeActivity : AppCompatActivity() {
 
     private val mReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
-            when (p1?.action) {
-                START_SERVICE -> {
-                    baseViewModel.locationServiceEnable.postValue(true)
-                }
-                STOP_SERVICE -> {
-                    baseViewModel.locationServiceEnable.postValue(false)
-                }
-                NEW_LOCATION -> {
-
-                }
-            }
+//            when (p1?.action) {
+//                START_SERVICE -> {
+//                    baseViewModel.locationServiceEnable.postValue(Pair(true, p1.extras?.getString(EVENT_ID)?:""))
+//                }
+//                STOP_SERVICE -> {
+//                    baseViewModel.locationServiceEnable.postValue(Pair(false, ""))
+//                }
+//                NEW_LOCATION -> {
+//
+//                }
+//            }
         }
 
     }

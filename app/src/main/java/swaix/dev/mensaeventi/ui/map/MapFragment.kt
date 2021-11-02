@@ -1,13 +1,18 @@
 package swaix.dev.mensaeventi.ui.map
 
 import android.Manifest
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -50,6 +55,27 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         )
     }
 
+    private val connection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceConnected(
+            className: ComponentName,
+            service: IBinder
+        ) {
+            val binder: LocationForegroundService.LocationForegroundServiceBinder = service as LocationForegroundService.LocationForegroundServiceBinder
+            val myService = binder.service
+
+
+            updateButton(myService.isNotifyForeground(), myService.eventQRid)
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {}
+    }
+
+    private fun updateButton(isEnabled: Boolean, eventQRid: String?) {
+        binding.sharingPeopleBox.text = getString(if (isEnabled) R.string.label_shared_position else R.string.label_share_position)
+        binding.sharingPeopleBox.isEnabled = eventQRid == null || eventQRid == args.eventId
+        binding.sharingPeopleBox.isSelected = isEnabled
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -60,6 +86,10 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
                 } else
                     Toast.makeText(requireContext(), "DEVI DARE I PERMESSI MANUALMENTE", Toast.LENGTH_LONG).show()
             }
+
+
+        val intent = Intent(requireActivity(), LocationForegroundService::class.java)
+        requireActivity().bindService(intent, connection, AppCompatActivity.BIND_AUTO_CREATE)
     }
 
     override fun onCreateView(
@@ -77,11 +107,6 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         }
 
         with(binding) {
-            baseViewModel.locationServiceEnable.observe(viewLifecycleOwner, {
-                sharingPeopleBox.isEnabled = true
-                sharingPeopleBox.isSelected = it
-                binding.sharingPeopleBox.text = getString(if (it) R.string.label_shared_position else R.string.label_share_position)
-            })
 
             backArrow.setOnClickListener {
                 findNavController().navigateUp()
@@ -90,7 +115,9 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
             mapToolbarTitle.text = (args.details.name + " " + args.details.dateFrom.yearString()).asHtml()
 
             sharingPeopleBox.setOnClickListener {
-                sharingPeopleBox.isEnabled = false
+                sharingPeopleBox.isSelected = !sharingPeopleBox.isSelected
+                updateButton(sharingPeopleBox.isSelected,null)
+
                 if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
                     manageLocationService()
                 else
@@ -99,6 +126,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
         }
     }
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
@@ -129,12 +157,15 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun manageLocationService() {
         val eventId = args.eventId
-        if (baseViewModel.locationServiceEnable.value == false && eventId.isNotEmpty()) {
-            LocationForegroundService.startLocationService(requireContext(), eventId)
-        } else {
-            clusterManager.clearItems()
-            addExtrasMarkers()
-            LocationForegroundService.stopLocationService(requireContext())
+        with(binding) {
+
+            if (sharingPeopleBox.isSelected && eventId.isNotEmpty()) {
+                LocationForegroundService.startLocationService(requireContext(), eventId)
+            } else {
+                clusterManager.clearItems()
+                addExtrasMarkers()
+                LocationForegroundService.stopLocationService(requireContext())
+            }
         }
     }
 

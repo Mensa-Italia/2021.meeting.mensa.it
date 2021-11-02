@@ -67,7 +67,7 @@ class LocationForegroundService : Service() {
     @Inject
     lateinit var repository: DataRepository
 
-    private var eventId: String? = null
+    var eventQRid: String? = null
     private val mBinder: IBinder = LocationForegroundServiceBinder()
     private lateinit var mLocation: Location
     private val mLocationRequest: LocationRequest = LocationRequest.create().apply {
@@ -97,15 +97,15 @@ class LocationForegroundService : Service() {
                                 broadcastIntent.action = NEW_LOCATION
                                 sendBroadcast(broadcastIntent)
 
-                                if (baseContext.isLogged() && !eventId.isNullOrEmpty()) {
+                                if (baseContext.isLogged() && !eventQRid.isNullOrEmpty()) {
                                     CoroutineScope(Dispatchers.IO + Job()).launch {
-                                        repository.pushPosition(eventId!!, baseContext.getAccountPassword(), mLocation.latitude, mLocation.longitude)
+                                        repository.pushPosition(eventQRid!!, baseContext.getAccountPassword(), mLocation.latitude, mLocation.longitude)
                                             .collect { networkResult ->
                                                 networkResult.manage(onSuccess = {
                                                     Timber.d("PositionUpdated : ${it.result}")
                                                 }, onError = {
                                                     Timber.e("PositionUpdated : network error ")
-                                                } )
+                                                })
                                             }
                                     }
                                 }
@@ -140,7 +140,7 @@ class LocationForegroundService : Service() {
             stopSelf()
         } else {
             notify(action)
-            eventId = intent?.extras?.getString(EVENT_ID)
+            eventQRid = intent?.extras?.getString(EVENT_ID)
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null)
         }
         return START_NOT_STICKY
@@ -163,6 +163,7 @@ class LocationForegroundService : Service() {
     fun isNotifyForeground(): Boolean {
         return (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).isNotifyForeground(FOREGROUND_NOTE_ID)
     }
+
 
     private fun NotificationManager.isNotifyForeground(id: Int): Boolean {
         val notifyCheckForeground = activeNotifications.filter {

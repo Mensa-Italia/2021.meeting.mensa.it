@@ -67,7 +67,8 @@
     <string name="label_shared_position">Posizione condivisa</string>
 
     <plurals name="label_number_of_people_sharing">
-        <item quantity="one" formatted="true">%1$d persona</item>
+        <item quantity="zero" formatted="true">0 persone</item>
+        <item quantity="one" formatted="true">1 persona</item>
         <item quantity="other" formatted="true">%1$d persone</item>
     </plurals>
 

@@ -126,7 +126,7 @@ class EventDetailFragment : BaseFragment() {
                 setContactClickListener(it)
             }
 
-            baseViewModel.hasCheckedIn_.observe(viewLifecycleOwner, {
+            baseViewModel.hasCheckedIn.observe(viewLifecycleOwner, {
                 Timber.d("**** HAS CHECKEDIN get VALUE: $it")
                 if (!it.isNullOrEmpty() && requireContext().isLogged()) {
                     Timber.d("**** HAS CHECKEDIN && account created")

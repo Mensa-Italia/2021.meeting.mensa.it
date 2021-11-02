@@ -71,7 +71,7 @@ class CheckInFragment : DialogFragment() {
                             .collect { networkResult ->
                                 networkResult.manage(onSuccess = {
                                     Timber.d("**** HAS CHECKEDIN POST VALUE")
-                                    baseViewModel.hasCheckedIn_.postValue(args.eventId)
+                                    baseViewModel.hasCheckedIn.postValue(args.eventId)
                                     dismiss()
                                 }, onError = {
                                     Toast.makeText(requireContext(), "Errore durante il recupero dei dati, riprovare", Toast.LENGTH_LONG).show()
