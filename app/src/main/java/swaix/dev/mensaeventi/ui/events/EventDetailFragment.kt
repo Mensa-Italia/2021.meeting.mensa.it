@@ -92,8 +92,8 @@ class EventDetailFragment : BaseFragment() {
             Glide.with(requireContext())
                 .load(args.item.imageURL)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.drawable.placeholder)
-                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.ic_placeholder)
+                .placeholder(R.drawable.ic_placeholder)
                 .centerCrop()
                 .into(eventDetailsToolbar.background)
 

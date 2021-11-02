@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -19,6 +20,8 @@ import swaix.dev.mensaeventi.api.NetworkResult
 import swaix.dev.mensaeventi.databinding.EventsFragmentBinding
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.manage
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 
 
 @AndroidEntryPoint
@@ -51,22 +54,31 @@ class EventsFragment : BaseFragment(), LoadingManager {
                 }
             }
 
-            lifecycleScope.launch {
-                viewModel.eventsFlow
-                    .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                    .collect { networkResult ->
-                        with(eventList.adapter as EventAdapter) {
-                            networkResult.manage(onSuccess = {
-                                updateDataset(it.events )
-                            }, onError = {
-                                updateDataset(listOf())
-                            }, onLoading = {
-                                showLoading()
-                            })
-                        }
-                    }
-
+            fetchData()
+            swipeContainer.setOnRefreshListener {
+                fetchData()
+                swipeContainer.isRefreshing = false
             }
+
+        }
+    }
+
+    private fun EventsFragmentBinding.fetchData() {
+        lifecycleScope.launch {
+            viewModel.eventsFlow
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .collect { networkResult ->
+                    with(eventList.adapter as EventAdapter) {
+                        networkResult.manage(onSuccess = {
+                            updateDataset(it.events)
+                        }, onError = {
+                            updateDataset(listOf())
+                        }, onLoading = {
+                            showLoading()
+                        })
+                    }
+                }
+
         }
     }
 

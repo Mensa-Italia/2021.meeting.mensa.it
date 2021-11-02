@@ -48,8 +48,8 @@ class EventExtraViewHolder(binding: ItemEventExtrasBinding) : OnBindViewHolder(b
             Glide.with(itemView.context)
                 .load(item.imageURL)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .error(R.drawable.placeholder)
-                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.ic_placeholder)
+                .placeholder(R.drawable.ic_placeholder)
                 .transform(CenterCrop(), RoundedCorners(50))
                 .into(background)
 
