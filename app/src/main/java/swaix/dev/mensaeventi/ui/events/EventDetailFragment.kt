@@ -209,6 +209,8 @@ class EventDetailFragment : BaseFragment() {
                                 }
                             }
                             is NetworkResult.Error -> {
+                                checkIn.visibility = View.VISIBLE
+                                showMap.visibility = View.GONE
                             }
                             else -> {
                             }
