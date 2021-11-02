@@ -45,7 +45,6 @@ class EventDetailFragment : BaseFragment() {
 
     lateinit var binding: EventDetailFragmentBinding
     lateinit var cameraPermissionRequest: ActivityResultLauncher<Array<String>>
-    lateinit var eventDetails: ResponseGetEventDetails
     private var eventId: String = ""
 
 
@@ -81,6 +80,9 @@ class EventDetailFragment : BaseFragment() {
 
 
         with(EventDetailFragmentBinding.bind(view)) {
+
+            val details = args.item
+
             eventDetailsToolbar.eventName.text = (args.item.name + " " + args.item.dateFrom.yearString()).asHtml()
 
             eventDetailsToolbar.backArrow.setOnClickListener {
@@ -131,54 +133,40 @@ class EventDetailFragment : BaseFragment() {
                     fetchIsUserCheckedIn()
                 }
             })
-            lifecycleScope.launch {
-                viewModel.getEventDetails(args.item.id.toString())
-                    .collect { networkResult ->
-                        networkResult.manage(onSuccess = {
-                            manageSuccessResponse(it)
-                        }, onError = {
-                            Toast.makeText(requireContext(), "Errore durante il recupero dei dati, riprovare", Toast.LENGTH_LONG).show()
-                            findNavController().navigateUp()
-                        })
-                    }
-            }
-        }
-    }
 
+            (eventHotelsList.adapter as EventExtraAdapter).updateDataset(details.eventHotel)
+            checkForEmptyState(root, details)
 
-    private fun EventDetailFragmentBinding.manageSuccessResponse(value: ResponseGetEventDetails) {
-        eventDetails = value
-        (eventHotelsList.adapter as EventExtraAdapter).updateDataset(value.eventHotel)
-        checkForEmptyState(root, value)
+            val days: Map<String, List<EventItemWithDate>> = details.eventActivities
+                .sortedBy {
+                    it.dateFrom
+                }
+                .groupBy {
+                    it.dateFrom.shortDayString()
+                }
 
-        val days: Map<String, List<EventItemWithDate>> = value.eventActivities
-            .sortedBy {
-                it.dateFrom
-            }
-            .groupBy {
-                it.dateFrom.shortDayString()
-            }
+            calendarDaysPager.adapter = CalendarFragmentAdapter(this@EventDetailFragment, details)
 
-        calendarDaysPager.adapter = CalendarFragmentAdapter(this@EventDetailFragment, value)
+            TabLayoutMediator(calendarDaysTabs, calendarDaysPager) { tab, position ->
+                tab.text = days.keys.toTypedArray()[position]
+            }.attach()
 
-        TabLayoutMediator(calendarDaysTabs, calendarDaysPager) { tab, position ->
-            tab.text = days.keys.toTypedArray()[position]
-        }.attach()
+            (eventSuggestionsList.adapter as EventExtraAdapter).updateDataset(details.eventsSuggestions)
+            (eventContactList.adapter as EventContactAdapter).updateContacts(details.eventsContacts)
 
-        (eventSuggestionsList.adapter as EventExtraAdapter).updateDataset(value.eventsSuggestions)
-        (eventContactList.adapter as EventContactAdapter).updateContacts(value.eventsContacts)
-
-        showMap.visibility = View.GONE
-        if (requireContext().isLogged())
-            fetchIsUserCheckedIn()
-        else
-            checkIn.visibility = View.VISIBLE
-
-        checkIn.setOnClickListener {
-            if (requireContext().hasPermissions(*CAMERA_PERMISSIONS))
-                openBarcodeReader()
+            showMap.visibility = View.GONE
+            if (requireContext().isLogged())
+                fetchIsUserCheckedIn()
             else
-                cameraPermissionRequest.launch(CAMERA_PERMISSIONS)
+                checkIn.visibility = View.VISIBLE
+
+            checkIn.setOnClickListener {
+                if (requireContext().hasPermissions(*CAMERA_PERMISSIONS))
+                    openBarcodeReader()
+                else
+                    cameraPermissionRequest.launch(CAMERA_PERMISSIONS)
+            }
+
         }
     }
 
@@ -199,7 +187,7 @@ class EventDetailFragment : BaseFragment() {
                                         checkIn.visibility = View.GONE
 
                                         showMap.setOnClickListener {
-                                            findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword(), eventDetails))
+                                            findNavController().navigate(EventDetailFragmentDirections.actionEventDetailFragmentToMapFragment(value.eventIdQR, requireContext().getAccountPassword(), args.item))
                                         }
 
                                     } else {

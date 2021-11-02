@@ -5,8 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.transition.TransitionManager
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import swaix.dev.mensaeventi.databinding.ActivityHomeBinding
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.NEW_LOCATION
@@ -31,10 +34,13 @@ class HomeActivity : AppCompatActivity() {
         mIntentFilter.addAction(STOP_SERVICE)
         registerReceiver(mReceiver, mIntentFilter)
 
+
 //        enableClicks()
-//        with(binding.root) {
-//            setTransition(R.id.fab_closed, R.id.fab_middle)
-//        }
+        with(binding) {
+            baseViewModel.showLoading.observe(this@HomeActivity, {
+                loading.visibility = if (it) View.VISIBLE else View.GONE
+            })
+        }
 
     }
 

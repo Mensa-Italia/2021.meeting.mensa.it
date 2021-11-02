@@ -22,7 +22,7 @@
         tools:layout="@layout/event_detail_fragment">
         <argument
             android:name="item"
-            app:argType="swaix.dev.mensaeventi.model.EventItemWithDate" />
+            app:argType="swaix.dev.mensaeventi.model.ResponseGetEventDetails" />
         <action
             android:id="@+id/action_eventDetailFragment_to_eventDetailExtraFragment"
             app:destination="@id/eventDetailExtraFragment" />

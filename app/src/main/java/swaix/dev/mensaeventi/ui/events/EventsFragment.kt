@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -35,7 +36,19 @@ class EventsFragment : BaseFragment(), LoadingManager {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(EventsFragmentBinding.bind(view)) {
             eventList.adapter = EventAdapter {
-                findNavController().navigate(EventsFragmentDirections.actionNavigationHomeToEventDetailFragment(it))
+                lifecycleScope.launch {
+                    viewModel.getEventDetails(it.id.toString())
+                        .collect { networkResult ->
+                            networkResult.manage(onSuccess = {
+                                baseViewModel.showLoading.postValue(false)
+                                findNavController().navigate(EventsFragmentDirections.actionNavigationHomeToEventDetailFragment(it))
+                            }, onError = {
+                                Toast.makeText(requireContext(), "Errore durante il recupero dei dati, riprovare", Toast.LENGTH_LONG).show()
+                            }, onLoading = {
+                                baseViewModel.showLoading.postValue(true)
+                            })
+                        }
+                }
             }
 
             lifecycleScope.launch {
