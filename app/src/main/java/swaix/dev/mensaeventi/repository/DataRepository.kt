@@ -44,12 +44,12 @@ class DataRepository(private val apiHelper: ApiHelper) : BaseApiResponse() {
         }
     }
 
-    fun isUserCheckedIn(eventId: String): Flow<NetworkResult<ResponseIsUserCheckedIn>> {
+    fun isUserCheckedIn(mensaId: String, eventId: Int): Flow<NetworkResult<ResponseIsUserCheckedIn>> {
         return flow {
             if (MOCK_DATA) {
                 emit(NetworkResult.Success(mockIsUserCheckedIn()))
             } else {
-                emit(safeApiCall { apiHelper.isUserCheckedIn(eventId) })
+                emit(safeApiCall { apiHelper.isUserCheckedIn(mensaId, eventId) })
             }
         }
     }

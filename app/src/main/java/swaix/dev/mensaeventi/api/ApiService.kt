@@ -21,7 +21,7 @@ interface ApiService {
 
     @Headers("Content-Type:application/json; charset=ISO-8859-1")
     @GET("isUserCheckedIn.asp")
-    suspend fun isUserCheckedIn(@Query("idunivoco") mensaId: String): Response<ResponseIsUserCheckedIn>
+    suspend fun isUserCheckedIn(@Query("idunivoco") mensaId: String,@Query("idevento")  idEvent: Int): Response<ResponseIsUserCheckedIn>
 
     @Headers("Content-Type:application/json; charset=ISO-8859-1")
     @GET("putUserPosition.asp")

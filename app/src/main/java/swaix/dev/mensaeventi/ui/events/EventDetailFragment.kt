@@ -159,7 +159,7 @@ class EventDetailFragment : BaseFragment() {
                 it.dateFrom.shortDayString()
             }
 
-         calendarDaysPager.adapter = CalendarFragmentAdapter(this@EventDetailFragment, value)
+        calendarDaysPager.adapter = CalendarFragmentAdapter(this@EventDetailFragment, value)
 
         TabLayoutMediator(calendarDaysTabs, calendarDaysPager) { tab, position ->
             tab.text = days.keys.toTypedArray()[position]
@@ -186,7 +186,7 @@ class EventDetailFragment : BaseFragment() {
     private fun fetchIsUserCheckedIn() {
         with(binding) {
             lifecycleScope.launch {
-                viewModel.isUserCheckedIn(requireContext().getAccountPassword())
+                viewModel.isUserCheckedIn(requireContext().getAccountPassword(), args.item.id)
                     .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                     .collect { networkResult ->
                         when (networkResult) {
