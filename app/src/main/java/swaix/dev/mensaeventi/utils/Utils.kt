@@ -5,15 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
 import android.net.Uri
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.Item
 import swaix.dev.mensaeventi.api.NetworkResult
+import swaix.dev.mensaeventi.model.EventItem
+import swaix.dev.mensaeventi.model.ItemType
 import kotlin.random.Random
 
 
@@ -102,4 +111,32 @@ fun <T> NetworkResult<T>.manage( onLoading: ()->Unit = {}, onSuccess: (T) -> Uni
             onLoading.invoke()
         }
     }
+}
+
+
+fun GoogleMap.addMarker(context: Context, position: LatLng, eventItem: EventItem) {
+    addMarker(MarkerOptions().position(position).title(eventItem.name))?.apply {
+        showInfoWindow()
+    }?.setIcon(
+        context.bitmapFromVector(
+            when (eventItem.type) {
+                ItemType.HOTEL -> R.drawable.ic_hotel
+                ItemType.RESTAURANT -> R.drawable.ic_restaurant
+                ItemType.ACTIVITY -> R.drawable.ic_event_black_24dp
+                ItemType.EVENT -> R.drawable.ic_close
+                ItemType.CONTACT -> R.drawable.ic_close
+                ItemType.NONE -> R.drawable.ic_close
+            }
+        )
+    )
+}
+
+
+fun Context.bitmapFromVector(vectorResId: Int): BitmapDescriptor {
+    val vectorDrawable = ContextCompat.getDrawable(this, vectorResId)
+    vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
+    val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    vectorDrawable.draw(canvas)
+    return BitmapDescriptorFactory.fromBitmap(bitmap)
 }

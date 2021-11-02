@@ -41,7 +41,6 @@ class EventsFragment : BaseFragment(), LoadingManager {
             lifecycleScope.launch {
                 viewModel.eventsFlow
                     .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-
                     .collect { networkResult ->
                         with(eventList.adapter as EventAdapter) {
                             networkResult.manage(onSuccess = {
@@ -55,14 +54,6 @@ class EventsFragment : BaseFragment(), LoadingManager {
                     }
 
             }
-
-//            viewModel.events.observe(viewLifecycleOwner, object : NetworkObserver<ResponseGetEvents>(this@EventsFragment, {
-//                (eventList.adapter as EventAdapter).updateDataset(listOf())
-//            }) {
-//                override fun onSuccess(value: ResponseGetEvents) {
-//                    (eventList.adapter as EventAdapter).updateDataset(value.events)
-//                }
-//            })
         }
     }
 

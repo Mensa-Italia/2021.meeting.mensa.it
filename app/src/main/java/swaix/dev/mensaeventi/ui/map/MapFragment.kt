@@ -26,11 +26,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
-import swaix.dev.mensaeventi.api.NetworkResult
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
 import swaix.dev.mensaeventi.model.UserPosition
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.LocationForegroundService
+import swaix.dev.mensaeventi.utils.addMarker
 import swaix.dev.mensaeventi.utils.hasPermissions
 import swaix.dev.mensaeventi.utils.manage
 import java.util.*
@@ -97,20 +97,27 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+        clusterManager = ClusterManager(context, map)
+        clusterManager.renderer = context?.let { CustomClusterRenderer(it, map, clusterManager) }
+        map.setOnCameraIdleListener(clusterManager)
 
         lifecycleScope.launch {
             viewModel.getUsersPositions(args.eventId, args.mensaId)
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect { networkResult ->
                     networkResult.manage(onSuccess = {
-                        setUpClusterer(it.positions )
+                        addSharingPeople(it.positions)
+                        binding.sharePositionPeople.text = resources.getQuantityString(R.plurals.label_number_of_people_sharing, it.positions.size, it.positions.size)
                     }, onError = {
                         Toast.makeText(requireContext(), "Errore durante il recupero dei dati, riprovare", Toast.LENGTH_LONG).show()
                         findNavController().navigateUp()
                     })
                 }
-
         }
+
+        addExtrasMarkers()
+
+
     }
 
     private lateinit var clusterManager: ClusterManager<MyItem>
@@ -126,41 +133,54 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         } else {
             map.clear()
             clusterManager.clearItems()
+            addExtrasMarkers()
             LocationForegroundService.stopLocationService(requireContext())
         }
     }
+var first = true
 
-    private fun setUpClusterer(positions: List<UserPosition>) {
-        clusterManager = ClusterManager(context, map)
-        clusterManager.renderer = context?.let { CustomClusterRenderer(it, map, clusterManager) }
-        map.setOnCameraIdleListener(clusterManager)
-        addItems(positions)
-        binding.sharePositionPeople.text = resources.getQuantityString(R.plurals.label_number_of_people_sharing, positions.size, positions.size)
+    private fun addExtrasMarkers() {
+
+        val builder = LatLngBounds.builder()
+        args.details.eventActivities.map {
+            val position = LatLng(it.position.latitude, it.position.longitude)
+            map.addMarker(requireContext(), position, it)
+            builder.include(position)
+        }
+        args.details.eventHotel.map {
+            val position = LatLng(it.position.latitude, it.position.longitude)
+            map.addMarker(requireContext(), position, it)
+            builder.include(position)
+        }
+        args.details.eventsSuggestions.map {
+            val position = LatLng(it.position.latitude, it.position.longitude)
+            map.addMarker(requireContext(), position, it)
+            builder.include(position)
+        }
+        if(first) {
+            val bounds = builder.build()
+            val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
+            map.moveCamera(cu)
+            map.animateCamera(CameraUpdateFactory.zoomTo(12f), 2000, null)
+            first = false
+        }
     }
 
-    var isFirstTime = true
+    private fun addSharingPeople(positions: List<UserPosition>) {
 
-    private fun addItems(positions: List<UserPosition>) {
-
-        map.clear()
+//        clusterManager.markerCollection.markers.forEach {
+//            it.remove()
+//        }
+//
         clusterManager.clearItems()
-
-        if (positions.any() && binding.sharePositionIcon.isSelected) {
-            val builder = LatLngBounds.builder()
+        if (binding.sharePositionIcon.isSelected) {
             positions.forEach {
-                val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name, it.name.substring(0, 1).uppercase(Locale.getDefault()) + " " + it.surname.substring(0, 1).uppercase(Locale.getDefault()))
+                val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name, it.name.first().uppercase(Locale.getDefault()) + " " + it.surname.first().uppercase(Locale.getDefault()))
                 clusterManager.addItem(item)
-                builder.include(LatLng(it.latitude, it.longitude))
-            }
-            if (isFirstTime) {
-                val bounds = builder.build()
-                val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
-                map.moveCamera(cu)
-                map.animateCamera(CameraUpdateFactory.zoomTo(12f), 2000, null)
-                isFirstTime = false
             }
         }
         clusterManager.cluster()
+        addExtrasMarkers()
     }
 
 
