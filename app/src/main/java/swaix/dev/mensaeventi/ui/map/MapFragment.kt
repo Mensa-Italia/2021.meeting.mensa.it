@@ -48,6 +48,12 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
     private lateinit var binding: MapFragmentBinding
     private lateinit var permissionRequest: ActivityResultLauncher<Array<String>>
 
+    private var first = true
+    private var showActivity = true
+    private var showHotel = true
+    private var showRestaurant = true
+
+
     companion object {
         private val LOCATION_PERMISSIONS = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -143,6 +149,19 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
                     permissionRequest.launch(LOCATION_PERMISSIONS)
             }
 
+            fabHotel.setOnClickListener {
+                showHotel = !showHotel
+                addExtrasMarkers()
+            }
+            fabEvent.setOnClickListener {
+                showActivity = !showActivity
+                addExtrasMarkers()
+            }
+            fabRestaurant.setOnClickListener {
+                showRestaurant = !showRestaurant
+                addExtrasMarkers()
+            }
+
             baseViewModel.buttonShareText.observe(viewLifecycleOwner, {
                 binding.sharingPeopleBox.text = it.title
                 binding.sharingPeopleBox.isSelected = it.selected
@@ -192,26 +211,29 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         }
     }
 
-    var first = true
 
     private fun addExtrasMarkers() {
-
+        map.clear()
         val builder = LatLngBounds.builder()
-        args.details.eventActivities.map {
-            val position = LatLng(it.position.latitude, it.position.longitude)
-            map.addMarker(requireContext(), position, it)
-            builder.include(position)
-        }
-        args.details.eventHotel.map {
-            val position = LatLng(it.position.latitude, it.position.longitude)
-            map.addMarker(requireContext(), position, it)
-            builder.include(position)
-        }
-        args.details.eventsSuggestions.map {
-            val position = LatLng(it.position.latitude, it.position.longitude)
-            map.addMarker(requireContext(), position, it)
-            builder.include(position)
-        }
+//        if (showActivity)
+            args.details.eventActivities.map {
+                val position = LatLng(it.position.latitude, it.position.longitude)
+                map.addMarker(requireContext(), position, it)
+                builder.include(position)
+            }
+
+//        if (showRestaurant)
+            args.details.eventHotel.map {
+                val position = LatLng(it.position.latitude, it.position.longitude)
+                map.addMarker(requireContext(), position, it)
+                builder.include(position)
+            }
+//        if (showRestaurant)
+            args.details.eventsSuggestions.map {
+                val position = LatLng(it.position.latitude, it.position.longitude)
+                map.addMarker(requireContext(), position, it)
+                builder.include(position)
+            }
         if (first) {
             val bounds = builder.build()
             val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
