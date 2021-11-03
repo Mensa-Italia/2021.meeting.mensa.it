@@ -216,25 +216,30 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
     private fun addExtrasMarkers() {
         map.clear()
         val builder = LatLngBounds.builder()
-//        if (showActivity)
+        if (showActivity) {
             args.details.eventActivities.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
                 map.addMarker(requireContext(), position, it)
                 builder.include(position)
             }
+        }
 
-//        if (showRestaurant)
+        if (showHotel) {
             args.details.eventHotel.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
                 map.addMarker(requireContext(), position, it)
                 builder.include(position)
             }
-//        if (showRestaurant)
+        }
+
+        if (showRestaurant) {
             args.details.eventsSuggestions.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
                 map.addMarker(requireContext(), position, it)
                 builder.include(position)
             }
+        }
+
         if (first) {
             val bounds = builder.build()
             val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
