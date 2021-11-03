@@ -5,9 +5,9 @@
     android:viewportWidth="700"
     android:viewportHeight="700">
     <path
-        android:fillColor="@color/hotel_badge_color_bg"
+        android:fillColor="@color/restaurant_badge_color_bg"
         android:pathData="M0,0 L700,700 L700,0 z"
-        android:strokeColor="@color/hotel_badge_color_bg" />
+        android:strokeColor="@color/restaurant_badge_color_bg" />
 
 
     <group

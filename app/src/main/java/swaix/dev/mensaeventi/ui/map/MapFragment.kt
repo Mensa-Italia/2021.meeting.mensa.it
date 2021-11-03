@@ -182,7 +182,8 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
                 .collect { networkResult ->
                     networkResult.manage(onSuccess = {
                         addSharingPeople(it.positions)
-                        binding.sharePositionPeople.text = resources.getQuantityString(R.plurals.label_number_of_people_sharing, it.positions.size, it.positions.size)
+                        //binding.sharePositionPeople.text = resources.getQuantityString(R.plurals.label_number_of_people_sharing, it.positions.size, it.positions.size)
+                        binding.sharePositionPeople.text = it.positions.size.toString()
                     }, onError = {
                         Toast.makeText(requireContext(), "Errore durante il recupero dei dati, riprovare", Toast.LENGTH_LONG).show()
                         findNavController().navigateUp()
