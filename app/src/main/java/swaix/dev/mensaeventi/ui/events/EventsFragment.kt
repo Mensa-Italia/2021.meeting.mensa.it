@@ -46,7 +46,8 @@ class EventsFragment : BaseFragment(), LoadingManager {
                                 baseViewModel.showLoading.postValue(false)
                                 findNavController().navigate(EventsFragmentDirections.actionNavigationHomeToEventDetailFragment(it))
                             }, onError = {
-                                Toast.makeText(requireContext(), "Errore durante il recupero dei dati, riprovare", Toast.LENGTH_LONG).show()
+                                baseViewModel.showLoading.postValue(false)
+                                Toast.makeText(requireContext(), "Errore durante il recupero dei dati: $it", Toast.LENGTH_LONG).show()
                             }, onLoading = {
                                 baseViewModel.showLoading.postValue(true)
                             })

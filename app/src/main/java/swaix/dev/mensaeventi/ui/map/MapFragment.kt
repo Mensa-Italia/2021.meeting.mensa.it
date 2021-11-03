@@ -175,6 +175,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         clusterManager = ClusterManager(context, map)
         clusterManager.renderer = context?.let { CustomClusterRenderer(it, map, clusterManager) }
         map.setOnCameraIdleListener(clusterManager)
+        map.uiSettings.isMapToolbarEnabled = false
 
         lifecycleScope.launch {
             viewModel.getUsersPositions(args.eventId, args.mensaId)

@@ -19,12 +19,13 @@ import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
+import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.databinding.BarcodeReaderFragmentBinding
 import swaix.dev.mensaeventi.model.BarcodeModel
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.vibrate
 import timber.log.Timber
+import java.util.*
 import java.util.concurrent.Executors
 import kotlin.math.abs
 import kotlin.math.max
@@ -132,7 +133,7 @@ class BarcodeReaderFragment : BaseFragment() {
 
         try {
             cameraProvider!!.bindToLifecycle(
-               this,
+                this,
                 cameraSelector!!,
                 analysisUseCase
             )
@@ -142,6 +143,9 @@ class BarcodeReaderFragment : BaseFragment() {
             Timber.e(illegalArgumentException.message ?: "IllegalStateException")
         }
     }
+
+    var lastScan: BarcodeModel? = null
+    var lastTime: Long = Long.MIN_VALUE
 
 
     @SuppressLint("UnsafeExperimentalUsageError")
@@ -158,25 +162,35 @@ class BarcodeReaderFragment : BaseFragment() {
             .addOnSuccessListener { barcodes ->
                 with(binding) {
 
-                    if(barcodes.any()){
+                    if (barcodes.any()) {
                         val barcode = barcodes.first()
                         Timber.d(barcode.rawValue)
                         val gson = Gson()
                         try {
                             val text = barcode.displayValue ?: ""
                             val parsed = gson.fromJson(text, BarcodeModel::class.java)
-                            if (parsed.idEvent.isNullOrEmpty()) {
-                                Toast.makeText(requireContext(), "QR-Code non valido", Toast.LENGTH_LONG).show()
-                                root.vibrate()
+                            val t1 = lastScan
+                            val t2 = lastTime + 5000
+                            if (parsed.idEvent != args.event.id) {
+                                val b = t1 == parsed
+                                val b1 = t2 < Date().time
+                                if (t1 == null || (b && b1)) {
+                                    Toast.makeText(requireContext(), R.string.error_qr_code_read, Toast.LENGTH_LONG).show()
+                                    root.vibrate()
+                                    lastScan = parsed
+                                    lastTime = Date().time
+                                }
                             } else {
                                 root.vibrate()
                                 // Aggiungo questo perchè altrimenti a volte crasha...
                                 lifecycleScope.launchWhenResumed {
-                                    findNavController().navigate(BarcodeReaderFragmentDirections.actionBarcodeReaderFragmentToCheckInFragment(parsed.idEvent))
+                                    findNavController().navigate(BarcodeReaderFragmentDirections.actionBarcodeReaderFragmentToCheckInFragment(parsed.idEventQRCode))
                                 }
+                                lastScan = parsed
+                                lastTime = Date().time
                             }
                         } catch (i: JsonSyntaxException) {
-                            Toast.makeText(requireContext(), "QR-Code non valido", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), R.string.error_qr_code_json, Toast.LENGTH_LONG).show()
                             root.vibrate()
                         }
 
@@ -191,7 +205,6 @@ class BarcodeReaderFragment : BaseFragment() {
                 imageProxy.close()
             }
     }
-
 
 
     companion object {
