@@ -47,7 +47,6 @@
     <string name="label_time_22">22:00</string>
     <string name="label_time_23">23:00</string>
     <string name="label_time_24">24:00</string>
-    <string name="label_share_position">Condividi posizione</string>
     <string name="label_start_share_position">Inizio condivisione posizione…</string>
     <string name="label_location_update">Posizione attuale: %1$f, %2$f</string>
     <string name="label_remove_location_updates">stop</string>
@@ -64,7 +63,9 @@
     <string name="label_show_map">Visualizza mappa</string>
     <string name="message_share_your_position">Per visualizzare la posizione degli altri devi attivare la condivisione della tua posizione</string>
     <string name="location_service_off">La condivisione della posizione è stata fermata.</string>
+    <string name="label_share_position">Condividi posizione</string>
     <string name="label_shared_position">Posizione condivisa</string>
+    <string name="label_sharing_loading">Caricamento…</string>
 
     <plurals name="label_number_of_people_sharing">
         <item quantity="zero" formatted="true">0 persone</item>

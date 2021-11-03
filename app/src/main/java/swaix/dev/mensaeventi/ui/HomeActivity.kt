@@ -5,14 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.transition.TransitionManager
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
+import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.databinding.ActivityHomeBinding
-import swaix.dev.mensaeventi.utils.EVENT_ID
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.NEW_LOCATION
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.START_SERVICE
 import swaix.dev.mensaeventi.utils.LocationForegroundService.Companion.STOP_SERVICE
@@ -33,6 +31,7 @@ class HomeActivity : AppCompatActivity() {
         val mIntentFilter = IntentFilter()
         mIntentFilter.addAction(START_SERVICE)
         mIntentFilter.addAction(STOP_SERVICE)
+        mIntentFilter.addAction(NEW_LOCATION)
         registerReceiver(mReceiver, mIntentFilter)
 
 
@@ -166,17 +165,17 @@ class HomeActivity : AppCompatActivity() {
 
     private val mReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
-//            when (p1?.action) {
-//                START_SERVICE -> {
-//                    baseViewModel.locationServiceEnable.postValue(Pair(true, p1.extras?.getString(EVENT_ID)?:""))
-//                }
-//                STOP_SERVICE -> {
-//                    baseViewModel.locationServiceEnable.postValue(Pair(false, ""))
-//                }
-//                NEW_LOCATION -> {
-//
-//                }
-//            }
+            when (p1?.action) {
+                START_SERVICE -> {
+                    baseViewModel.buttonShareText.postValue(SharePositionData(getString(R.string.label_sharing_loading), true))
+                }
+                STOP_SERVICE -> {
+                    baseViewModel.buttonShareText.postValue(SharePositionData(getString(R.string.label_share_position), false))
+                }
+                NEW_LOCATION -> {
+                    baseViewModel.buttonShareText.postValue(SharePositionData(getString(R.string.label_shared_position), true))
+                }
+            }
         }
 
     }

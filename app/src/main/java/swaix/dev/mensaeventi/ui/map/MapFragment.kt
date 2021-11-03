@@ -64,16 +64,35 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
             val myService = binder.service
 
 
-            updateButton(myService.isNotifyForeground(), myService.eventQRid)
+            updateButton(myService.eventQRid)
+
+            binding.sharingPeopleBox.apply {
+
+                text = getString(
+                    when {
+                        !myService.isNotifyForeground() -> {
+                            isSelected = false
+                            R.string.label_share_position
+                        }
+                        myService.lastLocation() != null -> {
+                            isSelected = true
+                            R.string.label_shared_position
+                        }
+                        else -> {
+                            isSelected = true
+                            R.string.label_sharing_loading
+                        }
+                    }
+                )
+            }
+
         }
 
         override fun onServiceDisconnected(arg0: ComponentName) {}
     }
 
-    private fun updateButton(isEnabled: Boolean, eventQRid: String?) {
-        binding.sharingPeopleBox.text = getString(if (isEnabled) R.string.label_shared_position else R.string.label_share_position)
+    private fun updateButton(eventQRid: String?) {
         binding.sharingPeopleBox.isEnabled = eventQRid == null || eventQRid == args.eventId
-        binding.sharingPeopleBox.isSelected = isEnabled
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,7 +135,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
             sharingPeopleBox.setOnClickListener {
                 sharingPeopleBox.isSelected = !sharingPeopleBox.isSelected
-                updateButton(sharingPeopleBox.isSelected,null)
+                updateButton(null)
 
                 if (requireContext().hasPermissions(*LOCATION_PERMISSIONS))
                     manageLocationService()
@@ -124,6 +143,10 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
                     permissionRequest.launch(LOCATION_PERMISSIONS)
             }
 
+            baseViewModel.buttonShareText.observe(viewLifecycleOwner, {
+                binding.sharingPeopleBox.text = it.title
+                binding.sharingPeopleBox.isSelected = it.selected
+            })
         }
     }
 
@@ -193,7 +216,8 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
             val bounds = builder.build()
             val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
             map.moveCamera(cu)
-            map.animateCamera(CameraUpdateFactory.zoomTo(12f), 2000, null)
+            map.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 24))
+//            map.animateCamera(CameraUpdateFactory.zoomTo(12f), 2000, null)
             first = false
         }
     }

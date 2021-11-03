@@ -69,7 +69,7 @@ class LocationForegroundService : Service() {
 
     var eventQRid: String? = null
     private val mBinder: IBinder = LocationForegroundServiceBinder()
-    private lateinit var mLocation: Location
+    private var mLocation: Location? = null
     private val mLocationRequest: LocationRequest = LocationRequest.create().apply {
         interval = UPDATE_INTERVAL_IN_MILLISECONDS
         fastestInterval = FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS
@@ -97,9 +97,9 @@ class LocationForegroundService : Service() {
                                 broadcastIntent.action = NEW_LOCATION
                                 sendBroadcast(broadcastIntent)
 
-                                if (baseContext.isLogged() && !eventQRid.isNullOrEmpty()) {
+                                if (baseContext.isLogged() && !eventQRid.isNullOrEmpty() && mLocation!=null) {
                                     CoroutineScope(Dispatchers.IO + Job()).launch {
-                                        repository.pushPosition(eventQRid!!, baseContext.getAccountPassword(), mLocation.latitude, mLocation.longitude)
+                                        repository.pushPosition(eventQRid!!, baseContext.getAccountPassword(), mLocation!!.latitude, mLocation!!.longitude)
                                             .collect { networkResult ->
                                                 networkResult.manage(onSuccess = {
                                                     Timber.d("PositionUpdated : ${it.result}")
@@ -164,6 +164,11 @@ class LocationForegroundService : Service() {
         return (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).isNotifyForeground(FOREGROUND_NOTE_ID)
     }
 
+    fun lastLocation(): Location?{
+        return mLocation
+    }
+
+
 
     private fun NotificationManager.isNotifyForeground(id: Int): Boolean {
         val notifyCheckForeground = activeNotifications.filter {
@@ -177,8 +182,8 @@ class LocationForegroundService : Service() {
             createNotificationChannel()
         }
         //Do any customization you want here
-        val notificationContent: String = if (NEW_LOCATION == _action) {
-            getString(R.string.label_location_update, mLocation.latitude, mLocation.longitude)
+        val notificationContent: String = if (NEW_LOCATION == _action && mLocation!=null) {
+            getString(R.string.label_location_update, mLocation!!.latitude, mLocation!!.longitude)
         } else {
             getString(R.string.label_start_share_position)
         }

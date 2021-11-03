@@ -12,7 +12,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,23 +66,13 @@
         style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:drawableEnd="@drawable/share_icon"
         android:elevation="8dp"
         android:text="@string/label_share_position"
         android:textColor="@color/share_icon_color"
-        app:layout_constraintEnd_toEndOf="@id/title_box"
-        app:layout_constraintTop_toBottomOf="@id/title_box" />
-
-    <View
-        android:id="@+id/footer"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:background="?attr/colorSecondary"
-        android:elevation="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/title_box" />
 
     <TextView
         android:id="@+id/share_position_people"
@@ -94,9 +84,18 @@
         android:elevation="17dp"
         android:textColor="@color/share_icon_color"
         app:drawableStartCompat="@drawable/ic_account_eye"
-        app:layout_constraintBottom_toBottomOf="@id/footer"
-        app:layout_constraintEnd_toEndOf="@id/footer"
-        app:layout_constraintTop_toTopOf="@id/footer"
+        app:layout_constraintBottom_toBottomOf="@id/sharing_people_box"
+        app:layout_constraintEnd_toEndOf="@id/title_box"
         tools:text="prova" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="-16dp"
+        android:background="@drawable/background_gradient_alpha_squared"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/sharing_people_box" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
