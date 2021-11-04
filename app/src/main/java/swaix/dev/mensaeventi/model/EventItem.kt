@@ -1,5 +1,7 @@
 package swaix.dev.mensaeventi.model
 
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.clustering.ClusterItem
 import swaix.dev.mensaeventi.utils.Searchable
 import java.io.Serializable
 
@@ -14,7 +16,7 @@ open class EventItem(
     val link: String,
     val telephoneNumber: String,
     var columnOnCalendar : Int = 0,
-) : Serializable, Comparable<EventItem>, Searchable {
+) : Serializable, Comparable<EventItem>, Searchable, ClusterItem {
 
     companion object{
         fun getEmpty():EventItem{
@@ -30,6 +32,18 @@ open class EventItem(
                 "",
             )
         }
+    }
+
+    override fun getPosition(): LatLng {
+        return LatLng(position.latitude, position.longitude)
+    }
+
+    override fun getTitle(): String? {
+        return name
+    }
+
+    override fun getSnippet(): String {
+        return id.toString()
     }
 
     override fun compareTo(other: EventItem): Int = id.compareTo(other.id)

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
+import android.media.metrics.Event
 import android.os.Bundle
 import android.os.IBinder
 import android.view.LayoutInflater
@@ -25,13 +26,17 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.collections.MarkerManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
+import swaix.dev.mensaeventi.adapters.InfoWindowAdapter
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
+import swaix.dev.mensaeventi.model.EventItem
 import swaix.dev.mensaeventi.model.UserPosition
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.*
@@ -39,7 +44,7 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class MapFragment : BaseFragment(), OnMapReadyCallback {
+class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener {
 
     private lateinit var map: GoogleMap
 
@@ -47,6 +52,10 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
     private val viewModel: MapViewModel by viewModels()
     private lateinit var binding: MapFragmentBinding
     private lateinit var permissionRequest: ActivityResultLauncher<Array<String>>
+    private var treeMap: TreeMap<String, EventItem> = TreeMap()
+    private lateinit var clusterManager: ClusterManager<MyItem>
+    private lateinit var markerManager: MarkerManager
+    private lateinit var collection : MarkerManager.Collection
 
     private var first = true
     private var showActivity = true
@@ -172,9 +181,20 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+        map.uiSettings.isMapToolbarEnabled = false
+        map.uiSettings.isRotateGesturesEnabled = false
+
         clusterManager = ClusterManager(context, map)
-        clusterManager.renderer = context?.let { CustomClusterRenderer(it, map, clusterManager) }
+        clusterManager.renderer = CustomClusterRenderer(requireContext(), map, clusterManager)
+        val infoWindowAdapter = InfoWindowAdapter(requireContext(), treeMap)
+        markerManager = MarkerManager(map)
+        collection = markerManager.newCollection()
+        collection.setInfoWindowAdapter(infoWindowAdapter)
+        collection.setOnInfoWindowClickListener(this)
+        collection.setOnMarkerClickListener(this)
+
         map.setOnCameraIdleListener(clusterManager)
+
 
         lifecycleScope.launch {
             viewModel.getUsersPositions(args.eventId, args.mensaId)
@@ -193,10 +213,18 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
         addExtrasMarkers()
 
-
     }
 
-    private lateinit var clusterManager: ClusterManager<MyItem>
+
+
+    override fun onInfoWindowClick(marker: Marker) {
+        val item: EventItem = treeMap[marker.tag] as EventItem
+        //findNavController().navigate(AroundMeFragmentDirections.goToDetailFragment(item.type, item.id))
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        return false
+    }
 
     private fun manageLocationService() {
         val eventId = args.eventId
@@ -214,12 +242,17 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
 
     private fun addExtrasMarkers() {
+        treeMap.clear()
         map.clear()
+        collection.clear()
         val builder = LatLngBounds.builder()
         if (showActivity) {
             args.details.eventActivities.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
-                map.addMarker(requireContext(), position, it)
+                map.addMarker(requireContext(), position, it).apply {
+                    collection.addMarker(this)
+                }
+                treeMap[it.snippet] = it
                 builder.include(position)
             }
         }
@@ -227,7 +260,10 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         if (showHotel) {
             args.details.eventHotel.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
-                map.addMarker(requireContext(), position, it)
+                map.addMarker(requireContext(), position, it).apply {
+                    collection.addMarker(this)
+                }
+                treeMap[it.snippet] = it
                 builder.include(position)
             }
         }
@@ -235,7 +271,10 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         if (showRestaurant) {
             args.details.eventsSuggestions.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
-                map.addMarker(requireContext(), position, it)
+                map.addMarker(requireContext(), position, it).apply {
+                    collection.addMarker(this)
+                }
+                treeMap[it.snippet] = it
                 builder.include(position)
             }
         }
@@ -255,6 +294,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         if (binding.sharingPeopleBox.isSelected) {
             positions.forEach {
                 val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name, it.name.first().uppercase(Locale.getDefault()) + " " + it.surname.first().uppercase(Locale.getDefault()))
+                //treeMap[item.snippet] = item
                 clusterManager.addItem(item)
             }
         }
