@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
-import android.media.metrics.Event
 import android.os.Bundle
 import android.os.IBinder
 import android.view.LayoutInflater
@@ -27,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.collections.MarkerManager
@@ -37,6 +37,7 @@ import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.InfoWindowAdapter
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
 import swaix.dev.mensaeventi.model.EventItem
+import swaix.dev.mensaeventi.model.ItemType
 import swaix.dev.mensaeventi.model.UserPosition
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.*
@@ -55,7 +56,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
     private var treeMap: TreeMap<String, EventItem> = TreeMap()
     private lateinit var clusterManager: ClusterManager<MyItem>
     private lateinit var markerManager: MarkerManager
-    private lateinit var collection : MarkerManager.Collection
+    private lateinit var collection: MarkerManager.Collection
 
     private var first = true
     private var showActivity = true
@@ -217,7 +218,6 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
     }
 
 
-
     override fun onInfoWindowClick(marker: Marker) {
         val item: EventItem = treeMap[marker.tag] as EventItem
         //findNavController().navigate(AroundMeFragmentDirections.goToDetailFragment(item.type, item.id))
@@ -235,7 +235,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
                 LocationForegroundService.startLocationService(requireContext(), eventId)
             } else {
                 clusterManager.clearItems()
-                addExtrasMarkers()
+                //addExtrasMarkers()
                 LocationForegroundService.stopLocationService(requireContext())
             }
         }
@@ -250,9 +250,16 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
         if (showActivity) {
             args.details.eventActivities.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
-                map.addMarker(requireContext(), position, it).apply {
-                    collection.addMarker(this)
-                }
+                collection.addMarker( MarkerOptions().position(position).title(it.name)).setIcon(
+                    context?.bitmapFromVector(
+                        when (it.type) {
+                            ItemType.HOTEL -> R.drawable.ic_hotel
+                            ItemType.RESTAURANT -> R.drawable.ic_restaurant
+                            ItemType.ACTIVITY -> R.drawable.ic_activity
+                            else -> R.drawable.ic_undefined
+                        }
+                    )
+                )
                 treeMap[it.snippet] = it
                 builder.include(position)
             }
@@ -261,9 +268,16 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
         if (showHotel) {
             args.details.eventHotel.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
-                map.addMarker(requireContext(), position, it).apply {
-                    collection.addMarker(this)
-                }
+                collection.addMarker( MarkerOptions().position(position).title(it.name)).setIcon(
+                    context?.bitmapFromVector(
+                        when (it.type) {
+                            ItemType.HOTEL -> R.drawable.ic_hotel
+                            ItemType.RESTAURANT -> R.drawable.ic_restaurant
+                            ItemType.ACTIVITY -> R.drawable.ic_activity
+                            else -> R.drawable.ic_undefined
+                        }
+                    )
+                )
                 treeMap[it.snippet] = it
                 builder.include(position)
             }
@@ -272,9 +286,16 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
         if (showRestaurant) {
             args.details.eventsSuggestions.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
-                map.addMarker(requireContext(), position, it).apply {
-                    collection.addMarker(this)
-                }
+                collection.addMarker( MarkerOptions().position(position).title(it.name)).setIcon(
+                    context?.bitmapFromVector(
+                        when (it.type) {
+                            ItemType.HOTEL -> R.drawable.ic_hotel
+                            ItemType.RESTAURANT -> R.drawable.ic_restaurant
+                            ItemType.ACTIVITY -> R.drawable.ic_activity
+                            else -> R.drawable.ic_undefined
+                        }
+                    )
+                )
                 treeMap[it.snippet] = it
                 builder.include(position)
             }
@@ -300,7 +321,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
             }
         }
         clusterManager.cluster()
-        addExtrasMarkers()
+        //addExtrasMarkers()
     }
 
 
