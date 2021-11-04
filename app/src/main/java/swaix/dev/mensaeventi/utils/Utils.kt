@@ -14,10 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.Item
 import swaix.dev.mensaeventi.api.NetworkResult
@@ -114,9 +111,11 @@ fun <T> NetworkResult<T>.manage(onLoading: () -> Unit = {}, onSuccess: (T) -> Un
 }
 
 
-fun GoogleMap.addMarker(context: Context, position: LatLng, eventItem: EventItem) {
-    addMarker(MarkerOptions().position(position).title(eventItem.name))?.apply {
-        showInfoWindow()
+fun GoogleMap.addMarker(context: Context, position: LatLng, eventItem: EventItem) : MarkerOptions {
+    val marker = MarkerOptions().position(position).title(eventItem.name)
+    addMarker(marker)?.apply {
+        tag = eventItem.snippet
+        //showInfoWindow()
     }?.setIcon(
         context.bitmapFromVector(
             when (eventItem.type) {
@@ -127,6 +126,7 @@ fun GoogleMap.addMarker(context: Context, position: LatLng, eventItem: EventItem
             }
         )
     )
+    return marker
 }
 
 

@@ -42,7 +42,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="@id/title_box"
         app:layout_constraintTop_toTopOf="@id/title_box"
-        app:tint="?attr/colorOnBackground" />
+        app:tint="?attr/colorPrimary" />
 
     <TextView
         android:id="@+id/map_toolbar_title"
