@@ -194,6 +194,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
         collection.setOnMarkerClickListener(this)
 
         map.setOnCameraIdleListener(clusterManager)
+        map.uiSettings.isMapToolbarEnabled = false
 
 
         lifecycleScope.launch {

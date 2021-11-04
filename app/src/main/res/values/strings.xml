@@ -66,6 +66,8 @@
     <string name="label_share_position">Condividi posizione</string>
     <string name="label_shared_position">Posizione condivisa</string>
     <string name="label_sharing_loading">Caricamento…</string>
+    <string name="error_qr_code_read">Il QR-Code scansionato non è associato a questo evento.</string>
+    <string name="error_qr_code_json">QR-Code non valido</string>
 
     <plurals name="label_number_of_people_sharing">
         <item quantity="zero" formatted="true">0 persone</item>
