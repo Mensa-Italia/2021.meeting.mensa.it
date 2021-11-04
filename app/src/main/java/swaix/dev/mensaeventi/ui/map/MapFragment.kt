@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import swaix.dev.mensaeventi.R
 import swaix.dev.mensaeventi.adapters.InfoWindowAdapter
+import swaix.dev.mensaeventi.adapters.InfoWindowUserAdapter
 import swaix.dev.mensaeventi.databinding.MapFragmentBinding
 import swaix.dev.mensaeventi.model.EventItem
 import swaix.dev.mensaeventi.model.ItemType
@@ -54,6 +55,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
     private lateinit var binding: MapFragmentBinding
     private lateinit var permissionRequest: ActivityResultLauncher<Array<String>>
     private var treeMap: TreeMap<String, EventItem> = TreeMap()
+    private var treeMapUser: TreeMap<String, MyItem> = TreeMap()
     private lateinit var clusterManager: ClusterManager<MyItem>
     private lateinit var markerManager: MarkerManager
     private lateinit var collection: MarkerManager.Collection
@@ -188,12 +190,18 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
         clusterManager = ClusterManager(context, map)
         clusterManager.renderer = CustomClusterRenderer(requireContext(), map, clusterManager)
         val infoWindowAdapter = InfoWindowAdapter(requireContext(), treeMap)
+        val infoWindowUserAdapter = InfoWindowUserAdapter(requireContext(), treeMapUser)
         markerManager = MarkerManager(map)
         collection = markerManager.newCollection()
         collection.setInfoWindowAdapter(infoWindowAdapter)
         collection.setOnInfoWindowClickListener(this)
         collection.setOnMarkerClickListener(this)
-
+        clusterManager.markerCollection.setInfoWindowAdapter(infoWindowUserAdapter)
+//        clusterManager.setOnClusterItemClickListener { item: MyItem? ->
+//            false
+//        }
+        clusterManager.markerCollection.setOnMarkerClickListener(this)
+        clusterManager.clusterMarkerCollection.setOnMarkerClickListener(this)
         map.setOnCameraIdleListener(clusterManager)
         map.uiSettings.isMapToolbarEnabled = false
 
@@ -217,10 +225,9 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
 
     }
 
-
     override fun onInfoWindowClick(marker: Marker) {
         val item: EventItem = treeMap[marker.tag] as EventItem
-        //findNavController().navigate(AroundMeFragmentDirections.goToDetailFragment(item.type, item.id))
+        findNavController().navigate(MapFragmentDirections.actionMapFragmentToEventDetailExtraFragment(item))
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
@@ -235,7 +242,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
                 LocationForegroundService.startLocationService(requireContext(), eventId)
             } else {
                 clusterManager.clearItems()
-                //addExtrasMarkers()
+                treeMapUser.clear()
                 LocationForegroundService.stopLocationService(requireContext())
             }
         }
@@ -250,7 +257,9 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
         if (showActivity) {
             args.details.eventActivities.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
-                collection.addMarker( MarkerOptions().position(position).title(it.name)).setIcon(
+                val marker = collection.addMarker(MarkerOptions().position(position).title(it.name))
+                marker.tag = it.snippet
+                marker.setIcon(
                     context?.bitmapFromVector(
                         when (it.type) {
                             ItemType.HOTEL -> R.drawable.ic_hotel
@@ -268,7 +277,9 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
         if (showHotel) {
             args.details.eventHotel.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
-                collection.addMarker( MarkerOptions().position(position).title(it.name)).setIcon(
+                val marker = collection.addMarker(MarkerOptions().position(position).title(it.name))
+                marker.tag = it.snippet
+                marker.setIcon(
                     context?.bitmapFromVector(
                         when (it.type) {
                             ItemType.HOTEL -> R.drawable.ic_hotel
@@ -286,7 +297,9 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
         if (showRestaurant) {
             args.details.eventsSuggestions.map {
                 val position = LatLng(it.position.latitude, it.position.longitude)
-                collection.addMarker( MarkerOptions().position(position).title(it.name)).setIcon(
+                val marker = collection.addMarker(MarkerOptions().position(position).title(it.name))
+                marker.tag = it.snippet
+                marker.setIcon(
                     context?.bitmapFromVector(
                         when (it.type) {
                             ItemType.HOTEL -> R.drawable.ic_hotel
@@ -313,15 +326,15 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
 
     private fun addSharingPeople(positions: List<UserPosition>) {
         clusterManager.clearItems()
+        treeMapUser.clear()
         if (binding.sharingPeopleBox.isSelected) {
             positions.forEach {
-                val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, it.name, it.name.first().uppercase(Locale.getDefault()) + " " + it.surname.first().uppercase(Locale.getDefault()))
-                //treeMap[item.snippet] = item
+                val item = MyItem(it.latitude, it.longitude, it.name + " " + it.surname, "USER" + it.name + it.surname, it.name.first().uppercase(Locale.getDefault()) + " " + it.surname.first().uppercase(Locale.getDefault()))
                 clusterManager.addItem(item)
+                treeMapUser[item.snippet] = item
             }
         }
         clusterManager.cluster()
-        //addExtrasMarkers()
     }
 
 

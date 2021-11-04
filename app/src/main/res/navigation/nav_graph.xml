@@ -85,5 +85,8 @@
         <argument
             android:name="details"
             app:argType="swaix.dev.mensaeventi.model.ResponseGetEventDetails" />
+        <action
+            android:id="@+id/action_mapFragment_to_eventDetailExtraFragment"
+            app:destination="@id/eventDetailExtraFragment" />
     </fragment>
 </navigation>

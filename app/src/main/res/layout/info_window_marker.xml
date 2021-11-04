@@ -29,17 +29,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/navigation_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="6dp"
-            android:src="@drawable/ic_direction_blue"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/info_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_marker"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/navigation_icon"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_marginTop="4dp"-->
+<!--            android:layout_marginBottom="6dp"-->
+<!--            android:src="@drawable/ic_direction_blue"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/info_icon"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/title_marker"/>-->
 
         <ImageView
             android:id="@+id/info_icon"
@@ -49,7 +49,7 @@
             android:layout_marginBottom="6dp"
             android:src="@drawable/ic_info_blue"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/navigation_icon"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_marker"/>
 

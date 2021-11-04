@@ -43,7 +43,7 @@ open class EventItem(
     }
 
     override fun getSnippet(): String {
-        return id.toString()
+        return id.toString()+name
     }
 
     override fun compareTo(other: EventItem): Int = id.compareTo(other.id)
