@@ -9,19 +9,19 @@
         android:id="@+id/placeholder1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/background_gradient_alpha_rounded"
+        android:background="@drawable/background_gradient_rounded_top_bottom"
         app:layout_constraintDimensionRatio="7:3" />
     <View
         android:id="@+id/placeholder2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/background_gradient_alpha_rounded"
+        android:background="@drawable/background_gradient_rounded_top_bottom"
         app:layout_constraintDimensionRatio="7:3" />
     <View
         android:id="@+id/placeholder3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/background_gradient_alpha_rounded"
+        android:background="@drawable/background_gradient_rounded_top_bottom"
         app:layout_constraintDimensionRatio="7:3" />
 
     <androidx.constraintlayout.helper.widget.Flow

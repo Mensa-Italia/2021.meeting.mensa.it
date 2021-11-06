@@ -37,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:rotation="360"
             motion:layout_constraintCircle="@id/fab"
             motion:layout_constraintCircleAngle="270"
             motion:layout_constraintCircleRadius="75dp" />

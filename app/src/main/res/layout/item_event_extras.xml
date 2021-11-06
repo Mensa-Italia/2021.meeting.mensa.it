@@ -23,6 +23,7 @@
         android:id="@+id/extra_name"
         style="@style/LatoBold.14"
         android:textColor="?attr/colorOnPrimary"
+        android:background="#090"
         android:layout_width="0dp"
         android:gravity="center"
         android:layout_height="wrap_content"

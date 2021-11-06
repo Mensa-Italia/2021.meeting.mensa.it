@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/back_arrow"
-        android:background="@drawable/background_gradient_top_bottom_alpha_squared"    />
+        android:background="@drawable/background_gradient_squared_alpha_top_bottom"    />
 
     <ImageView
         android:id="@+id/back_arrow"
@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/event_name"
-        android:background="@drawable/background_gradient_alpha_squared"    />
+        android:background="@drawable/background_gradient_squared_alpha_bottom_top"    />
 
     <TextView
         android:id="@+id/event_name"
