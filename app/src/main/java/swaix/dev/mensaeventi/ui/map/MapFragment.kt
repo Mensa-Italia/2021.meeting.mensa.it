@@ -169,14 +169,17 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
             }
 
             fabHotel.setOnClickListener {
+                it.isSelected = !it.isSelected
                 showHotel = !showHotel
                 addExtrasMarkers()
             }
             fabEvent.setOnClickListener {
+                it.isSelected = !it.isSelected
                 showActivity = !showActivity
                 addExtrasMarkers()
             }
             fabRestaurant.setOnClickListener {
+                it.isSelected = !it.isSelected
                 showRestaurant = !showRestaurant
                 addExtrasMarkers()
             }

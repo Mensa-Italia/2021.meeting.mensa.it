@@ -138,6 +138,7 @@ class LocationForegroundService : Service() {
         if (STOP_SERVICE == action) {
             stopForeground(true)
             stopSelf()
+            mFusedLocationClient.removeLocationUpdates(mLocationCallback)
         } else {
             notify(action)
             eventQRid = intent?.extras?.getString(EVENT_ID)
