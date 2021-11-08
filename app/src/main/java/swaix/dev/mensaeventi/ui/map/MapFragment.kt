@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.clustering.ClusterItem
 import com.google.maps.android.clustering.ClusterManager
+import com.google.maps.android.clustering.ClusterManager.OnClusterItemClickListener
 import com.google.maps.android.collections.MarkerManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -43,10 +45,15 @@ import swaix.dev.mensaeventi.model.UserPosition
 import swaix.dev.mensaeventi.ui.BaseFragment
 import swaix.dev.mensaeventi.utils.*
 import java.util.*
+import swaix.dev.mensaeventi.ui.map.MapFragment.MyItem
+
+import com.google.maps.android.clustering.Cluster
+import com.google.maps.android.clustering.ClusterManager.OnClusterClickListener
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 
 @AndroidEntryPoint
-class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener {
+class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener   {
 
     private lateinit var map: GoogleMap
 
@@ -192,19 +199,29 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowCl
 
         clusterManager = ClusterManager(context, map)
         clusterManager.renderer = CustomClusterRenderer(requireContext(), map, clusterManager)
+
         val infoWindowAdapter = InfoWindowAdapter(requireContext(), treeMap)
         val infoWindowUserAdapter = InfoWindowUserAdapter(requireContext(), treeMapUser)
+
         markerManager = MarkerManager(map)
         collection = markerManager.newCollection()
         collection.setInfoWindowAdapter(infoWindowAdapter)
         collection.setOnInfoWindowClickListener(this)
         collection.setOnMarkerClickListener(this)
+
         clusterManager.markerCollection.setInfoWindowAdapter(infoWindowUserAdapter)
-//        clusterManager.setOnClusterItemClickListener { item: MyItem? ->
-//            false
-//        }
-        clusterManager.markerCollection.setOnMarkerClickListener(this)
-        clusterManager.clusterMarkerCollection.setOnMarkerClickListener(this)
+        clusterManager.markerCollection.setOnMarkerClickListener { false }
+
+        clusterManager.setOnClusterClickListener {
+            Log.d("cluster", "clicked")
+            false
+        }
+
+        clusterManager.markerCollection.setOnMarkerClickListener {
+            Log.d("cluster", "clicked")
+            false
+        }
+
         map.setOnCameraIdleListener(clusterManager)
         map.uiSettings.isMapToolbarEnabled = false
 
