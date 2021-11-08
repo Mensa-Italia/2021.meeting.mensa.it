@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <corners android:topLeftRadius="16dp" android:topRightRadius="16dp"/>
+    <corners android:topLeftRadius="@dimen/photo_radius" android:topRightRadius="@dimen/photo_radius"/>
 
     <gradient
         android:angle="90"
         android:centerColor="#0000"
-        android:centerY="65%"
+        android:centerY="20%"
         android:endColor="@color/detail_event_color_with_alpha"
         android:startColor="#0000"
         android:type="linear" />

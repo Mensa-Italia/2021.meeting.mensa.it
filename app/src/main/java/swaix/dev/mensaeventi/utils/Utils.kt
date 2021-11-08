@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -138,3 +139,5 @@ fun Context.bitmapFromVector(vectorResId: Int): BitmapDescriptor {
     vectorDrawable.draw(canvas)
     return BitmapDescriptorFactory.fromBitmap(bitmap)
 }
+
+fun Int.toPX() = (this * Resources.getSystem().displayMetrics.density).toInt()
