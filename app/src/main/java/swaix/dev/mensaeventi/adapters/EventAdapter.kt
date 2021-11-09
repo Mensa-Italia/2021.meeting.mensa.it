@@ -69,7 +69,7 @@ class EventViewHolder(binding: ItemEventBinding) : OnBindViewHolder(binding) {
             Glide.with(itemView.context)
                 .load(item.imageURL)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .transform(MultiTransformation(CenterCrop(), RoundedCorners(16.toPX())))
+                .transform(CenterCrop(),RoundedCorners(16.toPX()))
                 .error(R.drawable.ic_placeholder)
                 .placeholder(R.drawable.ic_placeholder)
                 .into(imageEvent)
